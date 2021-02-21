@@ -1,10 +1,10 @@
-name: Develop-Build
+name: Master-Build-Fontend
 
 on:
   push:
-    branches: [develop]
+    branches: [master]
   pull_request:
-    branches: [develop]
+    branches: [master]
 
 jobs:
   tests:
@@ -29,3 +29,8 @@ jobs:
       - run: cd frontend/ && npm ci
       - run: cd frontend/ && npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox --code-coverage
       - run: cd frontend/ && npm run e2e
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
