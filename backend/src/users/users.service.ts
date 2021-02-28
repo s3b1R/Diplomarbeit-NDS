@@ -14,6 +14,10 @@ export class UsersService {
     return await this.usersRepository.find();
   }
 
+  async findById(id): Promise<Users[]> {
+    return await this.usersRepository.findByIds(id);
+  }
+
   async create(users: Users): Promise<Users> {
     return await this.usersRepository.save(users);
   }
