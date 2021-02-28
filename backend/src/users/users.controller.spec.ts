@@ -5,8 +5,8 @@ import { Users } from './users.entity';
 jest.mock('../users/users.service.ts');
 
 describe('UsersController', () => {
-  let controller: UsersController;
-  let service: UsersService;
+  let userController: UsersController;
+  let userService: UsersService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -14,20 +14,79 @@ describe('UsersController', () => {
       providers: [UsersService],
     }).compile();
 
-    service = module.get<UsersService>(UsersService);
-    controller = module.get<UsersController>(UsersController);
+    userService = module.get<UsersService>(UsersService);
+    userController = module.get<UsersController>(UsersController);
   });
 
   it('should be defined', () => {
-    expect(controller).toBeDefined();
+    expect(userController).toBeDefined();
+  });
+
+  it('should find all', async () => {
+    const mockedValues = [
+      { id: 1, name: 'Hans Muster' },
+      { id: 2, name: 'Sebastian Rüegg' },
+      { id: 3, name: 'Peter Lustig' },
+      { id: 4, name: 'Peter Müller' },
+    ];
+    jest.spyOn(userService, 'findAll').mockResolvedValue(mockedValues);
+    expect(await userController.index()).toHaveLength(4);
   });
 
   it('should find one by Id', async () => {
-    const expectedResult = [{ id: 1, name: 'Hans Muster' }];
-    const mockNumberToSatisfyParameters = 1;
-    jest.spyOn(service, 'findById').mockResolvedValue(expectedResult);
-    expect(await controller.findById(mockNumberToSatisfyParameters)).toBe(
-      expectedResult,
+    const mockedValues = [{ id: 1, name: 'Hans Muster' }];
+    const mockedId = 1;
+    jest.spyOn(userService, 'findById').mockResolvedValue(mockedValues);
+    expect(await userController.findById(mockedId)).toHaveLength(1);
+  });
+
+  it('should create one', async () => {
+    // eslint-disable-next-line prettier/prettier
+    const mockedValues = { "name": "Susi Test", "id": 1 };
+    const mockedUser = new Users();
+    jest.spyOn(userService, 'create').mockResolvedValue(mockedValues);
+    expect(await userController.create(mockedUser)).toBe(mockedValues);
+  });
+
+  it('should update one', async () => {
+    const mockedValues = {
+      generatedMaps: [],
+      raw: {
+        fieldCount: 0,
+        affectedRows: 1,
+        insertId: 0,
+        serverStatus: 2,
+        warningCount: 0,
+        message: '(Rows matched: 1  Changed: 1  Warnings: 0',
+        protocol41: true,
+        changedRows: 1,
+      },
+      affected: 1,
+    };
+    const mockedID = 1;
+    const mockedBody = new Users();
+    jest.spyOn(userService, 'update').mockResolvedValue(mockedValues);
+    expect(await userController.update(mockedID, mockedBody)).toBe(
+      mockedValues,
     );
+  });
+
+  it('should delete one', async () => {
+    const mockedValues = {
+      raw: {
+        fieldCount: 0,
+        affectedRows: 1,
+        insertId: 0,
+        serverStatus: 2,
+        warningCount: 0,
+        message: '',
+        protocol41: true,
+        changedRows: 0,
+      },
+      affected: 1,
+    };
+    const mockedID = 1;
+    jest.spyOn(userService, 'delete').mockResolvedValue(mockedValues);
+    expect(await userController.delete(mockedID)).toBe(mockedValues);
   });
 });
