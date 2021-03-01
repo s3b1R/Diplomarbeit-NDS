@@ -2,9 +2,17 @@ name: Develop-Build-Frontend
 
 on:
   push:
-    branches: [develop]
+    branches:
+      - develop
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/**'
   pull_request:
-    branches: [develop]
+    branches:
+    - develop
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/**'
 
 jobs:
   tests:
