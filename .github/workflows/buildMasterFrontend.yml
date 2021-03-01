@@ -2,14 +2,14 @@ name: Master-Build-Fontend
 
 on:
   push:
-    branches: 
-    - 'master'
+    branches:
+    - master
     paths:
       - 'frontend/**'
       - '.github/workflows/**'
   pull_request:
     branches:
-      - 'master'
+      - master
       paths:
         - 'frontend/**'
         - '.github/workflows/**'
