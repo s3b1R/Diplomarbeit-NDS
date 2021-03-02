@@ -11,7 +11,7 @@ import { UsersModule } from './users/users.module';
     UsersModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
-      database: 'resourceplanner',
+      database: process.env.DATABASE_DATABASE,
       username: process.env.DATABASE_USER,
       password: process.env.DATABASE_PASSWORD,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
