@@ -44,5 +44,4 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: cd backend/ && npm ci
       - run: cd backend/ && npm run test
-#        todo: e2e tests
-#      - run: cd backend/ && npm run test:e2e
+      - run: cd backend/ && npm run test:e2e
