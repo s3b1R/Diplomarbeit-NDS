@@ -15,15 +15,6 @@ on:
       - '.github/workflows/**'
 
 jobs:
-  Ubuntu_Chrome:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Test
-        run: |
-          sudo apt-get update
-          sudo apt-get --only-upgrade install google-chrome-stable
-
-          google-chrome --version
   tests:
     runs-on: ubuntu-latest
 
