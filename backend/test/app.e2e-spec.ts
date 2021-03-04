@@ -4,7 +4,7 @@ import * as request from 'supertest';
 import { AppModule } from './../src/app.module';
 import { UsersModule } from './../src//users/users.module';
 import { Repository } from 'typeorm';
-import { Users } from '../dist/users/users.entity';
+import { Users } from './../src/users/users.entity';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
