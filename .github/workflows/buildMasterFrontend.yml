@@ -9,10 +9,10 @@ on:
       - '.github/workflows/**'
   pull_request:
     branches:
-      - master
-      paths:
-        - 'frontend/**'
-        - '.github/workflows/**'
+     - master
+    paths:
+       - 'frontend/**'
+       - '.github/workflows/**'
 
 jobs:
   tests:

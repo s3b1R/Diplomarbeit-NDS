@@ -13,16 +13,24 @@ on:
     paths:
       - 'backend/**'
       - '.github/workflows/**'
-      -
+
 jobs:
   tests:
     runs-on: ubuntu-latest
+    env:
+      DATABASE_SCHEMA: test_db
+      DATABASE_USER: root
+      DATABASE_PASSWORD: root
 
     strategy:
       matrix:
         node-version: [14.x]
 
     steps:
+      - name: Set up MySQL
+        run: |
+          sudo /etc/init.d/mysql start
+          mysql -e 'CREATE DATABASE ${{ env.DATABASE_SCHEMA }};' -u${{ env.DATABASE_USER }} -p${{ env.DATABASE_PASSWORD }}
       - uses: actions/cache@v2
         with:
           path: ~/.npm
@@ -36,5 +44,4 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: cd backend/ && npm ci
       - run: cd backend/ && npm run test
-#        todo: e2e tests
-#      - run: cd backend/ && npm run test:e2e
+      - run: cd backend/ && npm run test:e2e
