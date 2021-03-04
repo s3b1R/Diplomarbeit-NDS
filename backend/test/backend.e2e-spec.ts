@@ -52,13 +52,38 @@ describe('Usersmodule (e2e)', () => {
   });
 
   it('should return an array of users', async () => {
+    await request(app.getHttpServer())
+      .post('/users/create')
+      .set('Accept', 'application/json')
+      .send({ name: 'Hans Test' });
     const { body } = await request(app.getHttpServer())
       .get('/users')
       .set('Accept', 'application/json')
       .expect(200);
+    expect(body).toEqual([
+      { id: expect.any(Number), name: 'Susi Test' },
+      { id: expect.any(Number), name: 'Hans Test' },
+    ]);
+    expect(body).toHaveLength(2);
+  });
 
-    expect(body).toEqual([{ id: expect.any(Number), name: 'Susi Test' }]);
+  it('should return an user by id', async () => {
+    const { body } = await request(app.getHttpServer())
+      .get('/users/2')
+      .set('Accept', 'application/json')
+      .expect(200);
+    expect(body).toEqual([{ id: expect.any(Number), name: 'Hans Test' }]);
     expect(body).toHaveLength(1);
+  });
+
+  it('should update an users name', async () => {
+    const { body } = await request(app.getHttpServer())
+      .put('/users/1/update')
+      .set('Accept', 'application/json')
+      .send({ name: 'Hanna Test' })
+      .expect(200);
+    expect(body).toHaveProperty('raw.changedRows', 1);
+    expect(body).toHaveProperty('affected', 1);
   });
 
   it('should delete an user', async () => {
@@ -66,20 +91,8 @@ describe('Usersmodule (e2e)', () => {
       .delete('/users/1/delete')
       .set('Accept', 'application/json')
       .expect(200);
-
-    expect(body).toEqual({
-      raw: {
-        fieldCount: 0,
-        affectedRows: 1,
-        insertId: 0,
-        serverStatus: 2,
-        warningCount: 0,
-        message: '',
-        protocol41: true,
-        changedRows: 0,
-      },
-      affected: 1,
-    });
+    expect(body).toHaveProperty('raw.changedRows', 0);
+    expect(body).toHaveProperty('affected', 1);
   });
 
   afterAll(async () => {
