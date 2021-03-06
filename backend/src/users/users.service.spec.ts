@@ -4,9 +4,9 @@ import { UsersService } from './users.service';
 import { Users } from './users.entity';
 
 describe('UsersService', () => {
-  let service: UsersService;
+  let usersService: UsersService;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         UsersService,
@@ -17,46 +17,46 @@ describe('UsersService', () => {
       ],
     }).compile();
 
-    service = module.get<UsersService>(UsersService);
+    usersService = module.get<UsersService>(UsersService);
   });
 
   it('should be defined', () => {
-    expect(service).toBeDefined();
+    expect(usersService).toBeDefined();
   });
 
-  it('find all users', async () => {
-    const usersFromDB: Users[] = await service.findAll();
+  it('should find all users', async () => {
+    const usersFromDB: Users[] = await usersService.findAll();
 
     expect(usersFromDB).toHaveLength(5);
     expect(usersFromDB[0].id).toBe(1);
     expect(usersFromDB[2].name).toBe('Peter Lustig');
   });
 
-  it('find by id', async () => {
+  it('should find by id', async () => {
     const placeholderId = 1;
-    const userFromDB: Users[] = await service.findById(placeholderId);
+    const userFromDB: Users[] = await usersService.findById(placeholderId);
 
     expect(Array.isArray(userFromDB)).toBeTruthy();
     expect(userFromDB[0].id).toBe(2);
     expect(userFromDB[0].name).toBe('Sebastian Rüegg');
   });
 
-  it('create one', async () => {
-    const newUser: Users = await service.create(new Users());
+  it('should create one', async () => {
+    const newUser: Users = await usersService.create(new Users());
 
     expect(newUser).toBeInstanceOf(Users);
   });
 
-  it('update one', async () => {
-    const updateResult = await service.update(new Users());
+  it('should update one', async () => {
+    const updateResult = await usersService.update(new Users());
 
     expect(updateResult).toHaveProperty('raw.changedRows', 1);
     expect(updateResult).toHaveProperty('affected', 1);
   });
 
-  it('delete one', async () => {
+  it('should delete one', async () => {
     const placeholderID = 1;
-    const deleteResult = await service.delete(placeholderID);
+    const deleteResult = await usersService.delete(placeholderID);
 
     expect(deleteResult).toHaveProperty('raw.changedRows', 0);
     expect(deleteResult).toHaveProperty('affected', 1);
