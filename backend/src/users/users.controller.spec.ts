@@ -24,26 +24,20 @@ describe('UsersController', () => {
   });
 
   it('should find all', async () => {
-    const mockedValues = [
-      { id: 1, name: 'Hans Muster', capacity: [] },
-      { id: 2, name: 'Sebastian Rüegg', capacity: [] },
-      { id: 3, name: 'Peter Lustig', capacity: [] },
-      { id: 4, name: 'Peter Müller', capacity: [] },
-    ];
+    const mockedValues = [new Users(), new Users(), new Users(), new Users()];
     jest.spyOn(userService, 'findAll').mockResolvedValue(mockedValues);
     expect(await userController.index()).toHaveLength(4);
   });
 
   it('should find one by Id', async () => {
-    const mockedValues = [{ id: 1, name: 'Hans Muster', capacity: [] }];
+    const mockedValues = [new Users()];
     const mockedId = 1;
     jest.spyOn(userService, 'findById').mockResolvedValue(mockedValues);
     expect(await userController.findById(mockedId)).toHaveLength(1);
   });
 
   it('should create one', async () => {
-    // eslint-disable-next-line prettier/prettier
-    const mockedValues = { "name": "Susi Test", "id": 1, capacity: [] };
+    const mockedValues = { name: 'Susi Test', id: 1, capacity: [] };
     const mockedUser = new Users();
     jest.spyOn(userService, 'create').mockResolvedValue(mockedValues);
     expect(await userController.create(mockedUser)).toBe(mockedValues);

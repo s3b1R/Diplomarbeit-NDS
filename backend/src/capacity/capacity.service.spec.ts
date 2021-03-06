@@ -72,26 +72,26 @@ export const mockRepository = jest.fn(() => ({
         {
           id: 1,
           capa: '0.8',
-          date: '2021-04-12T22:00:00.000Z',
+          date: '2021-04-12',
           user: { id: 1, name: 'Hans Muster' },
         },
         {
           id: 2,
           capa: '0.8',
-          date: '2021-04-13T22:00:00.000Z',
+          date: '2021-04-13',
           user: { id: 2, name: 'Sebastian Rüegg' },
         },
         {
           id: 3,
           capa: '1.0',
-          date: '2021-04-13T22:00:00.000Z',
+          date: '2021-04-13',
           user: { id: 3, name: 'Peter Lustig' },
         },
       ]);
     }),
   findByIds: () =>
     new Promise((resolve) => {
-      resolve([{ id: 1, capa: '0.8', date: '2021-04-12T22:00:00.000Z' }]);
+      resolve([{ id: 1, capa: '0.8', date: '2021-04-12' }]);
     }),
   save: () =>
     new Promise((resolve) => {

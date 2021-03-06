@@ -9,7 +9,7 @@ export class Capacity {
   @Column('decimal', { precision: 2, scale: 1 })
   capa: number;
 
-  @Column('datetime')
+  @Column('date')
   date: Date;
 
   @ManyToOne(() => Users, (user: Users) => user.capacity)
