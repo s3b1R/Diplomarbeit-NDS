@@ -2,13 +2,14 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { Users } from './users.entity';
+
 jest.mock('../users/users.service.ts');
 
 describe('UsersController', () => {
   let userController: UsersController;
   let userService: UsersService;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [UsersController],
       providers: [UsersService],
@@ -24,17 +25,17 @@ describe('UsersController', () => {
 
   it('should find all', async () => {
     const mockedValues = [
-      { id: 1, name: 'Hans Muster' },
-      { id: 2, name: 'Sebastian Rüegg' },
-      { id: 3, name: 'Peter Lustig' },
-      { id: 4, name: 'Peter Müller' },
+      { id: 1, name: 'Hans Muster', capacity: [] },
+      { id: 2, name: 'Sebastian Rüegg', capacity: [] },
+      { id: 3, name: 'Peter Lustig', capacity: [] },
+      { id: 4, name: 'Peter Müller', capacity: [] },
     ];
     jest.spyOn(userService, 'findAll').mockResolvedValue(mockedValues);
     expect(await userController.index()).toHaveLength(4);
   });
 
   it('should find one by Id', async () => {
-    const mockedValues = [{ id: 1, name: 'Hans Muster' }];
+    const mockedValues = [{ id: 1, name: 'Hans Muster', capacity: [] }];
     const mockedId = 1;
     jest.spyOn(userService, 'findById').mockResolvedValue(mockedValues);
     expect(await userController.findById(mockedId)).toHaveLength(1);
@@ -42,7 +43,7 @@ describe('UsersController', () => {
 
   it('should create one', async () => {
     // eslint-disable-next-line prettier/prettier
-    const mockedValues = { "name": "Susi Test", "id": 1 };
+    const mockedValues = { "name": "Susi Test", "id": 1, capacity: [] };
     const mockedUser = new Users();
     jest.spyOn(userService, 'create').mockResolvedValue(mockedValues);
     expect(await userController.create(mockedUser)).toBe(mockedValues);
