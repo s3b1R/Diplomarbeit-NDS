@@ -24,7 +24,7 @@ describe('UsersService', () => {
     expect(service).toBeDefined();
   });
 
-  it('find all users', async () => {
+  it('should find all users', async () => {
     const usersFromDB: Users[] = await service.findAll();
 
     expect(usersFromDB).toHaveLength(5);
@@ -32,7 +32,7 @@ describe('UsersService', () => {
     expect(usersFromDB[2].name).toBe('Peter Lustig');
   });
 
-  it('find by id', async () => {
+  it('should find by id', async () => {
     const placeholderId = 1;
     const userFromDB: Users[] = await service.findById(placeholderId);
 
@@ -41,20 +41,20 @@ describe('UsersService', () => {
     expect(userFromDB[0].name).toBe('Sebastian Rüegg');
   });
 
-  it('create one', async () => {
+  it('should create one', async () => {
     const newUser: Users = await service.create(new Users());
 
     expect(newUser).toBeInstanceOf(Users);
   });
 
-  it('update one', async () => {
+  it('should update one', async () => {
     const updateResult = await service.update(new Users());
 
     expect(updateResult).toHaveProperty('raw.changedRows', 1);
     expect(updateResult).toHaveProperty('affected', 1);
   });
 
-  it('delete one', async () => {
+  it('should delete one', async () => {
     const placeholderID = 1;
     const deleteResult = await service.delete(placeholderID);
 
