@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Capacity } from '../capacity/capacity.entity';
 
 @Entity()
 export class Users {
@@ -7,4 +8,7 @@ export class Users {
 
   @Column()
   name: string;
+
+  @OneToMany(() => Capacity, (capacity: Capacity) => capacity.user)
+  public capacity: Capacity[];
 }
