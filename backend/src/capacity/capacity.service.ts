@@ -26,7 +26,7 @@ export class CapacityService {
     return await this.capacityRepository.update(capacity.id, capacity);
   }
 
-  async remove(id): Promise<DeleteResult> {
+  async delete(id): Promise<DeleteResult> {
     return await this.capacityRepository.delete(id);
   }
 }
