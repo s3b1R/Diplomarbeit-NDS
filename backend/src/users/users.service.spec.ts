@@ -4,7 +4,7 @@ import { UsersService } from './users.service';
 import { Users } from './users.entity';
 
 describe('UsersService', () => {
-  let service: UsersService;
+  let usersService: UsersService;
 
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -17,15 +17,15 @@ describe('UsersService', () => {
       ],
     }).compile();
 
-    service = module.get<UsersService>(UsersService);
+    usersService = module.get<UsersService>(UsersService);
   });
 
   it('should be defined', () => {
-    expect(service).toBeDefined();
+    expect(usersService).toBeDefined();
   });
 
   it('should find all users', async () => {
-    const usersFromDB: Users[] = await service.findAll();
+    const usersFromDB: Users[] = await usersService.findAll();
 
     expect(usersFromDB).toHaveLength(5);
     expect(usersFromDB[0].id).toBe(1);
@@ -34,7 +34,7 @@ describe('UsersService', () => {
 
   it('should find by id', async () => {
     const placeholderId = 1;
-    const userFromDB: Users[] = await service.findById(placeholderId);
+    const userFromDB: Users[] = await usersService.findById(placeholderId);
 
     expect(Array.isArray(userFromDB)).toBeTruthy();
     expect(userFromDB[0].id).toBe(2);
@@ -42,13 +42,13 @@ describe('UsersService', () => {
   });
 
   it('should create one', async () => {
-    const newUser: Users = await service.create(new Users());
+    const newUser: Users = await usersService.create(new Users());
 
     expect(newUser).toBeInstanceOf(Users);
   });
 
   it('should update one', async () => {
-    const updateResult = await service.update(new Users());
+    const updateResult = await usersService.update(new Users());
 
     expect(updateResult).toHaveProperty('raw.changedRows', 1);
     expect(updateResult).toHaveProperty('affected', 1);
@@ -56,7 +56,7 @@ describe('UsersService', () => {
 
   it('should delete one', async () => {
     const placeholderID = 1;
-    const deleteResult = await service.delete(placeholderID);
+    const deleteResult = await usersService.delete(placeholderID);
 
     expect(deleteResult).toHaveProperty('raw.changedRows', 0);
     expect(deleteResult).toHaveProperty('affected', 1);
