@@ -11,7 +11,6 @@ import { PiModule } from './pi/pi.module';
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    UsersModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       database: process.env.DATABASE_SCHEMA,
@@ -20,6 +19,7 @@ import { PiModule } from './pi/pi.module';
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
+    UsersModule,
     CapacityModule,
     WorkloadModule,
     PiModule,

@@ -1,26 +1,32 @@
 import { Injectable } from '@nestjs/common';
-import { CreatePiDto } from './dto/create-pi.dto';
-import { UpdatePiDto } from './dto/update-pi.dto';
+import { Repository, UpdateResult, DeleteResult } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Pi } from './pi.entity';
 
 @Injectable()
 export class PiService {
-  create(createPiDto: CreatePiDto) {
-    return 'This action adds a new pi';
+  constructor(
+    @InjectRepository(Pi)
+    private piRepository: Repository<Pi>,
+  ) {}
+
+  async create(pi: Pi): Promise<Pi> {
+    return await this.piRepository.save(pi);
   }
 
-  findAll() {
-    return `This action returns all pi`;
+  async findAll(): Promise<Pi[]> {
+    return await this.piRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} pi`;
+  async findById(id): Promise<Pi[]> {
+    return await this.piRepository.findByIds(id);
   }
 
-  update(id: number, updatePiDto: UpdatePiDto) {
-    return `This action updates a #${id} pi`;
+  async update(pi: Pi): Promise<UpdateResult> {
+    return await this.piRepository.update(pi.id, pi);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} pi`;
+  async delete(id): Promise<DeleteResult> {
+    return await this.piRepository.delete(id);
   }
 }

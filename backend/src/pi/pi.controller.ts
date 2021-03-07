@@ -1,34 +1,35 @@
 import { Controller, Get, Post, Body, Put, Param, Delete } from '@nestjs/common';
 import { PiService } from './pi.service';
-import { CreatePiDto } from './dto/create-pi.dto';
-import { UpdatePiDto } from './dto/update-pi.dto';
+import { Pi } from './pi.entity';
+import {UpdateResult} from "typeorm";
 
 @Controller('pi')
 export class PiController {
-  constructor(private readonly piService: PiService) {}
+  constructor(private piService: PiService) {}
 
-  @Post()
-  create(@Body() createPiDto: CreatePiDto) {
-    return this.piService.create(createPiDto);
+  @Post('create')
+  async create(@Body() piData: Pi): Promise<any> {
+    return this.piService.create(piData);
   }
 
   @Get()
-  findAll() {
+  index(): Promise<Pi[]> {
     return this.piService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.piService.findOne(+id);
+  findOne(@Param('id') id): Promise<Pi[]> {
+    return this.piService.findById(id);
   }
 
-  @Put(':id')
-  update(@Param('id') id: string, @Body() updatePiDto: UpdatePiDto) {
-    return this.piService.update(+id, updatePiDto);
+  @Put(':id/update')
+  async update(@Param('id') id, @Body() piData: Pi): Promise<any> {
+    piData.id = Number(id);
+    return this.piService.update(piData);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.piService.remove(+id);
+  @Delete(':id/delete')
+  async delete(@Param('id') id): Promise<any> {
+    return this.piService.delete(id);
   }
 }
