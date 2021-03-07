@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { CapacityModule } from './capacity/capacity.module';
+import { WorkloadModule } from './workload/workload.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { CapacityModule } from './capacity/capacity.module';
       synchronize: true,
     }),
     CapacityModule,
+    WorkloadModule,
   ],
   controllers: [AppController],
   providers: [AppService],

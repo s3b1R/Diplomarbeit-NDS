@@ -1,12 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
+import { Repository } from 'typeorm';
 import { AppModule } from './../src/app.module';
 import { UsersModule } from './../src//users/users.module';
-import { Repository } from 'typeorm';
-import { Users } from './../src/users/users.entity';
-import { Capacity } from '../src/capacity/capacity.entity';
-import { CapacityModule } from '../src/capacity/capacity.module';
+import { CapacityModule } from './../src/capacity/capacity.module';
+import { Workload } from './../src/workload/workload.entity';
+import { WorkloadModule } from './../src/workload/workload.module';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
@@ -102,8 +102,6 @@ describe('Usersmodule (e2e)', () => {
 
 describe('CapacityModule (e2e)', () => {
   let app: INestApplication;
-  let userRepository: Repository<Users>;
-  let capacityRepository: Repository<Capacity>;
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -112,8 +110,6 @@ describe('CapacityModule (e2e)', () => {
 
     app = moduleFixture.createNestApplication();
     await app.init();
-    userRepository = moduleFixture.get('UsersRepository');
-    capacityRepository = moduleFixture.get('CapacityRepository');
   });
 
   it('should create a new capacity', async () => {
@@ -165,7 +161,6 @@ describe('CapacityModule (e2e)', () => {
     expect(body).toHaveLength(2);
   });
 
-
   it('should return a capacity by id', async () => {
     const { body } = await request(app.getHttpServer())
       .get('/capacity/2')
@@ -195,8 +190,90 @@ describe('CapacityModule (e2e)', () => {
   });
 
   afterAll(async () => {
-    await capacityRepository.query(`DROP TABLE capacity;`);
-    await userRepository.query(`DROP TABLE users;`);
+    await app.close();
+  });
+});
+
+describe('WorkloadModule (e2e)', () => {
+  let app: INestApplication;
+  let workloadRepository: Repository<Workload>;
+
+  beforeAll(async () => {
+    const moduleFixture: TestingModule = await Test.createTestingModule({
+      imports: [AppModule, WorkloadModule],
+    }).compile();
+
+    app = moduleFixture.createNestApplication();
+    await app.init();
+    workloadRepository = moduleFixture.get('WorkloadRepository');
+  });
+
+  it('should create a new workload', async () => {
+    const { body } = await request(app.getHttpServer())
+      .post('/workload/create')
+      .set('Accept', 'application/json')
+      .send({
+        assignee: 'Hans Muster',
+        sprint: 'E2E 2101-5 (23.12.-5.1.)',
+        storyPoints: '1.0',
+        project: 'Go4 E2E',
+      })
+      .expect(201);
+
+    expect(body).toEqual({
+      assignee: 'Hans Muster',
+      sprint: 'E2E 2101-5 (23.12.-5.1.)',
+      storyPoints: '1.0',
+      project: 'Go4 E2E',
+      id: 1,
+    });
+  });
+
+  it('should return an array of workloads', async () => {
+    await request(app.getHttpServer())
+      .post('/workload/create')
+      .set('Accept', 'application/json')
+      .send({
+        assignee: 'Hanna Muster',
+        sprint: 'E2E 2101-5 (23.12.-5.1.)',
+        storyPoints: '0.8',
+        project: 'Go4 E2E',
+      });
+    const { body } = await request(app.getHttpServer())
+      .get('/workload')
+      .set('Accept', 'application/json')
+      .expect(200);
+    expect(body).toEqual([
+      {
+        id: 1,
+        assignee: 'Hans Muster',
+        sprint: 'E2E 2101-5 (23.12.-5.1.)',
+        storyPoints: '1.0',
+        project: 'Go4 E2E',
+      },
+      {
+        id: 2,
+        assignee: 'Hanna Muster',
+        sprint: 'E2E 2101-5 (23.12.-5.1.)',
+        storyPoints: '0.8',
+        project: 'Go4 E2E',
+      },
+    ]);
+    expect(body).toHaveLength(2);
+  });
+
+  it('should clear workload table', async () => {
+    const { body } = await request(app.getHttpServer())
+      .delete('/workload/delete')
+      .set('Accept', 'application/json')
+      .expect(200);
+    expect(body).toEqual({});
+  });
+
+  afterAll(async () => {
+    await workloadRepository.query(`DROP TABLE capacity;`);
+    await workloadRepository.query(`DROP TABLE users;`);
+    await workloadRepository.query(`DROP TABLE workload;`);
     await app.close();
   });
 });
