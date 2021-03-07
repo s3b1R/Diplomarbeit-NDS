@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { CapacityModule } from './capacity/capacity.module';
 import { WorkloadModule } from './workload/workload.module';
+import { PiModule } from './pi/pi.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { WorkloadModule } from './workload/workload.module';
     }),
     CapacityModule,
     WorkloadModule,
+    PiModule,
   ],
   controllers: [AppController],
   providers: [AppService],
