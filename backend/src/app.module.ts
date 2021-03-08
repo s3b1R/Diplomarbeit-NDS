@@ -6,11 +6,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { CapacityModule } from './capacity/capacity.module';
 import { WorkloadModule } from './workload/workload.module';
+import { PiModule } from './pi/pi.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    UsersModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       database: process.env.DATABASE_SCHEMA,
@@ -19,8 +19,10 @@ import { WorkloadModule } from './workload/workload.module';
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
+    UsersModule,
     CapacityModule,
     WorkloadModule,
+    PiModule,
   ],
   controllers: [AppController],
   providers: [AppService],
