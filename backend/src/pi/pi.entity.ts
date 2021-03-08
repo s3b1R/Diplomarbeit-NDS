@@ -6,7 +6,7 @@ export class Pi {
   id: number;
 
   @Column()
-  piShortname: string;
+  piShortname: number;
 
   @Column('date')
   piStart: Date;

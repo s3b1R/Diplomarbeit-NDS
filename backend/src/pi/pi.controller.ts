@@ -18,7 +18,7 @@ export class PiController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id): Promise<Pi[]> {
+  findById(@Param('id') id): Promise<Pi[]> {
     return this.piService.findById(id);
   }
 
