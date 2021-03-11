@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {FormControl} from '@angular/forms';
 
 @Component({
   selector: 'app-capacity',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CapacityComponent implements OnInit {
 
+  date  =  new  FormControl(new  Date());
+
   constructor() { }
 
   ngOnInit(): void {
   }
-
 }

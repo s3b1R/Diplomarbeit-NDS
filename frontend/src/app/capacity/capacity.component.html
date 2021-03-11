@@ -1,1 +1,7 @@
 <p>capacity works!</p>
+<mat-form-field>
+  <mat-label>Date</mat-label>
+  <input  [value]="date.value" matInput [matDatepicker]="myPicker"  placeholder="date">
+  <mat-datepicker-toggle  matSuffix [for]="myPicker"></mat-datepicker-toggle>
+  <mat-datepicker #myPicker startView="year"></mat-datepicker>
+</mat-form-field>
