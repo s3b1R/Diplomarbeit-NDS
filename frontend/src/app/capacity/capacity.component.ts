@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl} from '@angular/forms';
+import {eachDayOfInterval, lastDayOfMonth, startOfMonth} from 'date-fns';
+import {MatDatepickerInputEvent} from '@angular/material/datepicker';
+
 
 @Component({
   selector: 'app-capacity',
@@ -8,10 +10,24 @@ import {FormControl} from '@angular/forms';
 })
 export class CapacityComponent implements OnInit {
 
-  date  =  new  FormControl(new  Date());
-
   constructor() { }
 
+  interval: any = [];
+
   ngOnInit(): void {
+    this.updateInterval(new Date());
   }
+
+  dateChange(event: MatDatepickerInputEvent<any>): void {
+    this.updateInterval(event.value);
+  }
+
+  updateInterval(date: Date): void{
+    this.interval = eachDayOfInterval({
+      start: startOfMonth(new Date(date)),
+      end: lastDayOfMonth(new Date(date))
+    });
+  }
+
+
 }
