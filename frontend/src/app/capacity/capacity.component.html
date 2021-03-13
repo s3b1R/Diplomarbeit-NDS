@@ -6,6 +6,24 @@
   <mat-datepicker #capaMonth startView="year"></mat-datepicker>
 </mat-form-field>
 
-<div *ngFor="let day of interval">
-  <div>{{day | dfnsFormatPure : 'dd. MMM'}}</div>
-</div>
+<table>
+  <tr>
+    <th>Name</th>
+    <th *ngFor="let day of interval">{{day | dfnsFormatPure : 'dd. MMM'}}</th>
+  </tr>
+  <tr *ngFor="let user of users">
+      <td>{{user.name}}</td>
+
+    <td *ngFor="let day of interval">
+
+      <ng-container *ngFor="let capa of capacity">
+        <ng-container *ngIf="capa.user.name === user.name">
+      <ng-container *ngIf="checkDate(day, capa.date)">
+          {{capa.capa}}
+       </ng-container>
+        </ng-container>
+      </ng-container>
+      </td>
+  </tr>
+</table>
+
