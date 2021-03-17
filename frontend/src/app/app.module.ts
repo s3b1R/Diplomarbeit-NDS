@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { HttpClientModule } from '@angular/common/http';
 import { CapacityComponent } from './capacity/capacity.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {DateFnsConfigurationService, DateFnsModule} from 'ngx-date-fns';
@@ -24,6 +25,7 @@ germanConfig.setLocale(de);
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     DateFnsModule.forRoot(),
     NgxMatDateFnsDateModule,

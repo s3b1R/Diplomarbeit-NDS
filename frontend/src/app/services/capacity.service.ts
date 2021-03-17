@@ -8,12 +8,13 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class CapacityService {
+  private baseUrl = 'http://localhost:3000/';
 
   constructor(private httpService: HttpClient){
   }
 
   public getAllCapacities(): Observable<Capacity[]> {
-    return this.httpService.get<Capacity[]>('http://localhost:3000/capacity').pipe(
+    return this.httpService.get<Capacity[]>(`${this.baseUrl}capacity`).pipe(
       map(data => data.map(data => new Capacity().deserialize(data)))
     );
   }
