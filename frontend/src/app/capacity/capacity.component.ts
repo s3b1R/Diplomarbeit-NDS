@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {eachDayOfInterval, lastDayOfMonth, startOfMonth, format} from 'date-fns';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
-import {CapacityService} from '../services/capacity.service';
+import {ApiService} from '../services/api.service';
 import { Capacity } from '../models/capacity.model';
+import { User } from '../models/user.model';
 
 
 @Component({
@@ -12,21 +13,24 @@ import { Capacity } from '../models/capacity.model';
 })
 export class CapacityComponent implements OnInit {
 
-  constructor(private capacityService: CapacityService) { }
+  constructor(private capacityService: ApiService) { }
   dayOutOfTable: any;
   interval: any = [];
-  users: any = [{id: 1, name: 'Hans Muster'}, {id: 2, name: 'Sebastian Rüegg'}, {id: 3, name: 'Peter Lustig'},
-    {id: 4, name: 'Peter Müller'}, {id: 7, name: 'Greg Müller'}];
+  users: User[];
   capacity: Capacity[];
 
   ngOnInit(): void {
     this.updateInterval(new Date());
     this.getAllCapacities();
-    console.log(this.capacity);
+    this.getAllUsers();
   }
 
   getAllCapacities(): void {
    this.capacityService.getAllCapacities().subscribe(capacities => this.capacity = capacities);
+  }
+
+  getAllUsers(): void {
+    this.capacityService.getAllUsers().subscribe( users => this.users = users);
   }
 
   dateChange(event: MatDatepickerInputEvent<any>): void {

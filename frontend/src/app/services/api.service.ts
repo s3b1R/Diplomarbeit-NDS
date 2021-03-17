@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {Capacity} from '../models/capacity.model';
+import { User } from '../models/user.model';
 import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CapacityService {
+export class ApiService {
   private baseUrl = 'http://localhost:3000/';
 
   constructor(private httpService: HttpClient){
@@ -16,6 +17,12 @@ export class CapacityService {
   public getAllCapacities(): Observable<Capacity[]> {
     return this.httpService.get<Capacity[]>(`${this.baseUrl}capacity`).pipe(
       map(data => data.map(data => new Capacity().deserialize(data)))
+    );
+  }
+
+  public getAllUsers(): Observable<User[]> {
+    return this.httpService.get<User[]>(`${this.baseUrl}users`).pipe(
+      map(data => data.map(data => new User().deserialize(data)))
     );
   }
 }
