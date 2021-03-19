@@ -1,0 +1,2 @@
+table, td {border: 1px solid black; padding: 4px; border-collapse: collapse}
+/*td:empty::before {content: "0"}*/

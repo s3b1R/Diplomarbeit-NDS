@@ -3,7 +3,7 @@ import { User } from './user.model';
 
 export class Capacity implements Deserializable{
   public id: number;
-  public capa: string;
+  public capa: number;
   public date: string;
   public user: User;
 

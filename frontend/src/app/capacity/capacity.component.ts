@@ -18,6 +18,7 @@ export class CapacityComponent implements OnInit {
   interval: any = [];
   users: User[];
   capacity: Capacity[];
+  capaView = new Map();
 
   ngOnInit(): void {
     this.updateInterval(new Date());
@@ -26,7 +27,10 @@ export class CapacityComponent implements OnInit {
   }
 
   getAllCapacities(): void {
-   this.capacityService.getAllCapacities().subscribe(capacities => this.capacity = capacities);
+   this.capacityService.getAllCapacities().subscribe(capacities => {
+     this.capacity = capacities;
+     this.createCapaView(this.capacity);
+   });
   }
 
   getAllUsers(): void {
@@ -44,10 +48,48 @@ export class CapacityComponent implements OnInit {
     });
   }
 
-checkDate(dayOfMonth: any, capaDate: any): boolean{
+  checkDate(dayOfMonth: any, capaDate: any): boolean{
     this.dayOutOfTable = format(dayOfMonth, 'yyyy-MM-dd');
     return this.dayOutOfTable === capaDate;
-}
+  }
 
+  logCapacity(): void {
+    console.log(this.capaView);
+  }
+
+  createCapaView(givenCapa: Capacity[]): void {
+    let userMap = new Map();
+
+    for (let index = 0; index < givenCapa.length; index++){
+      const currentEntry = givenCapa[index];
+      const nextEntry = givenCapa[index + 1];
+
+      if (nextEntry && currentEntry.user.id === nextEntry.user.id){
+        const user = currentEntry.user.name;
+        let userCapas = userMap.get(user);
+
+        if (!userCapas){
+          userCapas = [];
+        }
+
+        userCapas.push(currentEntry);
+        userMap.set(user, userCapas);
+      } else {
+        const user = currentEntry.user.name;
+        let userCapas = userMap.get(user);
+
+        if (!userCapas){
+          userCapas = [];
+        }
+
+        userCapas.push(currentEntry);
+        userMap.set(user, userCapas);
+        this.capaView.set(currentEntry.user.name, userMap);
+        userMap = new Map();
+      }
+    }
+
+
+  }
 
 }

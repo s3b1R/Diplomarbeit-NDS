@@ -14,7 +14,7 @@
   <tr *ngFor="let user of users">
       <td>{{user.name}}</td>
 
-    <td *ngFor="let day of interval">
+    <td *ngFor="let day of interval" (dblclick)="logCapacity()">
 
       <ng-container *ngFor="let capa of capacity">
         <ng-container *ngIf="capa.user.name === user.name">
