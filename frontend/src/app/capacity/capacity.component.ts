@@ -5,7 +5,6 @@ import {ApiService} from '../services/api.service';
 import { Capacity } from '../models/capacity.model';
 import { User } from '../models/user.model';
 import {forkJoin} from 'rxjs';
-import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 
 
 @Component({

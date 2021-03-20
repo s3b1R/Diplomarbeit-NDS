@@ -1,11 +1,12 @@
-<p>capacity works!</p>
+<mat-card>
 <mat-form-field>
   <mat-label>Datum</mat-label>
   <input matInput [matDatepicker]="capaMonth" (dateChange)="dateChangeHandler($event)">
   <mat-datepicker-toggle  matSuffix [for]="capaMonth"></mat-datepicker-toggle>
   <mat-datepicker #capaMonth startView="year"></mat-datepicker>
 </mat-form-field>
-
+</mat-card>
+<mat-card>
 <table>
   <tr>
     <th>Name</th>
@@ -27,12 +28,14 @@
       </ng-container>
   </tr>
 </table>
+</mat-card>
+<mat-card *ngIf="loading">
 
-<div *ngIf="loading">
   <mat-progress-spinner
     class="tp-margin"
     color="primary"
     mode="indeterminate"
     diameter="100"
   ></mat-progress-spinner>
-</div>
+
+</mat-card>
