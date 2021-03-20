@@ -17,12 +17,12 @@ export class CapacityComponent implements OnInit {
   constructor(private capacityService: ApiService) { }
   interval: any = [];
   userList: User[];
-  rawCapacity: Capacity[];
-  rawCapacityPerUser = new Map();
-  allCapacities: Capacity[];
+  capacityFromDatabase: Capacity[];
+  capacityMapPerUserFromDatabase = new Map();
+  capacitiesForView: Capacity[];
 
   ngOnInit(): void {
-    this.updateInterval(new Date());
+    this.setInterval(new Date());
     this.getCapacitiesAndUsers();
   }
 
@@ -31,24 +31,24 @@ export class CapacityComponent implements OnInit {
       this.capacityService.getAllCapacities() ])
       .subscribe(results => {
         this.userList = results[0];
-        this.rawCapacity = results[1];
-        this.createCapaView(this.rawCapacity);
-        this.allCapacities = this.fillCapa(this.rawCapacityPerUser, this.userList);
+        this.capacityFromDatabase = results[1];
+        this.mapDatabaseCapacitiesPerUser(this.capacityFromDatabase);
+        this.capacitiesForView = this.addCapacityToDatesWithoutEntries(this.capacityMapPerUserFromDatabase, this.userList);
     });
   }
 
-  dateChange(event: MatDatepickerInputEvent<any>): void {
-    this.updateInterval(event.value);
+  dateChangeHandler(event: MatDatepickerInputEvent<any>): void {
+    this.setInterval(event.value);
   }
 
-  updateInterval(date: Date): void{
+  setInterval(date: Date): void{
     this.interval = eachDayOfInterval({
       start: startOfMonth(new Date(date)),
       end: lastDayOfMonth(new Date(date))
     });
   }
 
-  checkDate(dayOfMonth: any, capaDate: any): boolean{
+  compareDates(dayOfMonth: any, capaDate: any): boolean{
     const dayOutOfTable = format(dayOfMonth, 'yyyy-MM-dd');
     return dayOutOfTable === capaDate;
   }
@@ -57,7 +57,7 @@ export class CapacityComponent implements OnInit {
     alert(capa.date + ' ' + capa.id);
   }
 
-  createCapaView(givenCapa: Capacity[]): void {
+  mapDatabaseCapacitiesPerUser(givenCapa: Capacity[]): void {
     let userMap = new Map();
 
     for (let index = 0; index < givenCapa.length; index++){
@@ -65,33 +65,32 @@ export class CapacityComponent implements OnInit {
       const nextEntry = givenCapa[index + 1];
 
       if (nextEntry && currentEntry.user.id === nextEntry.user.id){
-        const user = currentEntry.user.name;
-        let userCapas = userMap.get(user);
+        const userName = currentEntry.user.name;
+        let userCapacities = userMap.get(userName);
 
-        if (!userCapas){
-          userCapas = [];
+        if (!userCapacities){
+          userCapacities = [];
         }
 
-        userCapas.push(currentEntry);
-        userMap.set(user, userCapas);
+        userCapacities.push(currentEntry);
+        userMap.set(userName, userCapacities);
       } else {
-        const user = currentEntry.user.name;
-        let userCapas = userMap.get(user);
+        const userName = currentEntry.user.name;
+        let userCapacities = userMap.get(userName);
 
-        if (!userCapas){
-          userCapas = [];
+        if (!userCapacities){
+          userCapacities = [];
         }
 
-        userCapas.push(currentEntry);
-        userMap.set(user, userCapas);
-        this.rawCapacityPerUser.set(currentEntry.user.name, userMap);
+        userCapacities.push(currentEntry);
+        userMap.set(userName, userCapacities);
+        this.capacityMapPerUserFromDatabase.set(currentEntry.user.name, userMap);
         userMap = new Map();
       }
     }
   }
 
-  fillCapa(rawCapacityMap: Map<string, Map<string, Array<Capacity>>>, userList: User[]): Capacity[]{
-    const userMap = new Map();
+  addCapacityToDatesWithoutEntries(rawCapacityMap: Map<string, Map<string, Array<Capacity>>>, userList: User[]): Capacity[]{
     const capaForUserExists = [];
     const allCapacities = [];
 
@@ -106,49 +105,35 @@ export class CapacityComponent implements OnInit {
         for (const [key, capacityMap] of rawCapacityMap.entries()){
 
           if (rawCapacityMap.has(userName)){
-
             if (key === userName){
-
               const capaArray = capacityMap.get(userName);
               const dateArray = [];
               capaArray.forEach( (capacity) => {
                 dateArray.push(capacity.date);
               });
-
-
-
               if (dateArray.includes(date)){
-                for (let capaIndex = 0; capaIndex < capaArray.length; capaIndex++){
+              for (let capaIndex = 0; capaIndex < capaArray.length; capaIndex++){
 
 
-                  if (format(this.interval[intervalIndex], 'yyyy-MM-dd') === capaArray[capaIndex].date){
+                if (format(this.interval[intervalIndex], 'yyyy-MM-dd') === capaArray[capaIndex].date){
 
-                    allCapacities.push(capaArray[capaIndex]);
-                  }
+                  allCapacities.push(capaArray[capaIndex]);
                 }
-              } else {
-
-                allCapacities.push({id: 0, capa: '0', date: date, user: {id: userList[userIndex].id, name: userName} });
-
               }
-
-
+              } else {
+              allCapacities.push({id: 0, capa: '0', date, user: {id: userList[userIndex].id, name: userName} });
+              }
             }
-          }
-          else {
+          } else {
 
             if (!capaForUserExists.includes(userName + date)){
               capaForUserExists.push(userName + date);
-              allCapacities.push({id: 0, capa: '0', date: date, user: {id: userList[userIndex].id, name: userName} });
+              allCapacities.push({id: 0, capa: '0', date, user: {id: userList[userIndex].id, name: userName} });
             }
-
           }
         }
-
       }
-
     }
     return allCapacities;
   }
-
 }

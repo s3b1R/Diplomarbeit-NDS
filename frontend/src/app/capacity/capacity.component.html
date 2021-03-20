@@ -1,7 +1,7 @@
 <p>capacity works!</p>
 <mat-form-field>
   <mat-label>Datum</mat-label>
-  <input matInput [matDatepicker]="capaMonth" (dateChange)="dateChange($event)">
+  <input matInput [matDatepicker]="capaMonth" (dateChange)="dateChangeHandler($event)">
   <mat-datepicker-toggle  matSuffix [for]="capaMonth"></mat-datepicker-toggle>
   <mat-datepicker #capaMonth startView="year"></mat-datepicker>
 </mat-form-field>
@@ -17,9 +17,9 @@
 
     <ng-container *ngFor="let day of interval">
 
-      <ng-container *ngFor="let capa of allCapacities">
+      <ng-container *ngFor="let capa of capacitiesForView">
         <ng-container *ngIf="capa.user.name === user.name">
-      <td *ngIf="checkDate(day, capa.date)"  (dblclick)="sayHello(capa)">
+      <td *ngIf="compareDates(day, capa.date)" (dblclick)="sayHello(capa)">
           {{capa.capa}}
        </td>
         </ng-container>
