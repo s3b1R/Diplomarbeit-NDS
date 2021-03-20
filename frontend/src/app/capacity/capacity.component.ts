@@ -5,6 +5,7 @@ import {ApiService} from '../services/api.service';
 import { Capacity } from '../models/capacity.model';
 import { User } from '../models/user.model';
 import {forkJoin} from 'rxjs';
+import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 
 
 @Component({
@@ -20,8 +21,10 @@ export class CapacityComponent implements OnInit {
   capacityFromDatabase: Capacity[];
   capacityMapPerUserFromDatabase = new Map();
   capacitiesForView: Capacity[];
+  loading = false;
 
   ngOnInit(): void {
+    this.loading = true;
     this.setInterval(new Date());
     this.getCapacitiesAndUsers();
   }
@@ -38,6 +41,7 @@ export class CapacityComponent implements OnInit {
   }
 
   dateChangeHandler(event: MatDatepickerInputEvent<any>): void {
+    this.loading = true;
     this.setInterval(event.value);
     this.getCapacitiesAndUsers();
   }
@@ -135,6 +139,7 @@ export class CapacityComponent implements OnInit {
         }
       }
     }
+    this.loading = false;
     return allCapacities;
   }
 }

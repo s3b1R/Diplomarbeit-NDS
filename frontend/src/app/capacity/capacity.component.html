@@ -28,3 +28,11 @@
   </tr>
 </table>
 
+<div *ngIf="loading">
+  <mat-progress-spinner
+    class="tp-margin"
+    color="primary"
+    mode="indeterminate"
+    diameter="100"
+  ></mat-progress-spinner>
+</div>
