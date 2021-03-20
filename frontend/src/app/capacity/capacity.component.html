@@ -15,16 +15,16 @@
   <tr *ngFor="let user of userList">
       <td>{{user.name}}</td>
 
-    <td *ngFor="let day of interval" (dblclick)="sayHello()">
+    <ng-container *ngFor="let day of interval">
 
-      <ng-container *ngFor="let capa of rawCapacity">
+      <ng-container *ngFor="let capa of allCapacities">
         <ng-container *ngIf="capa.user.name === user.name">
-      <ng-container *ngIf="checkDate(day, capa.date)">
+      <td *ngIf="checkDate(day, capa.date)"  (dblclick)="sayHello(capa)">
           {{capa.capa}}
-       </ng-container>
+       </td>
         </ng-container>
       </ng-container>
-      </td>
+      </ng-container>
   </tr>
 </table>
 
