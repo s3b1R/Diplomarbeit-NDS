@@ -39,6 +39,7 @@ export class CapacityComponent implements OnInit {
 
   dateChangeHandler(event: MatDatepickerInputEvent<any>): void {
     this.setInterval(event.value);
+    this.getCapacitiesAndUsers();
   }
 
   setInterval(date: Date): void{
