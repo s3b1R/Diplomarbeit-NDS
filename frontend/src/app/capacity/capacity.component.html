@@ -20,7 +20,8 @@
 
       <ng-container *ngFor="let capa of capacitiesForView">
         <ng-container *ngIf="capa.user.name === user.name">
-      <td *ngIf="compareDates(day, capa.date)" (dblclick)="sayHello(capa)">
+      <td *ngIf="compareDates(day, capa.date)" contenteditable="true" (focus)="onFocus($event.target.innerText)"
+          (blur)="onBlur($event.target.innerText, user, capa)">
           {{capa.capa}}
        </td>
         </ng-container>
@@ -30,12 +31,5 @@
 </table>
 </mat-card>
 <mat-card *ngIf="loading">
-
-  <mat-progress-spinner
-    class="tp-margin"
-    color="primary"
-    mode="indeterminate"
-    diameter="100"
-  ></mat-progress-spinner>
-
+  <img src="../../assets/images/spinner.gif" height="233" width="414" alt="loading"/>
 </mat-card>

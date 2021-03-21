@@ -25,4 +25,19 @@ export class ApiService {
       map(data => data.map(data => new User().deserialize(data)))
     );
   }
+
+  public updateCapacity(capaId: number, newValue: number): void {
+    this.httpService.put(`${this.baseUrl}capacity/${capaId}/update`, {capa: newValue},
+      {headers: {'Content-Type': 'application/json'}, observe: 'body', responseType: 'json'})
+  .subscribe(response => console.log(response));
+  }
+
+  public newCapacity(capaValue: string, onDate: string, forUser: number): void {
+    this.httpService.post(`${this.baseUrl}capacity/create`, {
+      capa: capaValue,
+      date: onDate,
+      user: forUser
+    }, {headers: {'Content-Type': 'application/json'}, observe: 'body', responseType: 'json'})
+      .subscribe(response => console.log(response));
+  }
 }

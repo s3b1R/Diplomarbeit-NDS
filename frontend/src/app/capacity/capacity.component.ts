@@ -14,13 +14,14 @@ import {forkJoin} from 'rxjs';
 })
 export class CapacityComponent implements OnInit {
 
-  constructor(private capacityService: ApiService) { }
+  constructor(private apiService: ApiService) { }
   interval: any = [];
   userList: User[];
   capacityFromDatabase: Capacity[];
   capacityMapPerUserFromDatabase = new Map();
   capacitiesForView: Capacity[];
   loading = false;
+  cellTextOnFocus: number;
 
   ngOnInit(): void {
     this.loading = true;
@@ -29,8 +30,8 @@ export class CapacityComponent implements OnInit {
   }
 
   getCapacitiesAndUsers(): void {
-    forkJoin([ this.capacityService.getAllUsers(),
-      this.capacityService.getAllCapacities() ])
+    forkJoin([ this.apiService.getAllUsers(),
+      this.apiService.getAllCapacities() ])
       .subscribe(results => {
         this.userList = results[0];
         this.capacityFromDatabase = results[1];
@@ -57,8 +58,26 @@ export class CapacityComponent implements OnInit {
     return dayOutOfTable === capaDate;
   }
 
-  sayHello(capa): void {
-    alert(capa.date + ' ' + capa.id);
+  onFocus(cellText): void {
+    this.cellTextOnFocus = cellText;
+  }
+
+  onBlur(cellText, user, capacity): void {
+    if (this.capaValueHasChanged(cellText)) {
+      if (capacity.id !== 0){
+        console.log('send capa update');
+        this.apiService.updateCapacity(capacity.id, cellText);
+      } else {
+        console.log('send new capa for ');
+        this.apiService.newCapacity(cellText, capacity.date, user.id);
+      }
+    } else {
+      console.log('do nothing');
+    }
+  }
+
+  private capaValueHasChanged(cellText): boolean {
+    return this.cellTextOnFocus !== cellText;
   }
 
   mapDatabaseCapacitiesPerUser(givenCapa: Capacity[]): void {
