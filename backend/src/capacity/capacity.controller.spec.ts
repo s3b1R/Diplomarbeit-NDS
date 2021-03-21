@@ -29,6 +29,13 @@ describe('CapacityController', () => {
     expect(await capacityController.index()).toHaveLength(3);
   });
 
+  it('should find capacities by month', async () => {
+    const mockedValues = [new Capacity(), new Capacity()];
+    const mockedMonth = '2021-03';
+    jest.spyOn(capacityService, 'findMonth').mockResolvedValue(mockedValues);
+    expect(await capacityController.find(mockedMonth)).toHaveLength(2);
+  });
+
   it('should find one by Id', async () => {
     const mockedValue = [new Capacity()];
     const mockedId = 99;

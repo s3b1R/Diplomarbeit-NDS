@@ -138,7 +138,7 @@ describe('CapacityModule (e2e)', () => {
       .set('Accept', 'application/json')
       .send({
         capa: '0.8',
-        date: '2021-04-14',
+        date: '2021-05-14',
         user: '2',
       });
     const { body } = await request(app.getHttpServer())
@@ -155,11 +155,27 @@ describe('CapacityModule (e2e)', () => {
       {
         id: 2,
         capa: '0.8',
-        date: '2021-04-14',
+        date: '2021-05-14',
         user: { id: 2, name: 'Hans Test' },
       },
     ]);
     expect(body).toHaveLength(2);
+  });
+
+  it('should return capacities by month', async () => {
+    const { body } = await request(app.getHttpServer())
+      .get('/capacity/month/2021-04')
+      .set('Accept', 'application/json')
+      .expect(200);
+    expect(body).toEqual([
+      {
+        id: 1,
+        capa: '0.8',
+        date: '2021-04-13',
+        user: { id: 2, name: 'Hans Test' },
+      },
+    ]);
+    expect(body).toHaveLength(1);
   });
 
   it('should return a capacity by id', async () => {
@@ -167,7 +183,7 @@ describe('CapacityModule (e2e)', () => {
       .get('/capacity/2')
       .set('Accept', 'application/json')
       .expect(200);
-    expect(body).toEqual([{ id: 2, capa: '0.8', date: '2021-04-14' }]);
+    expect(body).toEqual([{ id: 2, capa: '0.8', date: '2021-05-14' }]);
     expect(body).toHaveLength(1);
   });
 
