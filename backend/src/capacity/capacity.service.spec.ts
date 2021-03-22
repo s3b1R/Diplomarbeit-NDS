@@ -32,6 +32,17 @@ describe('CapacityService', () => {
     expect(capacitiesFromDB[1].user.id).toBe(2);
   });
 
+  it('should find capacities by month', async () => {
+    const placeholderString = 'placholder';
+    const monthCapacitiesFromDB: Capacity[] = await capacityService.findMonth(
+      placeholderString,
+    );
+
+    expect(monthCapacitiesFromDB).toHaveLength(3);
+    expect(monthCapacitiesFromDB[0].id).toBe(1);
+    expect(monthCapacitiesFromDB[1].user.id).toBe(2);
+  });
+
   it('should find by id', async () => {
     const placeholderId = 999;
     const capacityFromDB: Capacity[] = await capacityService.findById(
