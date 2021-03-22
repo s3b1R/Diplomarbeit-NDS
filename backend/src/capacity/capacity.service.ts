@@ -34,6 +34,7 @@ export class CapacityService {
     return await this.capacityRepository.find({
       relations: ['user'],
       where: `date like "${month}%"`,
+      order: { user: 'ASC' },
     });
   }
 }
