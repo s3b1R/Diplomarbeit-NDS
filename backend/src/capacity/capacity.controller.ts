@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Put, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Put,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { CapacityService } from './capacity.service';
 import { Capacity } from './capacity.entity';
 
@@ -14,6 +22,11 @@ export class CapacityController {
   @Get(':id')
   async findById(@Param('id') id): Promise<Capacity[]> {
     return this.capacityService.findById(id);
+  }
+
+  @Get('month/:month')
+  async find(@Param('month') month): Promise<Capacity[]> {
+    return this.capacityService.findMonth(month);
   }
 
   @Post('create')
