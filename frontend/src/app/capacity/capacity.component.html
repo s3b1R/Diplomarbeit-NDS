@@ -18,10 +18,10 @@
 
     <ng-container *ngFor="let day of interval">
 
-      <ng-container *ngFor="let capa of capacitiesForView">
+      <ng-container *ngFor="let capa of capacitiesForView; let arrIndex = index;">
         <ng-container *ngIf="capa.user.name === user.name">
       <td *ngIf="compareDates(day, capa.date)" contenteditable="true" (focus)="onFocus($event.target.innerText)"
-          (blur)="onBlur($event.target.innerText, user, capa)">
+          (blur)="onBlur($event.target.innerText, user, capa, arrIndex)">
           {{capa.capa}}
        </td>
         </ng-container>

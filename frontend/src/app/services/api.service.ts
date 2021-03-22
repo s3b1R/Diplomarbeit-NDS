@@ -37,12 +37,12 @@ export class ApiService {
   .subscribe(response => console.log(response));
   }
 
-  public newCapacity(capaValue: string, onDate: string, forUser: number): void {
-    this.httpService.post(`${this.baseUrl}capacity/create`, {
+  public newCapacity(capaValue: string, onDate: string, forUser: number): Observable<Capacity> {
+    return  this.httpService.post(`${this.baseUrl}capacity/create`, {
       capa: capaValue,
       date: onDate,
       user: forUser
     }, {headers: {'Content-Type': 'application/json'}, observe: 'body', responseType: 'json'})
-      .subscribe(response => console.log(response));
+      .pipe(map(data => new Capacity().deserialize(data)));
   }
 }

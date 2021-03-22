@@ -62,17 +62,16 @@ export class CapacityComponent implements OnInit {
     this.cellTextOnFocus = cellText;
   }
 
-  onBlur(cellText, user, capacity): void {
+  onBlur(cellText, user, capacity, arrayIndex): void {
     if (this.capaValueHasChanged(cellText)) {
       if (capacity.id !== 0){
-        console.log('send capa update');
         this.apiService.updateCapacity(capacity.id, cellText);
       } else {
-        console.log('send new capa for ');
-        this.apiService.newCapacity(cellText, capacity.date, user.id);
+        this.apiService.newCapacity(cellText, capacity.date, user.id)
+          .subscribe(data => {
+            this.capacitiesForView[arrayIndex].id = data.id;
+          });
       }
-    } else {
-      console.log('do nothing');
     }
   }
 
