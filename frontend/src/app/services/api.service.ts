@@ -26,6 +26,11 @@ export class ApiService {
     );
   }
 
+  public getCapacitiesForMonth(month: string): Observable<Capacity[]> {
+    return this.httpService.get<Capacity[]>(`${this.baseUrl}capacity/month/${month}`)
+      .pipe(map(data => data.map(data => new Capacity().deserialize(data))));
+  }
+
   public updateCapacity(capaId: number, newValue: number): void {
     this.httpService.put(`${this.baseUrl}capacity/${capaId}/update`, {capa: newValue},
       {headers: {'Content-Type': 'application/json'}, observe: 'body', responseType: 'json'})

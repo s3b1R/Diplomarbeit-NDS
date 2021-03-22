@@ -31,7 +31,7 @@ export class CapacityComponent implements OnInit {
 
   getCapacitiesAndUsers(): void {
     forkJoin([ this.apiService.getAllUsers(),
-      this.apiService.getAllCapacities() ])
+      this.apiService.getCapacitiesForMonth(format(this.interval[0], 'yyyy-MM')) ])
       .subscribe(results => {
         this.userList = results[0];
         this.capacityFromDatabase = results[1];
