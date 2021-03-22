@@ -1,11 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import {
-  DeleteResult,
-  getConnection,
-  getRepository,
-  Repository, SelectQueryBuilder,
-  UpdateResult,
-} from 'typeorm';
+import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Capacity } from './capacity.entity';
 
@@ -37,6 +31,9 @@ export class CapacityService {
   }
 
   async findMonth(month: string): Promise<Capacity[]> {
-    return await this.capacityRepository.find({ relations: ['user'], where: `date like "${month}%"` });
+    return await this.capacityRepository.find({
+      relations: ['user'],
+      where: `date like "${month}%"`,
+    });
   }
 }
