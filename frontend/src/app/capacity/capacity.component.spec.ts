@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { CapacityComponent } from './capacity.component';
+import { DateFnsModule } from 'ngx-date-fns';
 
 describe('CapacityComponent', () => {
   let component: CapacityComponent;
@@ -8,7 +9,7 @@ describe('CapacityComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CapacityComponent ]
+      declarations: [ CapacityComponent ], imports: [HttpClientTestingModule, DateFnsModule]
     })
     .compileComponents();
   });
