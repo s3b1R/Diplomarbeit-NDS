@@ -10,15 +10,15 @@
 <table>
   <tr>
     <th>Name</th>
-    <th *ngFor="let day of interval">{{day | dfnsFormatPure : 'dd. MMM'}}</th>
+    <th *ngFor="let day of intervalOfDates">{{day | dfnsFormatPure : 'dd. MMM'}}</th>
   </tr>
 
   <tr *ngFor="let user of userList">
       <td>{{user.name}}</td>
 
-    <ng-container *ngFor="let day of interval">
+    <ng-container *ngFor="let day of intervalOfDates">
 
-      <ng-container *ngFor="let capa of capacitiesForView; let arrIndex = index;">
+      <ng-container *ngFor="let capa of capacitiesToShow; let arrIndex = index;">
         <ng-container *ngIf="capa.user.name === user.name">
       <td *ngIf="compareDates(day, capa.date)" contenteditable="true" (focus)="onFocus($event.target.innerText)"
           (blur)="onBlur($event.target.innerText, user, capa, arrIndex)">
@@ -30,6 +30,6 @@
   </tr>
 </table>
 </mat-card>
-<mat-card *ngIf="loading">
+<mat-card *ngIf="isLoading">
   <img src="../../assets/images/spinner.gif" height="233" width="414" alt="loading"/>
 </mat-card>
