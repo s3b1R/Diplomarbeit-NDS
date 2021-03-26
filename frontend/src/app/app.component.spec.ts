@@ -25,7 +25,7 @@ describe('AppComponent', () => {
     const app = fixture.componentInstance;
     expect(app.title).toEqual('frontend');
   });
-
+  // todo: Löschen oder aktivieren bei push auf prod
   // it('should render title', () => {
   //   const fixture = TestBed.createComponent(AppComponent);
   //   fixture.detectChanges();
