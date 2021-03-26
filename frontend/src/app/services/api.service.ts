@@ -9,15 +9,9 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class ApiService {
-  private baseUrl = 'http://localhost:3000/';
+  readonly baseUrl = 'http://localhost:3000/';
 
   constructor(private httpService: HttpClient){
-  }
-
-  public getAllCapacities(): Observable<Capacity[]> {
-    return this.httpService.get<Capacity[]>(`${this.baseUrl}capacity`).pipe(
-      map(data => data.map(data => new Capacity().deserialize(data)))
-    );
   }
 
   public getAllUsers(): Observable<User[]> {
@@ -34,7 +28,7 @@ export class ApiService {
   public updateCapacity(capaId: number, newValue: number): void {
     this.httpService.put(`${this.baseUrl}capacity/${capaId}/update`, {capa: newValue},
       {headers: {'Content-Type': 'application/json'}, observe: 'body', responseType: 'json'})
-  .subscribe(response => console.log(response));
+  .subscribe(response => response );
   }
 
   public newCapacity(capaValue: string, onDate: string, forUser: number): Observable<Capacity> {
