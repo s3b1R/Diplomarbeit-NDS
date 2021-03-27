@@ -132,7 +132,6 @@ export class CapacityComponent implements OnInit {
   onBlur(cellText, user, capacity, arrayIndex): void {
     if (this.capaValueHasChanged(cellText)) {
       const capaValue = cellText.replace(/\n/g, '').replace(/\s+/g, '').replace(/,/, '.');
-      console.log(capaValue);
       this.persistInput(capacity, capaValue, user, arrayIndex);
     }
   }
