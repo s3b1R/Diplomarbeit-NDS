@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {eachDayOfInterval, lastDayOfMonth, startOfMonth, format} from 'date-fns';
-import {MatDatepickerInputEvent} from '@angular/material/datepicker';
-import {ApiService} from '../services/api.service';
+import { eachDayOfInterval, lastDayOfMonth, startOfMonth, format } from 'date-fns';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { ApiService } from '../services/api.service';
 import { Capacity } from '../models/capacity.model';
 import { User } from '../models/user.model';
-import {forkJoin} from 'rxjs';
+import { forkJoin } from 'rxjs';
 
 
 @Component({
@@ -47,12 +47,12 @@ export class CapacityComponent implements OnInit {
     });
   }
 
-  mapDatabaseCapacitiesPerUser(givenCapa: Capacity[]): void {
+  private mapDatabaseCapacitiesPerUser(capacityFromDB: Capacity[]): void {
     let userMap = new Map();
 
-    for (let index = 0; index < givenCapa.length; index++){
-      const currentEntry = givenCapa[index];
-      const nextEntry = givenCapa[index + 1];
+    for (let index = 0; index < capacityFromDB.length; index++){
+      const currentEntry = capacityFromDB[index];
+      const nextEntry = capacityFromDB[index + 1];
 
       if (nextEntry && currentEntry.user.id === nextEntry.user.id){
         this.mapCapaToUser(currentEntry, userMap);
@@ -75,7 +75,7 @@ export class CapacityComponent implements OnInit {
     userMap.set(userName, userCapacities);
   }
 
-  addEmptyCapaToDatesWithoutEntries(rawCapacityMap: Map<string, Map<string, Array<Capacity>>>, userList: User[]): Capacity[]{
+  private addEmptyCapaToDatesWithoutEntries(rawCapacityMap: Map<string, Map<string, Array<Capacity>>>, userList: User[]): Capacity[]{
     const capaForUserExists = [];
     const allCapacities = [];
 
@@ -109,7 +109,6 @@ export class CapacityComponent implements OnInit {
           });
           if (dateArray.includes(dayOfInterval)) {
             for (const capa of capaArray) {
-
 
               if (format(day, 'yyyy-MM-dd') === capa.date) {
 
