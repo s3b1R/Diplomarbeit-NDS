@@ -69,6 +69,23 @@ describe('CapacityService', () => {
     capaRequest.flush(dummyCapacities);
   });
 
+  it('should get capacity for date from a specific user', () => {
+    const dummyCapacity = [new Capacity().deserialize({
+      id: 2,
+      capa: '0.8',
+      date: '2021-04-13',
+      user: { id: 1, name: 'Hans Muster' }
+    })];
+
+    service.getCapacityForDateAndUserid('2021-04-13', 1).subscribe(capa => {
+      expect(capa.length).toBe(1);
+    });
+
+    const dayAndIdRequest = httpMock.expectOne(`${service.baseUrl}capacity/2021-04-13/1`);
+    expect(dayAndIdRequest.request.method).toBe('GET');
+    dayAndIdRequest.flush(dummyCapacity);
+  });
+
   it('should update capacity', () => {
     expect((service.updateCapacity(99, 1))).toBeUndefined();
 
@@ -89,9 +106,9 @@ describe('CapacityService', () => {
       expect(capacity).toBeInstanceOf(Capacity);
     });
 
-      const newCapacityRequest = httpMock.expectOne(`${service.baseUrl}capacity/create`);
-      expect(newCapacityRequest.request.method).toBe('POST');
-      newCapacityRequest.flush(dummyCapacity);
+    const newCapacityRequest = httpMock.expectOne(`${service.baseUrl}capacity/create`);
+    expect(newCapacityRequest.request.method).toBe('POST');
+    newCapacityRequest.flush(dummyCapacity);
   });
 
 });
