@@ -3,3 +3,11 @@ table, td, th {border: 1px solid black; padding: 4px; border-collapse: collapse}
 mat-card {
   margin: 20px;
 }
+
+.weekend {
+  background-color: lightgray ;
+}
+
+td {
+  text-align: center;
+}

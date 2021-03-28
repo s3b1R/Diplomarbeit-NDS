@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { eachDayOfInterval, lastDayOfMonth, startOfMonth, format } from 'date-fns';
+import { eachDayOfInterval, lastDayOfMonth, startOfMonth, format, isWeekend } from 'date-fns';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { ApiService } from '../services/api.service';
 import { Capacity } from '../models/capacity.model';
 import { User } from '../models/user.model';
 import { forkJoin } from 'rxjs';
+import { FormControl, FormGroup } from '@angular/forms';
 
 
 @Component({
@@ -22,6 +23,10 @@ export class CapacityComponent implements OnInit {
   capacitiesToShow: Capacity[];
   isLoading = false;
   cellTextOnFocus: number;
+  datePickerRange = new FormGroup({
+    start: new FormControl(),
+    end: new FormControl()
+  });
 
   ngOnInit(): void {
     this.isLoading = true;
@@ -165,4 +170,19 @@ export class CapacityComponent implements OnInit {
   onFocus(cellText): void {
     this.cellTextOnFocus = cellText;
   }
+
+  isItWeekend(day): boolean {
+    return isWeekend(day);
+  }
+  sayHello(): void {
+    const startDate = this.datePickerRange.value.start;
+    const endDate = this.datePickerRange.value.end;
+
+    alert(format(startDate, 'dd-MM-yyyy') + ' ' + format(endDate, 'dd-MM-yyyy'));
+  }
+
+  onFormSubmit() {
+    this.sayHello();
+  }
+
 }

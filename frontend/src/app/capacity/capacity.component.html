@@ -17,19 +17,38 @@
       <td>{{user.name}}</td>
 
     <ng-container *ngFor="let day of intervalOfDates">
-
       <ng-container *ngFor="let capa of capacitiesToShow; let arrIndex = index;">
         <ng-container *ngIf="capa.user.name === user.name">
-      <td *ngIf="compareDates(day, capa.date)" contenteditable="true" (focus)="onFocus($event.target.innerText)"
+          <td *ngIf="isItWeekend(day) && compareDates(day, capa.date)" class="weekend"></td>
+          <td *ngIf="!isItWeekend(day) && compareDates(day, capa.date)" contenteditable="true" (focus)="onFocus($event.target.innerText)"
           (blur)="onBlur($event.target.innerText, user, capa, arrIndex)">
           {{capa.capa}}
-       </td>
+          </td>
         </ng-container>
       </ng-container>
-      </ng-container>
+    </ng-container>
   </tr>
 </table>
 </mat-card>
 <mat-card *ngIf="isLoading">
   <img src="../../assets/images/spinner.gif" height="233" width="414" alt="loading"/>
 </mat-card>
+
+<mat-card>
+  <form [formGroup]="datePickerRange" (ngSubmit)="onFormSubmit()">
+  <mat-form-field appearance="fill">
+    <mat-label>Zeitraum</mat-label>
+    <mat-date-range-input  [rangePicker]="multiRange">
+      <input matStartDate formControlName="start" placeholder="Start date">
+      <input matEndDate formControlName="end" placeholder="End date">
+    </mat-date-range-input>
+    <mat-datepicker-toggle matSuffix [for]="multiRange"></mat-datepicker-toggle>
+    <mat-date-range-picker #multiRange></mat-date-range-picker>
+  </mat-form-field>
+    <p>Selected range: {{datePickerRange.value | json}}</p>
+
+    <button>Submit</button>
+  </form>
+
+</mat-card>
+
