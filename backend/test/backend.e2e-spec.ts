@@ -189,9 +189,9 @@ describe('CapacityModule (e2e)', () => {
 
   it('should return a capacity by date and user id', async () => {
     const { body } = await request(app.getHttpServer())
-        .get('/capacity/2021-04-13/2')
-        .set('Accept', 'application/json')
-        .expect(200);
+      .get('/capacity/2021-04-13/2')
+      .set('Accept', 'application/json')
+      .expect(200);
     expect(body).toEqual([
       {
         id: 1,
