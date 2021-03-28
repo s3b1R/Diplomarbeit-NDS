@@ -37,4 +37,11 @@ export class CapacityService {
       order: { user: 'ASC' },
     });
   }
+
+  async findDateAndUser(date: string, id: number): Promise<Capacity[]> {
+    return await this.capacityRepository.find({
+      relations: ['user'],
+      where: `date = "${date}" and userID = "${id}"`,
+    });
+  }
 }
