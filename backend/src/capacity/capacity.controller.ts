@@ -29,6 +29,14 @@ export class CapacityController {
     return this.capacityService.findMonth(month);
   }
 
+  @Get(':date/:id')
+  async findDateAndUser(
+    @Param('date') date,
+    @Param('id') id,
+  ): Promise<Capacity[]> {
+    return this.capacityService.findDateAndUser(date, id);
+  }
+
   @Post('create')
   async create(@Body() capacityData: Capacity): Promise<any> {
     return this.capacityService.create(capacityData);

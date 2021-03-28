@@ -187,6 +187,22 @@ describe('CapacityModule (e2e)', () => {
     expect(body).toHaveLength(1);
   });
 
+  it('should return a capacity by date and user id', async () => {
+    const { body } = await request(app.getHttpServer())
+        .get('/capacity/2021-04-13/2')
+        .set('Accept', 'application/json')
+        .expect(200);
+    expect(body).toEqual([
+      {
+        id: 1,
+        capa: '0.8',
+        date: '2021-04-13',
+        user: { id: 2, name: 'Hans Test' },
+      },
+    ]);
+    expect(body).toHaveLength(1);
+  });
+
   it('should update a capacity', async () => {
     const { body } = await request(app.getHttpServer())
       .put('/capacity/1/update')
