@@ -23,9 +23,11 @@ export class CapacityComponent implements OnInit {
   capacitiesToShow: Capacity[];
   isLoading = false;
   cellTextOnFocus: number;
-  datePickerRange = new FormGroup({
+  massInputValues = new FormGroup({
     start: new FormControl(),
-    end: new FormControl()
+    end: new FormControl(),
+    user: new FormControl(),
+    capa: new FormControl()
   });
 
   ngOnInit(): void {
@@ -171,18 +173,38 @@ export class CapacityComponent implements OnInit {
     this.cellTextOnFocus = cellText;
   }
 
-  isItWeekend(day): boolean {
-    return isWeekend(day);
+  isNotWeekend(day): boolean {
+    return !isWeekend(day);
   }
-  sayHello(): void {
-    const startDate = this.datePickerRange.value.start;
-    const endDate = this.datePickerRange.value.end;
+  onFormSubmit(): void {
+    const interval = this.getInterval();
+    const forUser = this.massInputValues.value.user;
+    const capaValue = this.massInputValues.value.capa.replace(/\n/g, '').replace(/\s+/g, '').replace(/,/, '.');
 
-    alert(format(startDate, 'dd-MM-yyyy') + ' ' + format(endDate, 'dd-MM-yyyy'));
+    for (const date of interval) {
+      const dateFormatted = format(date, 'yyyy-MM-dd');
+
+      if (this.isNotWeekend(date)){
+        this.apiService.getCapacityForDateAndUserid(dateFormatted, forUser)
+          .subscribe( capaArray => {
+            if (capaArray.length > 0) {
+              console.log(capaArray[0].date + ' ' + capaArray[0].id + ' ' + capaArray[0].capa);
+            } else {
+              console.log('erstelle für user: ' + forUser + ' am: ' + dateFormatted + ' capa von: ' + capaValue);
+            }
+          });
+      }
+    }
+
+
+    alert(this.massInputValues.value.user);
   }
 
-  onFormSubmit() {
-    this.sayHello();
+  private getInterval(): Date[] {
+    return eachDayOfInterval({
+      start: this.massInputValues.value.start,
+      end: this.massInputValues.value.end
+    });
   }
 
 }

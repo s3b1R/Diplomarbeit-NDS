@@ -19,9 +19,9 @@
     <ng-container *ngFor="let day of intervalOfDates">
       <ng-container *ngFor="let capa of capacitiesToShow; let arrIndex = index;">
         <ng-container *ngIf="capa.user.name === user.name">
-          <td *ngIf="isItWeekend(day) && compareDates(day, capa.date)" class="weekend"></td>
-          <td *ngIf="!isItWeekend(day) && compareDates(day, capa.date)" contenteditable="true" (focus)="onFocus($event.target.innerText)"
-          (blur)="onBlur($event.target.innerText, user, capa, arrIndex)">
+          <td *ngIf="!isNotWeekend(day) && compareDates(day, capa.date)" class="weekend"></td>
+          <td *ngIf="isNotWeekend(day) && compareDates(day, capa.date)" contenteditable="true" (focus)="onFocus($event.target.innerText)"
+              (blur)="onBlur($event.target.innerText, user, capa, arrIndex)">
           {{capa.capa}}
           </td>
         </ng-container>
@@ -35,17 +35,32 @@
 </mat-card>
 
 <mat-card>
-  <form [formGroup]="datePickerRange" (ngSubmit)="onFormSubmit()">
+  <form [formGroup]="massInputValues" (ngSubmit)="onFormSubmit()">
   <mat-form-field appearance="fill">
     <mat-label>Zeitraum</mat-label>
     <mat-date-range-input  [rangePicker]="multiRange">
-      <input matStartDate formControlName="start" placeholder="Start date">
-      <input matEndDate formControlName="end" placeholder="End date">
+      <input matStartDate formControlName="start" placeholder="Start Datum">
+      <input matEndDate formControlName="end" placeholder="End Datum">
     </mat-date-range-input>
     <mat-datepicker-toggle matSuffix [for]="multiRange"></mat-datepicker-toggle>
     <mat-date-range-picker #multiRange></mat-date-range-picker>
   </mat-form-field>
-    <p>Selected range: {{datePickerRange.value | json}}</p>
+
+    <mat-form-field appearance="fill">
+            <mat-label>Benutzer auswählen</mat-label>
+      <mat-select formControlName="user" >
+        <mat-option></mat-option>
+        <mat-option *ngFor="let user of userList" [value]="user.id">{{user.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="capa-input" appearance="fill">
+      <mat-label>Capa-Wert</mat-label>
+      <input matInput type="text" formControlName="capa">
+      <button mat-button *ngIf="massInputValues.value.capa" matSuffix mat-icon-button aria-label="Clear" (click)="massInputValues.value.capa=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
 
     <button>Submit</button>
   </form>
