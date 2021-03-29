@@ -18,6 +18,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule} from '@angular/material/icon';
+import { CapacityMassmutationComponent } from './capacity-massmutation/capacity-massmutation.component';
 
 
 const germanConfig = new DateFnsConfigurationService();
@@ -26,7 +27,8 @@ germanConfig.setLocale(de);
 @NgModule({
   declarations: [
     AppComponent,
-    CapacityComponent
+    CapacityComponent,
+    CapacityMassmutationComponent
   ],
     imports: [
         BrowserModule,

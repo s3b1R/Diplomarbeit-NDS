@@ -29,41 +29,11 @@
     </ng-container>
   </tr>
 </table>
+  <a routerLink="/massmutation" routerLinkActive="active">Massenerfassung</a>
 </mat-card>
 <mat-card *ngIf="isLoading">
   <img src="../../assets/images/spinner.gif" height="233" width="414" alt="loading"/>
 </mat-card>
 
-<mat-card>
-  <form [formGroup]="massInputValues" (ngSubmit)="onFormSubmit()">
-  <mat-form-field appearance="fill">
-    <mat-label>Zeitraum</mat-label>
-    <mat-date-range-input  [rangePicker]="multiRange">
-      <input matStartDate formControlName="start" placeholder="Start Datum">
-      <input matEndDate formControlName="end" placeholder="End Datum">
-    </mat-date-range-input>
-    <mat-datepicker-toggle matSuffix [for]="multiRange"></mat-datepicker-toggle>
-    <mat-date-range-picker #multiRange></mat-date-range-picker>
-  </mat-form-field>
 
-    <mat-form-field appearance="fill">
-            <mat-label>Benutzer auswählen</mat-label>
-      <mat-select formControlName="user" >
-        <mat-option></mat-option>
-        <mat-option *ngFor="let user of userList" [value]="user.id">{{user.name}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <mat-form-field class="capa-input" appearance="fill">
-      <mat-label>Capa-Wert</mat-label>
-      <input matInput type="text" formControlName="capa">
-      <button mat-button *ngIf="massInputValues.value.capa" matSuffix mat-icon-button aria-label="Clear" (click)="massInputValues.value.capa=''">
-        <mat-icon>close</mat-icon>
-      </button>
-    </mat-form-field>
-
-    <button>Submit</button>
-  </form>
-
-</mat-card>
 

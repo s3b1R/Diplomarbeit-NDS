@@ -5,7 +5,7 @@ import { ApiService } from '../services/api.service';
 import { Capacity } from '../models/capacity.model';
 import { User } from '../models/user.model';
 import { forkJoin } from 'rxjs';
-import { FormControl, FormGroup } from '@angular/forms';
+
 
 
 @Component({
@@ -23,12 +23,7 @@ export class CapacityComponent implements OnInit {
   capacitiesToShow: Capacity[];
   isLoading = false;
   cellTextOnFocus: number;
-  massInputValues = new FormGroup({
-    start: new FormControl(),
-    end: new FormControl(),
-    user: new FormControl(),
-    capa: new FormControl()
-  });
+
 
   ngOnInit(): void {
     this.isLoading = true;
@@ -176,35 +171,6 @@ export class CapacityComponent implements OnInit {
   isNotWeekend(day): boolean {
     return !isWeekend(day);
   }
-  onFormSubmit(): void {
-    const interval = this.getInterval();
-    const forUser = this.massInputValues.value.user;
-    const capaValue = this.massInputValues.value.capa.replace(/\n/g, '').replace(/\s+/g, '').replace(/,/, '.');
 
-    for (const date of interval) {
-      const dateFormatted = format(date, 'yyyy-MM-dd');
-
-      if (this.isNotWeekend(date)){
-        this.apiService.getCapacityForDateAndUserid(dateFormatted, forUser)
-          .subscribe( capaArray => {
-            if (capaArray.length > 0) {
-              console.log(capaArray[0].date + ' ' + capaArray[0].id + ' ' + capaArray[0].capa);
-            } else {
-              console.log('erstelle für user: ' + forUser + ' am: ' + dateFormatted + ' capa von: ' + capaValue);
-            }
-          });
-      }
-    }
-
-
-    alert(this.massInputValues.value.user);
-  }
-
-  private getInterval(): Date[] {
-    return eachDayOfInterval({
-      start: this.massInputValues.value.start,
-      end: this.massInputValues.value.end
-    });
-  }
 
 }
