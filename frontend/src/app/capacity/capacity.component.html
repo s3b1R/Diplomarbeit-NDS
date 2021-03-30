@@ -7,10 +7,10 @@
 </mat-form-field>
 </mat-card>
 <mat-card>
-<table>
+<table aria-describedby="Capacity">
   <tr>
-    <th>Name</th>
-    <th *ngFor="let day of intervalOfDates">{{day | dfnsFormatPure : 'dd. MMM'}}</th>
+    <th scope="col">Name</th>
+    <th scope="col" *ngFor="let day of intervalOfDates">{{day | dfnsFormatPure : 'dd. MMM'}}</th>
   </tr>
 
   <tr *ngFor="let user of userList">
@@ -29,11 +29,8 @@
     </ng-container>
   </tr>
 </table>
-  <a routerLink="/massmutation" routerLinkActive="active">Massenerfassung</a>
 </mat-card>
 <mat-card *ngIf="isLoading">
   <img src="../../assets/images/spinner.gif" height="233" width="414" alt="loading"/>
 </mat-card>
-
-
 

@@ -24,7 +24,6 @@ export class CapacityComponent implements OnInit {
   isLoading = false;
   cellTextOnFocus: number;
 
-
   ngOnInit(): void {
     this.isLoading = true;
     this.setInterval(new Date());
@@ -171,6 +170,5 @@ export class CapacityComponent implements OnInit {
   isNotWeekend(day): boolean {
     return !isWeekend(day);
   }
-
 
 }
