@@ -1,0 +1,36 @@
+<mat-card>
+<mat-form-field>
+  <mat-label>Datum</mat-label>
+  <input matInput [matDatepicker]="capaMonth" (dateChange)="dateChangeHandler($event)">
+  <mat-datepicker-toggle  matSuffix [for]="capaMonth"></mat-datepicker-toggle>
+  <mat-datepicker #capaMonth startView="year"></mat-datepicker>
+</mat-form-field>
+</mat-card>
+<mat-card>
+<table aria-describedby="Capacity">
+  <tr>
+    <th scope="col">Name</th>
+    <th scope="col" *ngFor="let day of intervalOfDates">{{day | dfnsFormatPure : 'dd. MMM'}}</th>
+  </tr>
+
+  <tr *ngFor="let user of userList">
+      <td>{{user.name}}</td>
+
+    <ng-container *ngFor="let day of intervalOfDates">
+      <ng-container *ngFor="let capa of capacitiesToShow; let arrIndex = index;">
+        <ng-container *ngIf="capa.user.name === user.name">
+          <td *ngIf="!isNotWeekend(day) && compareDates(day, capa.date)" class="weekend"></td>
+          <td *ngIf="isNotWeekend(day) && compareDates(day, capa.date)" contenteditable="true" (focus)="onFocus($event.target.innerText)"
+              (blur)="onBlur($event.target.innerText, user, capa, arrIndex)">
+          {{capa.capa}}
+          </td>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </tr>
+</table>
+</mat-card>
+<mat-card *ngIf="isLoading">
+  <img src="../../assets/images/spinner.gif" height="233" width="414" alt="loading"/>
+</mat-card>
+
