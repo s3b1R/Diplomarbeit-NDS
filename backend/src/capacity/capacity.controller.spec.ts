@@ -3,7 +3,7 @@ import { CapacityController } from './capacity.controller';
 import { CapacityService } from './capacity.service';
 import { Capacity } from './capacity.entity';
 
-jest.mock('../capacity/api.service.ts');
+jest.mock('../capacity/capacity.service.ts');
 
 describe('CapacityController', () => {
   let capacityController: CapacityController;
