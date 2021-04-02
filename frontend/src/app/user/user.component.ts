@@ -9,6 +9,7 @@ import { ApiService } from '../services/api.service';
 })
 export class UserComponent implements OnInit {
   userList: User[];
+  value = '';
 
   constructor(private apiService: ApiService) { }
 
