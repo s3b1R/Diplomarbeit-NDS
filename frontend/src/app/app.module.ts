@@ -21,6 +21,7 @@ import { MatIconModule} from '@angular/material/icon';
 import { CapacityMassmutationComponent } from './capacity-massmutation/capacity-massmutation.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { HeaderComponent } from './header/header.component';
+import { UserComponent } from './user/user.component';
 
 const germanConfig = new DateFnsConfigurationService();
 germanConfig.setLocale(de);
@@ -30,7 +31,8 @@ germanConfig.setLocale(de);
     AppComponent,
     CapacityComponent,
     CapacityMassmutationComponent,
-    HeaderComponent
+    HeaderComponent,
+    UserComponent
   ],
     imports: [
         BrowserModule,
