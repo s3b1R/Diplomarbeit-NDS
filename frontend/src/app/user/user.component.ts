@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '../models/user.model';
-import { ApiService } from '../services/api.service';
+import { User } from '../shared/models/user.model';
+import { ApiService } from '../shared/services/api.service';
 import { FormControl } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '../shared/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-user',
@@ -14,10 +16,22 @@ export class UserComponent implements OnInit {
   caseControl = new FormControl();
   userControl = new FormControl();
 
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.loadUserList();
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: `${this.userControl.value.name} löschen?`
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.deleteUser();
+      }
+    });
   }
 
 

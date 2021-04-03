@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { eachDayOfInterval, lastDayOfMonth, startOfMonth, format, isWeekend } from 'date-fns';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { ApiService } from '../services/api.service';
-import { Capacity } from '../models/capacity.model';
-import { User } from '../models/user.model';
+import { ApiService } from '../shared/services/api.service';
+import { Capacity } from '../shared/models/capacity.model';
+import { User } from '../shared/models/user.model';
 import { forkJoin } from 'rxjs';
 
 
