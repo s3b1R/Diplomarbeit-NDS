@@ -20,9 +20,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule} from '@angular/material/icon';
 import { CapacityMassmutationComponent } from './capacity-massmutation/capacity-massmutation.component';
 import { MatTabsModule } from '@angular/material/tabs';
-import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatDialogModule } from '@angular/material/dialog';
 import { HeaderComponent } from './header/header.component';
 import { UserComponent } from './user/user.component';
+import { ConfirmationDialogComponent } from './shared/confirmation-dialog/confirmation-dialog.component';
 
 const germanConfig = new DateFnsConfigurationService();
 germanConfig.setLocale(de);
@@ -33,7 +35,8 @@ germanConfig.setLocale(de);
     CapacityComponent,
     CapacityMassmutationComponent,
     HeaderComponent,
-    UserComponent
+    UserComponent,
+    ConfirmationDialogComponent
   ],
     imports: [
         BrowserModule,
@@ -53,6 +56,7 @@ germanConfig.setLocale(de);
         MatIconModule,
         MatTabsModule,
         MatButtonToggleModule,
+        MatDialogModule,
     ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'de'},

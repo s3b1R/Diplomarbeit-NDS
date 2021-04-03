@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { eachDayOfInterval, format, isWeekend } from 'date-fns';
-import { ApiService } from '../services/api.service';
-import { User } from '../models/user.model';
+import { ApiService } from '../shared/services/api.service';
+import { User } from '../shared/models/user.model';
 import { Router } from '@angular/router';
 
 @Component({
