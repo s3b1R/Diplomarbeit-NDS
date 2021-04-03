@@ -20,6 +20,21 @@ export class ApiService {
     );
   }
 
+  public newUser(userName: string): Observable<User> {
+    return this.httpService.post(`${this.baseUrl}users/create`, {name: userName},
+      {headers: {'Content-Type': 'application/json'}, observe: 'body', responseType: 'json'})
+      .pipe(map(data => new User().deserialize(data)));
+  }
+
+  public updateUser(userId: number, userName: string): void {
+    this.httpService.put(`${this.baseUrl}users/${userId}/update`, {name: userName},
+      {headers: {'Content-Type': 'application/json'}, observe: 'body', responseType: 'json'}).subscribe();
+  }
+
+  public deleteUser(userId: number): void {
+    this.httpService.delete(`${this.baseUrl}users/${userId}/delete`).subscribe();
+  }
+
   public getCapacitiesForMonth(month: string): Observable<Capacity[]> {
     return this.httpService.get<Capacity[]>(`${this.baseUrl}capacity/month/${month}`)
       .pipe(map(data => data.map(data => new Capacity().deserialize(data))));

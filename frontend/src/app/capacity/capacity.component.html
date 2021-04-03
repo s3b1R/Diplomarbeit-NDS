@@ -1,13 +1,12 @@
 <mat-card>
-<mat-form-field>
+<mat-form-field *ngIf="!isLoading">
   <mat-label>Datum</mat-label>
   <input matInput [matDatepicker]="capaMonth" (dateChange)="dateChangeHandler($event)">
   <mat-datepicker-toggle  matSuffix [for]="capaMonth"></mat-datepicker-toggle>
   <mat-datepicker #capaMonth startView="year"></mat-datepicker>
 </mat-form-field>
-</mat-card>
-<mat-card>
-<table aria-describedby="Capacity">
+
+<table *ngIf="!isLoading" aria-describedby="Capacity">
   <tr>
     <th scope="col">Name</th>
     <th scope="col" *ngFor="let day of intervalOfDates">{{day | dfnsFormatPure : 'dd. MMM'}}</th>
@@ -29,9 +28,9 @@
     </ng-container>
   </tr>
 </table>
-  <a mat-button routerLink="/massmutation">Mehrere Tage erfassen</a>
-</mat-card>
-<mat-card *ngIf="isLoading">
-  <img src="../../assets/images/spinner.gif" height="233" width="414" alt="loading"/>
+  <a *ngIf="!isLoading" mat-button routerLink="/massmutation">Mehrere Tage erfassen</a>
+
+
+  <img *ngIf="isLoading" src="../../assets/images/spinner.gif" height="233" width="414" alt="loading"/>
 </mat-card>
 

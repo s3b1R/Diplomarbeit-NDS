@@ -13,13 +13,13 @@ export class HeaderComponent implements OnInit {
   constructor(private router: Router) {
     this.navLinks = [
       {
-        label: 'Capa',
+        label: 'Kapazitätsverwaltung',
         link: './capaview',
         index: 0
       },
       {
-        label: 'Massen',
-        link: './massmutation',
+        label: 'Nutzerverwaltung',
+        link: './user',
         index: 1
       }
     ];
