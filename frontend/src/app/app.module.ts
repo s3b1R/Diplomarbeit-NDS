@@ -20,6 +20,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule} from '@angular/material/icon';
 import { CapacityMassmutationComponent } from './capacity-massmutation/capacity-massmutation.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { HeaderComponent } from './header/header.component';
 import { UserComponent } from './user/user.component';
 
@@ -51,6 +52,7 @@ germanConfig.setLocale(de);
         MatButtonModule,
         MatIconModule,
         MatTabsModule,
+        MatButtonToggleModule,
     ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'de'},
