@@ -32,7 +32,7 @@ export class ApiService {
   }
 
   public deleteUser(userId: number): void {
-    this.httpService.delete(`${this.baseUrl}users/${userId}/delete`);
+    this.httpService.delete(`${this.baseUrl}users/${userId}/delete`).subscribe();
   }
 
   public getCapacitiesForMonth(month: string): Observable<Capacity[]> {
