@@ -26,6 +26,7 @@ import { HeaderComponent } from './header/header.component';
 import { UserComponent } from './user/user.component';
 import { ConfirmationDialogComponent } from './shared/confirmation-dialog/confirmation-dialog.component';
 import { WorkloadComponent } from './workload/workload.component';
+import { NgxCsvParserModule } from 'ngx-csv-parser';
 
 const germanConfig = new DateFnsConfigurationService();
 germanConfig.setLocale(de);
@@ -59,6 +60,7 @@ germanConfig.setLocale(de);
         MatTabsModule,
         MatButtonToggleModule,
         MatDialogModule,
+        NgxCsvParserModule,
     ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'de'},
