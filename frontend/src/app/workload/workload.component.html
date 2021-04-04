@@ -1,2 +1,19 @@
-<input type="file" #fileImportInput name="File Upload" id="csvFileUpload" (change)="fileChangeListener($event)"
-       accept=".csv" />
+  <mat-form-field>
+    <div>
+      <mat-toolbar>
+        <!-- Display files names -->
+        <input matInput type="text" placeholder="Quelldatei">
+
+        <!-- Browse Button -->
+        <button mat-flat-button color="primary">
+          Durchsuchen
+        </button>
+      </mat-toolbar>
+
+      <!-- Fetch selected filed on change -->
+      <input type="file" #fileImportInput name="File Upload" id="csvFileUpload" (change)="fileChangeListener($event)"
+             accept=".csv" />
+    </div>
+  </mat-form-field>
+
+

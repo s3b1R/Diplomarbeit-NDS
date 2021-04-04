@@ -27,6 +27,7 @@ import { UserComponent } from './user/user.component';
 import { ConfirmationDialogComponent } from './shared/confirmation-dialog/confirmation-dialog.component';
 import { WorkloadComponent } from './workload/workload.component';
 import { NgxCsvParserModule } from 'ngx-csv-parser';
+import {MatToolbarModule} from "@angular/material/toolbar";
 
 const germanConfig = new DateFnsConfigurationService();
 germanConfig.setLocale(de);
@@ -41,27 +42,28 @@ germanConfig.setLocale(de);
     ConfirmationDialogComponent,
     WorkloadComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        HttpClientModule,
-        BrowserAnimationsModule,
-        DateFnsModule.forRoot(),
-        NgxMatDateFnsDateModule,
-        MatDatepickerModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatCardModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MatSelectModule,
-        MatButtonModule,
-        MatIconModule,
-        MatTabsModule,
-        MatButtonToggleModule,
-        MatDialogModule,
-        NgxCsvParserModule,
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    DateFnsModule.forRoot(),
+    NgxMatDateFnsDateModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCardModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTabsModule,
+    MatButtonToggleModule,
+    MatDialogModule,
+    NgxCsvParserModule,
+    MatToolbarModule,
+  ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'de'},
     {provide: DateFnsConfigurationService, useValue: germanConfig }
