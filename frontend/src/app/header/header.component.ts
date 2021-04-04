@@ -21,6 +21,11 @@ export class HeaderComponent implements OnInit {
         label: 'Nutzerverwaltung',
         link: './user',
         index: 1
+      },
+      {
+        label: 'Workload',
+        link: './workload',
+        index: 2
       }
     ];
   }
