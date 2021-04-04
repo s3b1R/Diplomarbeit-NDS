@@ -25,6 +25,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { HeaderComponent } from './header/header.component';
 import { UserComponent } from './user/user.component';
 import { ConfirmationDialogComponent } from './shared/confirmation-dialog/confirmation-dialog.component';
+import { WorkloadComponent } from './workload/workload.component';
 
 const germanConfig = new DateFnsConfigurationService();
 germanConfig.setLocale(de);
@@ -36,7 +37,8 @@ germanConfig.setLocale(de);
     CapacityMassmutationComponent,
     HeaderComponent,
     UserComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    WorkloadComponent
   ],
     imports: [
         BrowserModule,
