@@ -76,4 +76,8 @@ export class ApiService {
       map(data => data.map(data => new Workload().deserialize(data)))
     );
   }
+
+  public clearWorkload(): void {
+    this.httpService.delete(`${this.baseUrl}workload/delete`).subscribe();
+  }
 }

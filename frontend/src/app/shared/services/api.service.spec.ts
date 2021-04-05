@@ -188,4 +188,11 @@ describe('ApiService', () => {
     workloadRequest.flush(dummyWorkloads);
   });
 
+  it('should clear all workloads', () => {
+    expect((service.clearWorkload())).toBeUndefined();
+
+    const clearWorkloadRequest = httpMock.expectOne(`${service.baseUrl}workload/delete`);
+    expect(clearWorkloadRequest.request.method).toBe('DELETE');
+  });
+
 });
