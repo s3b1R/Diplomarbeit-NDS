@@ -161,4 +161,31 @@ describe('ApiService', () => {
     newWorkloadRequest.flush(dummyWorkload);
   });
 
+  it('should get all workloads', () => {
+    const dummyWorkloads = [ new Workload().deserialize(
+      {
+        id: 1,
+        assignee: 'Hans Muster',
+        sprint: 'dummySprint',
+        storyPoints: 0.8,
+        project: 'dummyProject',
+      }), new Workload().deserialize({
+      id: 2,
+      assignee: 'Hans Musterli',
+      sprint: 'dummySprint',
+      storyPoints: 0.5,
+      project: 'dummyProject',
+    })
+    ];
+
+    service.getWorkload().subscribe(workload => {
+      expect(workload.length).toBe(2);
+      expect(workload).toEqual(dummyWorkloads);
+    });
+
+    const workloadRequest = httpMock.expectOne(`${service.baseUrl}workload`);
+    expect(workloadRequest.request.method).toBe('GET');
+    workloadRequest.flush(dummyWorkloads);
+  });
+
 });

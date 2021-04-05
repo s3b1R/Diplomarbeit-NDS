@@ -70,4 +70,10 @@ export class ApiService {
     }, {headers: {'Content-Type': 'application/json'}, observe: 'body', responseType: 'json'})
       .pipe(map(data => new Workload().deserialize(data)));
   }
+
+  public getWorkload(): Observable<Workload[]> {
+    return this.httpService.get<Workload[]>(`${this.baseUrl}workload`).pipe(
+      map(data => data.map(data => new Workload().deserialize(data)))
+    );
+  }
 }
