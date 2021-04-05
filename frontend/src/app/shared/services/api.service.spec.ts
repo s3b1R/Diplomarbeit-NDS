@@ -25,6 +25,36 @@ describe('ApiService', () => {
     expect(service).toBeTruthy();
   });
 
+  it('should create a new user', () => {
+    const dummyUser = new User().deserialize({
+      id: 1,
+      name: 'Hans Muster',
+    });
+
+    service.newUser('Hans Muster').subscribe( user => {
+      expect(user).toEqual(dummyUser);
+      expect(user).toBeInstanceOf(User);
+    });
+
+    const newUserRequest = httpMock.expectOne(`${service.baseUrl}users/create`);
+    expect(newUserRequest.request.method).toBe('POST');
+    newUserRequest.flush(dummyUser);
+  });
+
+  it('should update an user', () => {
+    expect((service.updateUser(88, 'Hans Musterli'))).toBeUndefined();
+
+    const updateUserRequest = httpMock.expectOne(`${service.baseUrl}users/88/update`);
+    expect(updateUserRequest.request.method).toBe('PUT');
+  });
+
+  it('should delete an user', () => {
+    expect((service.deleteUser(88))).toBeUndefined();
+
+    const deleteUserRequest = httpMock.expectOne(`${service.baseUrl}users/88/delete`);
+    expect(deleteUserRequest.request.method).toBe('DELETE');
+  });
+
   it('should get all users', () => {
     const dummyUsers = [ new User().deserialize(
       {id: 1, name: 'Hans Muster'}), new User().deserialize({id: 2, name: 'Peter Müller'})
