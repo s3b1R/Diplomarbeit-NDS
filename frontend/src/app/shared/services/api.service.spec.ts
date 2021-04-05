@@ -3,8 +3,9 @@ import {HttpClientTestingModule, HttpTestingController} from '@angular/common/ht
 import { ApiService } from './api.service';
 import { User } from '../models/user.model';
 import { Capacity } from '../models/capacity.model';
+import { Workload } from '../models/workload.model';
 
-describe('CapacityService', () => {
+describe('ApiService', () => {
   let injector: TestBed;
   let service: ApiService;
   let httpMock: HttpTestingController;
@@ -24,7 +25,7 @@ describe('CapacityService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should get users', () => {
+  it('should get all users', () => {
     const dummyUsers = [ new User().deserialize(
       {id: 1, name: 'Hans Muster'}), new User().deserialize({id: 2, name: 'Peter Müller'})
     ];
@@ -86,7 +87,7 @@ describe('CapacityService', () => {
     dayAndIdRequest.flush(dummyCapacity);
   });
 
-  it('should update capacity', () => {
+  it('should update a capacity', () => {
     expect((service.updateCapacity(99, 1))).toBeUndefined();
 
     const updateRequest = httpMock.expectOne(`${service.baseUrl}capacity/99/update`);
@@ -109,6 +110,25 @@ describe('CapacityService', () => {
     const newCapacityRequest = httpMock.expectOne(`${service.baseUrl}capacity/create`);
     expect(newCapacityRequest.request.method).toBe('POST');
     newCapacityRequest.flush(dummyCapacity);
+  });
+
+  it('should create a new workload', () => {
+    const dummyWorkload = new Workload().deserialize({
+      id: 1,
+      assignee: 'Hans Muster',
+      sprint: 'dummySprint',
+      storyPoints: 0.8,
+      project: 'dummyProject',
+    });
+
+    service.newWorkload('Hans Muster', 'dummySprint', 0.8, 'dummyProject').subscribe( workload => {
+      expect(workload).toEqual(dummyWorkload);
+      expect(workload).toBeInstanceOf(Workload);
+    });
+
+    const newWorkloadRequest = httpMock.expectOne(`${service.baseUrl}workload/create`);
+    expect(newWorkloadRequest.request.method).toBe('POST');
+    newWorkloadRequest.flush(dummyWorkload);
   });
 
 });
