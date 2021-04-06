@@ -65,7 +65,7 @@ export class ApiService {
     return this.httpService.post(`${this.baseUrl}workload/create`, {
       assignee: newAssigne,
       sprint: newSprint,
-      storyPoints: newStoryPoints,
+      storyPoints: newStoryPoints || 0,
       project: newProject
     }, {headers: {'Content-Type': 'application/json'}, observe: 'body', responseType: 'json'})
       .pipe(map(data => new Workload().deserialize(data)));
