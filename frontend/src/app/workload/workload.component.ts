@@ -23,7 +23,7 @@ export class WorkloadComponent implements OnInit {
   }
 
   fileChangeListener($event: any): void {
-    const files = $event.srcElement.files;
+    const files = $event.target.files;
 
     this.ngxCsvParser.parse(files[0], {header: this.header, delimiter: ';'})
       .pipe().subscribe((result: Array<any>) => {
@@ -45,7 +45,7 @@ export class WorkloadComponent implements OnInit {
 
   async waitAMoment(): Promise<void> {
     await this.delay(500);
-    await this.router.navigate(['capaview']);
+    await this.router.navigate(['occupancy']);
   }
 
 }
