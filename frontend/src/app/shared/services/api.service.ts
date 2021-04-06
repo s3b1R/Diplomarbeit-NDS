@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import {Capacity} from '../models/capacity.model';
 import { User } from '../models/user.model';
 import { map } from 'rxjs/operators';
+import { Workload } from '../models/workload.model';
 
 @Injectable({
   providedIn: 'root'
@@ -58,5 +59,25 @@ export class ApiService {
       user: forUser
     }, {headers: {'Content-Type': 'application/json'}, observe: 'body', responseType: 'json'})
       .pipe(map(data => new Capacity().deserialize(data)));
+  }
+
+  public newWorkload(newAssigne: string, newSprint: string, newStoryPoints: number, newProject: string): Observable<Workload> {
+    return this.httpService.post(`${this.baseUrl}workload/create`, {
+      assignee: newAssigne,
+      sprint: newSprint,
+      storyPoints: newStoryPoints || 0,
+      project: newProject
+    }, {headers: {'Content-Type': 'application/json'}, observe: 'body', responseType: 'json'})
+      .pipe(map(data => new Workload().deserialize(data)));
+  }
+
+  public getWorkload(): Observable<Workload[]> {
+    return this.httpService.get<Workload[]>(`${this.baseUrl}workload`).pipe(
+      map(data => data.map(data => new Workload().deserialize(data)))
+    );
+  }
+
+  public clearWorkload(): void {
+    this.httpService.delete(`${this.baseUrl}workload/delete`).subscribe();
   }
 }

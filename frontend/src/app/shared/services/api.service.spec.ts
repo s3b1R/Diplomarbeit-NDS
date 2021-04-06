@@ -3,8 +3,9 @@ import {HttpClientTestingModule, HttpTestingController} from '@angular/common/ht
 import { ApiService } from './api.service';
 import { User } from '../models/user.model';
 import { Capacity } from '../models/capacity.model';
+import { Workload } from '../models/workload.model';
 
-describe('CapacityService', () => {
+describe('ApiService', () => {
   let injector: TestBed;
   let service: ApiService;
   let httpMock: HttpTestingController;
@@ -24,7 +25,37 @@ describe('CapacityService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should get users', () => {
+  it('should create a new user', () => {
+    const dummyUser = new User().deserialize({
+      id: 1,
+      name: 'Hans Muster',
+    });
+
+    service.newUser('Hans Muster').subscribe( user => {
+      expect(user).toEqual(dummyUser);
+      expect(user).toBeInstanceOf(User);
+    });
+
+    const newUserRequest = httpMock.expectOne(`${service.baseUrl}users/create`);
+    expect(newUserRequest.request.method).toBe('POST');
+    newUserRequest.flush(dummyUser);
+  });
+
+  it('should update an user', () => {
+    expect((service.updateUser(88, 'Hans Musterli'))).toBeUndefined();
+
+    const updateUserRequest = httpMock.expectOne(`${service.baseUrl}users/88/update`);
+    expect(updateUserRequest.request.method).toBe('PUT');
+  });
+
+  it('should delete an user', () => {
+    expect((service.deleteUser(88))).toBeUndefined();
+
+    const deleteUserRequest = httpMock.expectOne(`${service.baseUrl}users/88/delete`);
+    expect(deleteUserRequest.request.method).toBe('DELETE');
+  });
+
+  it('should get all users', () => {
     const dummyUsers = [ new User().deserialize(
       {id: 1, name: 'Hans Muster'}), new User().deserialize({id: 2, name: 'Peter Müller'})
     ];
@@ -86,7 +117,7 @@ describe('CapacityService', () => {
     dayAndIdRequest.flush(dummyCapacity);
   });
 
-  it('should update capacity', () => {
+  it('should update a capacity', () => {
     expect((service.updateCapacity(99, 1))).toBeUndefined();
 
     const updateRequest = httpMock.expectOne(`${service.baseUrl}capacity/99/update`);
@@ -109,6 +140,59 @@ describe('CapacityService', () => {
     const newCapacityRequest = httpMock.expectOne(`${service.baseUrl}capacity/create`);
     expect(newCapacityRequest.request.method).toBe('POST');
     newCapacityRequest.flush(dummyCapacity);
+  });
+
+  it('should create a new workload', () => {
+    const dummyWorkload = new Workload().deserialize({
+      id: 1,
+      assignee: 'Hans Muster',
+      sprint: 'dummySprint',
+      storyPoints: 0.8,
+      project: 'dummyProject',
+    });
+
+    service.newWorkload('Hans Muster', 'dummySprint', 0.8, 'dummyProject').subscribe( workload => {
+      expect(workload).toEqual(dummyWorkload);
+      expect(workload).toBeInstanceOf(Workload);
+    });
+
+    const newWorkloadRequest = httpMock.expectOne(`${service.baseUrl}workload/create`);
+    expect(newWorkloadRequest.request.method).toBe('POST');
+    newWorkloadRequest.flush(dummyWorkload);
+  });
+
+  it('should get all workloads', () => {
+    const dummyWorkloads = [ new Workload().deserialize(
+      {
+        id: 1,
+        assignee: 'Hans Muster',
+        sprint: 'dummySprint',
+        storyPoints: 0.8,
+        project: 'dummyProject',
+      }), new Workload().deserialize({
+      id: 2,
+      assignee: 'Hans Musterli',
+      sprint: 'dummySprint',
+      storyPoints: 0.5,
+      project: 'dummyProject',
+    })
+    ];
+
+    service.getWorkload().subscribe(workload => {
+      expect(workload.length).toBe(2);
+      expect(workload).toEqual(dummyWorkloads);
+    });
+
+    const workloadRequest = httpMock.expectOne(`${service.baseUrl}workload`);
+    expect(workloadRequest.request.method).toBe('GET');
+    workloadRequest.flush(dummyWorkloads);
+  });
+
+  it('should clear all workloads', () => {
+    expect((service.clearWorkload())).toBeUndefined();
+
+    const clearWorkloadRequest = httpMock.expectOne(`${service.baseUrl}workload/delete`);
+    expect(clearWorkloadRequest.request.method).toBe('DELETE');
   });
 
 });
