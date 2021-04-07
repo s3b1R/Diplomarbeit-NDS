@@ -12,6 +12,7 @@ export class WorkloadComponent implements OnInit {
 
   csvRecords: any[] = [];
   header = true;
+  readyForUpload = false;
 
   constructor(private ngxCsvParser: NgxCsvParser, private apiService: ApiService, private router: Router) { }
 
@@ -32,20 +33,14 @@ export class WorkloadComponent implements OnInit {
         }
       }
       this.csvRecords = result;
-
-      this.apiService.clearWorkload();
-      for (const workload of this.csvRecords) {
-        this.apiService.newWorkload(workload.Assignee, workload.Sprint, workload['Story Points'], workload.Project)
-          .subscribe();
-      }
-      this.waitAMoment();
+      this.readyForUpload = true;
 
     }, (error: NgxCSVParserError) => {
       console.log('Error', error);
     });
   }
 
-  private uploadWorkload(): void {
+  uploadWorkload(): void {
     this.apiService.clearWorkload();
     for (const workload of this.csvRecords) {
       this.apiService.newWorkload(workload.Assignee, workload.Sprint, workload['Story Points'], workload.Project)
@@ -60,6 +55,7 @@ export class WorkloadComponent implements OnInit {
 
   async waitAMoment(): Promise<void> {
     await this.delay(500);
+    this.readyForUpload = false;
     await this.router.navigate(['occupancy']);
   }
 
