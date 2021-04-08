@@ -29,6 +29,7 @@ import { WorkloadComponent } from './workload/workload.component';
 import { NgxCsvParserModule } from 'ngx-csv-parser';
 import {MatToolbarModule} from "@angular/material/toolbar";
 import { OccupancyComponent } from './occupancy/occupancy.component';
+import { PiComponent } from './pi/pi.component';
 
 const germanConfig = new DateFnsConfigurationService();
 germanConfig.setLocale(de);
@@ -42,7 +43,8 @@ germanConfig.setLocale(de);
     UserComponent,
     ConfirmationDialogComponent,
     WorkloadComponent,
-    OccupancyComponent
+    OccupancyComponent,
+    PiComponent
   ],
   imports: [
     BrowserModule,
