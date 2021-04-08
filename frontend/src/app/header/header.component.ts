@@ -26,6 +26,11 @@ export class HeaderComponent implements OnInit {
         label: 'Workload',
         link: './occupancy',
         index: 2
+      },
+      {
+        label: 'Pi',
+        link: './pi',
+        index: 3
       }
     ];
   }
