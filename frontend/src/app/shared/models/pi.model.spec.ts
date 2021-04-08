@@ -1,6 +1,6 @@
 import { Pi } from './pi.model';
 
-describe('Pi', () => {
+describe('Pi.Model', () => {
   it('should create an instance', () => {
     expect(new Pi()).toBeTruthy();
   });
