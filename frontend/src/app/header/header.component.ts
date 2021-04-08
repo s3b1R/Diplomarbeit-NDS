@@ -24,7 +24,7 @@ export class HeaderComponent implements OnInit {
       },
       {
         label: 'Workload',
-        link: './workload',
+        link: './occupancy',
         index: 2
       }
     ];

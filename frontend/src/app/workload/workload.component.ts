@@ -1,9 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ViewChild } from '@angular/core';
-import { NgxCsvParser } from 'ngx-csv-parser';
-import { NgxCSVParserError } from 'ngx-csv-parser';
-import { ApiService } from '../shared/services/api.service';
-import { Router } from '@angular/router';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {NgxCsvParser, NgxCSVParserError} from 'ngx-csv-parser';
+import {ApiService} from '../shared/services/api.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-workload',
@@ -14,6 +12,7 @@ export class WorkloadComponent implements OnInit {
 
   csvRecords: any[] = [];
   header = true;
+  readyForUpload = false;
 
   constructor(private ngxCsvParser: NgxCsvParser, private apiService: ApiService, private router: Router) { }
 
@@ -23,20 +22,31 @@ export class WorkloadComponent implements OnInit {
   }
 
   fileChangeListener($event: any): void {
-    const files = $event.srcElement.files;
+    const files = $event.target.files;
 
     this.ngxCsvParser.parse(files[0], {header: this.header, delimiter: ';'})
       .pipe().subscribe((result: Array<any>) => {
-      this.csvRecords = result;
-      this.apiService.clearWorkload();
-      for (const workload of this.csvRecords){
-        this.apiService.newWorkload(workload.Assignee, workload.Sprint, workload['Story Points'], workload.Project)
-          .subscribe();
+      for (const workload of result){
+        const lastComma = workload.Sprint.lastIndexOf(',');
+        if (lastComma > 0){
+          workload.Sprint = workload.Sprint.slice(lastComma + 2);
+        }
       }
-      this.waitAMoment();
+      this.csvRecords = result;
+      this.readyForUpload = true;
+
     }, (error: NgxCSVParserError) => {
       console.log('Error', error);
     });
+  }
+
+  uploadWorkload(): void {
+    this.apiService.clearWorkload();
+    for (const workload of this.csvRecords) {
+      this.apiService.newWorkload(workload.Assignee, workload.Sprint, workload['Story Points'], workload.Project)
+        .subscribe();
+    }
+    this.waitAMoment();
   }
 
   delay(ms: number): any {
@@ -45,7 +55,8 @@ export class WorkloadComponent implements OnInit {
 
   async waitAMoment(): Promise<void> {
     await this.delay(500);
-    await this.router.navigate(['capaview']);
+    this.readyForUpload = false;
+    await this.router.navigate(['occupancy']);
   }
 
 }

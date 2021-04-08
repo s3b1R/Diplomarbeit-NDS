@@ -1,4 +1,5 @@
-  <mat-form-field>
+ <mat-card>
+  <mat-form-field *ngIf="!readyForUpload">
     <div>
       <mat-toolbar>
         <!-- Display files names -->
@@ -16,4 +17,9 @@
     </div>
   </mat-form-field>
 
+  <div *ngIf="readyForUpload">
+    <button mat-button (click)="uploadWorkload()">Upload</button>
+  </div>
+
+ </mat-card>
 

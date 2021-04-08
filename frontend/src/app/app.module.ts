@@ -28,6 +28,7 @@ import { ConfirmationDialogComponent } from './shared/confirmation-dialog/confir
 import { WorkloadComponent } from './workload/workload.component';
 import { NgxCsvParserModule } from 'ngx-csv-parser';
 import {MatToolbarModule} from "@angular/material/toolbar";
+import { OccupancyComponent } from './occupancy/occupancy.component';
 
 const germanConfig = new DateFnsConfigurationService();
 germanConfig.setLocale(de);
@@ -40,7 +41,8 @@ germanConfig.setLocale(de);
     HeaderComponent,
     UserComponent,
     ConfirmationDialogComponent,
-    WorkloadComponent
+    WorkloadComponent,
+    OccupancyComponent
   ],
   imports: [
     BrowserModule,
