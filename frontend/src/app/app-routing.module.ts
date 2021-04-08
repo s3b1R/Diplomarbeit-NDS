@@ -5,6 +5,7 @@ import {CapacityMassmutationComponent} from './capacity-massmutation/capacity-ma
 import {UserComponent} from './user/user.component';
 import {WorkloadComponent} from './workload/workload.component';
 import {OccupancyComponent} from './occupancy/occupancy.component';
+import {PiComponent} from './pi/pi.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/capaview', pathMatch: 'full'},
@@ -12,7 +13,8 @@ const routes: Routes = [
   {path: 'massmutation', component: CapacityMassmutationComponent},
   {path: 'user', component: UserComponent},
   {path: 'occupancy', component: OccupancyComponent},
-  {path: 'workload', component: WorkloadComponent}
+  {path: 'workload', component: WorkloadComponent},
+  {path: 'pi', component: PiComponent}
 ];
 
 @NgModule({
