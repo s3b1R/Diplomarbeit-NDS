@@ -4,6 +4,7 @@ import { ApiService } from './api.service';
 import { User } from '../models/user.model';
 import { Capacity } from '../models/capacity.model';
 import { Workload } from '../models/workload.model';
+import { Pi } from '../models/pi.model';
 
 describe('ApiService', () => {
   let injector: TestBed;
@@ -193,6 +194,67 @@ describe('ApiService', () => {
 
     const clearWorkloadRequest = httpMock.expectOne(`${service.baseUrl}workload/delete`);
     expect(clearWorkloadRequest.request.method).toBe('DELETE');
+  });
+
+  it('should create a new pi', () => {
+    const dummyPi = new Pi().deserialize({
+      id: 1,
+      piShortname: '2021-6',
+      piStart: '2021-04-01',
+      pieEnd: '2021-06-09',
+      sprintCounts: 5
+    });
+
+    service.newPi('2021-6', '2021-04-01', '2021-06-09', 5)
+      .subscribe( pi => {
+      expect(pi).toEqual(dummyPi);
+      expect(pi).toBeInstanceOf(Pi);
+    });
+
+    const newPiRequest = httpMock.expectOne(`${service.baseUrl}pi/create`);
+    expect(newPiRequest.request.method).toBe('POST');
+    newPiRequest.flush(dummyPi);
+  });
+
+  it('should get all pi', () => {
+    const dummyPis = [ new Pi().deserialize(
+      {
+        id: 1,
+        piShortname: '2021-6',
+        piStart: '2021-04-01',
+        pieEnd: '2021-06-09',
+        sprintCounts: 5
+      }), new Pi().deserialize({
+      id: 2,
+      piShortname: '2021-3',
+      piStart: '2021-01-13',
+      pieEnd: '2021-03-30',
+      sprintCounts: 5
+    })
+    ];
+
+    service.getPiData().subscribe(pi => {
+      expect(pi.length).toBe(2);
+      expect(pi).toEqual(dummyPis);
+    });
+
+    const piRequest = httpMock.expectOne(`${service.baseUrl}pi`);
+    expect(piRequest.request.method).toBe('GET');
+    piRequest.flush(dummyPis);
+  });
+
+  it('should update a pi', () => {
+    expect((service.updatePi(1, '2021-6', '2021-04-01', '2021-06-19', 6))).toBeUndefined();
+
+    const updateRequest = httpMock.expectOne(`${service.baseUrl}pi/1/update`);
+    expect(updateRequest.request.method).toBe('PUT');
+  });
+
+  it('should delete a pi', () => {
+    expect((service.deletePi(1))).toBeUndefined();
+
+    const deleteUserRequest = httpMock.expectOne(`${service.baseUrl}pi/1/delete`);
+    expect(deleteUserRequest.request.method).toBe('DELETE');
   });
 
 });

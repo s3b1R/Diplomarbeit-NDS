@@ -5,6 +5,7 @@ import {Capacity} from '../models/capacity.model';
 import { User } from '../models/user.model';
 import { map } from 'rxjs/operators';
 import { Workload } from '../models/workload.model';
+import { Pi } from '../models/pi.model';
 
 @Injectable({
   providedIn: 'root'
@@ -79,5 +80,36 @@ export class ApiService {
 
   public clearWorkload(): void {
     this.httpService.delete(`${this.baseUrl}workload/delete`).subscribe();
+  }
+
+  public newPi(piName: string, startDate: string, endDate: string, amountOfSprints: number): Observable<Pi> {
+    return this.httpService.post(`${this.baseUrl}pi/create`, {
+      piShortname: piName,
+      piStart: startDate,
+      pieEnd: endDate,
+      sprintCounts: amountOfSprints
+    }, {headers: {'Content-Type': 'application/json'}, observe: 'body', responseType: 'json'})
+      .pipe(map(data => new Pi().deserialize(data)));
+  }
+
+  public getPiData(): Observable<Pi[]> {
+    return this.httpService.get<Pi[]>(`${this.baseUrl}pi`).pipe(
+      map(data => data.map(data => new Pi().deserialize(data)))
+    );
+  }
+
+  public updatePi(piId: number, piName: string, startDate: string, endDate: string, amountOfSprints: number): void {
+    this.httpService.put(`${this.baseUrl}pi/${piId}/update`, {
+        piShortname: piName,
+        piStart: startDate,
+        pieEnd: endDate,
+        sprintCounts: amountOfSprints
+      },
+      {headers: {'Content-Type': 'application/json'}, observe: 'body', responseType: 'json'})
+      .subscribe(response => response );
+  }
+
+  public deletePi(piId: number): void {
+    this.httpService.delete(`${this.baseUrl}pi/${piId}/delete`).subscribe();
   }
 }
