@@ -43,7 +43,7 @@ export class UserComponent implements OnInit {
     });
   }
 
-  safeNewUser(): void {
+  saveNewUser(): void {
     this.apiService.newUser(this.newUserName).subscribe();
     this.newUserName = '';
     this.loadUserList();
