@@ -199,13 +199,13 @@ describe('ApiService', () => {
   it('should create a new pi', () => {
     const dummyPi = new Pi().deserialize({
       id: 1,
-      piShortname: '2021-6',
+      piShortname: '2106',
       piStart: '2021-04-01',
       pieEnd: '2021-06-09',
       sprintCounts: 5
     });
 
-    service.newPi('2021-6', '2021-04-01', '2021-06-09', 5)
+    service.newPi('2106', '2021-04-01', '2021-06-09', 5)
       .subscribe( pi => {
       expect(pi).toEqual(dummyPi);
       expect(pi).toBeInstanceOf(Pi);
@@ -220,13 +220,13 @@ describe('ApiService', () => {
     const dummyPis = [ new Pi().deserialize(
       {
         id: 1,
-        piShortname: '2021-6',
+        piShortname: '2106',
         piStart: '2021-04-01',
         pieEnd: '2021-06-09',
         sprintCounts: 5
       }), new Pi().deserialize({
       id: 2,
-      piShortname: '2021-3',
+      piShortname: '2103',
       piStart: '2021-01-13',
       pieEnd: '2021-03-30',
       sprintCounts: 5
@@ -244,7 +244,7 @@ describe('ApiService', () => {
   });
 
   it('should update a pi', () => {
-    expect((service.updatePi(1, '2021-6', '2021-04-01', '2021-06-19', 6))).toBeUndefined();
+    expect((service.updatePi(1, '2106', '2021-04-01', '2021-06-19', 6))).toBeUndefined();
 
     const updateRequest = httpMock.expectOne(`${service.baseUrl}pi/1/update`);
     expect(updateRequest.request.method).toBe('PUT');
