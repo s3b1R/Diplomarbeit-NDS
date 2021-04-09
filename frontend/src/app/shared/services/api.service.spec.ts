@@ -201,7 +201,7 @@ describe('ApiService', () => {
       id: 1,
       piShortname: '2106',
       piStart: '2021-04-01',
-      pieEnd: '2021-06-09',
+      piEnd: '2021-06-09',
       sprintCounts: 5
     });
 
@@ -222,13 +222,13 @@ describe('ApiService', () => {
         id: 1,
         piShortname: '2106',
         piStart: '2021-04-01',
-        pieEnd: '2021-06-09',
+        piEnd: '2021-06-09',
         sprintCounts: 5
       }), new Pi().deserialize({
       id: 2,
       piShortname: '2103',
       piStart: '2021-01-13',
-      pieEnd: '2021-03-30',
+      piEnd: '2021-03-30',
       sprintCounts: 5
     })
     ];

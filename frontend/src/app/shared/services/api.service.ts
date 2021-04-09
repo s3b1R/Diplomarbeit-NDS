@@ -86,7 +86,7 @@ export class ApiService {
     return this.httpService.post(`${this.baseUrl}pi/create`, {
       piShortname: piName,
       piStart: startDate,
-      pieEnd: endDate,
+      piEnd: endDate,
       sprintCounts: amountOfSprints
     }, {headers: {'Content-Type': 'application/json'}, observe: 'body', responseType: 'json'})
       .pipe(map(data => new Pi().deserialize(data)));
@@ -102,7 +102,7 @@ export class ApiService {
     this.httpService.put(`${this.baseUrl}pi/${piId}/update`, {
         piShortname: piName,
         piStart: startDate,
-        pieEnd: endDate,
+        piEnd: endDate,
         sprintCounts: amountOfSprints
       },
       {headers: {'Content-Type': 'application/json'}, observe: 'body', responseType: 'json'})
