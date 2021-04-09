@@ -1,0 +1,86 @@
+<mat-card>
+
+  <div class="useCaseSelector">
+    <mat-button-toggle-group [formControl]="caseControl">
+      <mat-button-toggle value="new">Neues PI</mat-button-toggle>
+      <mat-button-toggle value="edit" (click)="piControl.reset()">PI ändern</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+
+  <form *ngIf="caseControl.value == 'new'" [formGroup]="newPi" (ngSubmit)="submitNewPi()">
+
+    <mat-form-field class="pi-input" appearance="fill">
+      <mat-label>PI Bezeichnung</mat-label>
+      <input matInput type="text" formControlName="shortName" placeholder="YYMM">
+      <button mat-button *ngIf="newPi.value.shortName" matSuffix mat-icon-button aria-label="Clear" (click)="newPi.value.shortName=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <mat-form-field class="pi-input" appearance="fill">
+      <mat-label>PI Start</mat-label>
+      <input matInput [matDatepicker]="newPiStart" formControlName="startDate">
+      <mat-datepicker-toggle  matSuffix [for]="newPiStart"></mat-datepicker-toggle>
+      <mat-datepicker #newPiStart></mat-datepicker>
+    </mat-form-field>
+
+
+    <mat-form-field class="pi-input" appearance="fill">
+      <mat-label>PI Ende</mat-label>
+      <input matInput [matDatepicker]="newPiEnd" formControlName="endDate">
+      <mat-datepicker-toggle  matSuffix [for]="newPiEnd"></mat-datepicker-toggle>
+      <mat-datepicker #newPiEnd></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field class="pi-input" appearance="fill">
+      <mat-label>Anzahl Sprints</mat-label>
+      <input matInput type="number" min="0" formControlName="sprintCounts">
+    </mat-form-field>
+
+    <button mat-button>Erfassen</button>
+  </form>
+
+  <form *ngIf="caseControl.value == 'edit'">
+    <div>
+    <mat-form-field appearance="fill">
+      <mat-label>PI auswählen</mat-label>
+      <mat-select [formControl]="piControl">
+        <mat-option></mat-option>
+        <mat-option *ngFor="let pi of piList" [value]="pi">
+          {{pi.piShortname}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    </div>
+
+    <div *ngIf="piControl.value">
+    <mat-form-field appearance="fill">
+      <mat-label>PI Bezeichnung</mat-label>
+      <input matInput type="text" #editedShortName value="{{piControl.value?.piShortname}}">
+    </mat-form-field>
+
+    <mat-form-field class="pi-input" appearance="fill">
+      <mat-label>PI Start</mat-label>
+      <input matInput [matDatepicker]="piStart" #editedStartDate value="{{piControl.value?.piStart}}" >
+      <mat-datepicker-toggle  matSuffix [for]="piStart"></mat-datepicker-toggle>
+      <mat-datepicker #piStart></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field class="pi-input" appearance="fill">
+      <mat-label>PI Ende</mat-label>
+      <input matInput [matDatepicker]="piEnd" #editedEndDate value="{{piControl.value?.piEnd}}" >
+      <mat-datepicker-toggle  matSuffix [for]="piEnd"></mat-datepicker-toggle>
+      <mat-datepicker #piEnd></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Anzahl Sprints</mat-label>
+      <input matInput type="number" min="0" #editedSprintCount value="{{piControl.value?.sprintCounts}}">
+    </mat-form-field>
+
+    <button mat-button (click)="updatePi(editedShortName.value, editedStartDate.value, editedEndDate.value, editedSprintCount.value)">Änderung Speichern</button>
+    <button mat-button color="warn" (click)="openDialog()">PI Löschen</button>
+    </div>
+  </form>
+
+</mat-card>
