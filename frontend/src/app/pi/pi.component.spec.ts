@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { MatDialogModule } from '@angular/material/dialog';
 import { PiComponent } from './pi.component';
 
 describe('PiComponent', () => {
@@ -8,7 +9,7 @@ describe('PiComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PiComponent ]
+      declarations: [ PiComponent ], imports: [HttpClientTestingModule, MatDialogModule]
     })
     .compileComponents();
   });
