@@ -1,6 +1,13 @@
 <mat-card>
 
-  <form [formGroup]="newPi" (ngSubmit)="submitNewPi()">
+  <div class="useCaseSelector">
+    <mat-button-toggle-group [formControl]="caseControl">
+      <mat-button-toggle value="new">Neues PI</mat-button-toggle>
+      <mat-button-toggle value="edit" (click)="piControl.reset()">PI ändern</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+
+  <form *ngIf="caseControl.value == 'new'" [formGroup]="newPi" (ngSubmit)="submitNewPi()">
 
     <mat-form-field class="pi-input" appearance="fill">
       <mat-label>PI Bezeichnung</mat-label>
@@ -33,7 +40,7 @@
     <button mat-button>Erfassen</button>
   </form>
 
-  <form>
+  <form *ngIf="caseControl.value == 'edit'">
     <div>
     <mat-form-field appearance="fill">
       <mat-label>PI auswählen</mat-label>
@@ -46,6 +53,7 @@
     </mat-form-field>
     </div>
 
+    <div *ngIf="piControl.value">
     <mat-form-field appearance="fill">
       <mat-label>PI Bezeichnung</mat-label>
       <input matInput type="text" #editedShortName value="{{piControl.value?.piShortname}}">
@@ -72,6 +80,7 @@
 
     <button mat-button (click)="updatePi(editedShortName.value, editedStartDate.value, editedEndDate.value, editedSprintCount.value)">Änderung Speichern</button>
     <button mat-button color="warn" (click)="openDialog()">PI Löschen</button>
+    </div>
   </form>
 
 </mat-card>

@@ -21,6 +21,7 @@ export class PiComponent implements OnInit {
     sprintCounts: new FormControl()
   });
   piControl = new FormControl();
+  caseControl = new FormControl();
 
 
   constructor(private apiService: ApiService, public dialog: MatDialog) { }
