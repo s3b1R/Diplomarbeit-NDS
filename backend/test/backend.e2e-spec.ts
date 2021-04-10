@@ -377,7 +377,7 @@ describe('WorkloadModule (e2e)', () => {
         assignee: 'Hanna Muster',
         sprint: 'E2E 2101-5 (23.12.-5.1.)',
         storyPoints: '0.8',
-        project: 'Go4 E2E',
+        project: 'Best E2E',
       });
     const { body } = await request(app.getHttpServer())
       .get('/workload')
@@ -385,17 +385,17 @@ describe('WorkloadModule (e2e)', () => {
       .expect(200);
     expect(body).toEqual([
       {
-        id: 1,
-        assignee: 'Hans Muster',
-        sprint: 'E2E 2101-5 (23.12.-5.1.)',
-        storyPoints: '1.0',
-        project: 'Go4 E2E',
-      },
-      {
         id: 2,
         assignee: 'Hanna Muster',
         sprint: 'E2E 2101-5 (23.12.-5.1.)',
         storyPoints: '0.8',
+        project: 'Best E2E',
+      },
+      {
+        id: 1,
+        assignee: 'Hans Muster',
+        sprint: 'E2E 2101-5 (23.12.-5.1.)',
+        storyPoints: '1.0',
         project: 'Go4 E2E',
       },
     ]);
