@@ -39,9 +39,21 @@ describe('PiController', () => {
   it('should create one', async () => {
     const mockedValues = {
       piShortname: 2103,
-      piStart: new Date(2021, 1, 6),
-      piEnd: new Date(2021, 3, 1),
+      piStart: new Date(2021, 3, 1),
+      piEnd: new Date(2021, 5, 9),
       sprintCounts: 5,
+      sprint1Start: new Date(),
+      sprint1End: new Date(),
+      sprint2Start: new Date(),
+      sprint2End: new Date(),
+      sprint3Start: new Date(),
+      sprint3End: new Date(),
+      sprint4Start: new Date(),
+      sprint4End: new Date(),
+      sprint5Start: new Date(),
+      sprint5End: new Date(),
+      sprint6Start: null,
+      sprint6End: null,
       id: 1,
     };
     const mockedPi = new Pi();
