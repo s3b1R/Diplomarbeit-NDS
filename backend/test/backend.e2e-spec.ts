@@ -276,17 +276,17 @@ describe('PiModule (e2e)', () => {
       .expect(200);
     expect(body).toEqual([
       {
-        id: 1,
-        piShortname: 2103,
-        piStart: '2021-01-06',
-        piEnd: '2021-03-01',
-        sprintCounts: 5,
-      },
-      {
         id: 2,
         piShortname: 2105,
         piStart: '2021-05-06',
         piEnd: '2021-07-01',
+        sprintCounts: 5,
+      },
+      {
+        id: 1,
+        piShortname: 2103,
+        piStart: '2021-01-06',
+        piEnd: '2021-03-01',
         sprintCounts: 5,
       },
     ]);

@@ -15,7 +15,9 @@ export class PiService {
   }
 
   async findAll(): Promise<Pi[]> {
-    return await this.piRepository.find();
+    return await this.piRepository.find({
+      order: { piShortname: 'DESC' },
+    });
   }
 
   async findById(id): Promise<Pi[]> {
