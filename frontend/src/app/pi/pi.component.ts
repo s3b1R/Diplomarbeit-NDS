@@ -36,6 +36,8 @@ export class PiComponent implements OnInit {
       format(this.newPi.value.startDate, 'yyyy-MM-dd'),
       format(this.newPi.value.endDate, 'yyyy-MM-dd'),
       this.newPi.value.sprintCounts).subscribe();
+    this.newPi.reset();
+    this.caseControl.reset();
     this.loadPiList();
   }
 
@@ -48,6 +50,7 @@ export class PiComponent implements OnInit {
       Number(newSprintCount)
     );
     this.piControl.reset();
+    this.caseControl.reset();
     this.loadPiList();
   }
 
@@ -66,6 +69,7 @@ export class PiComponent implements OnInit {
   deletePi(): void {
     this.apiService.deletePi(this.piControl.value.id);
     this.piControl.reset();
+    this.caseControl.reset();
     this.loadPiList();
   }
 
