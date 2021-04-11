@@ -82,12 +82,26 @@ export class ApiService {
     this.httpService.delete(`${this.baseUrl}workload/delete`).subscribe();
   }
 
-  public newPi(piName: string, startDate: string, endDate: string, amountOfSprints: number): Observable<Pi> {
+  public newPi(piName: string, startDate: string, endDate: string, amountOfSprints: number,
+               sprint1Start?, sprint1End?, sprint2Start?, sprint2End?, sprint3Start?, sprint3End?, sprint4Start?, sprint4End?,
+               sprint5Start?, sprint5End?, sprint6Start?, sprint6End?): Observable<Pi> {
     return this.httpService.post(`${this.baseUrl}pi/create`, {
       piShortname: piName,
       piStart: startDate,
       piEnd: endDate,
-      sprintCounts: amountOfSprints
+      sprintCounts: amountOfSprints,
+      sprint1Start: sprint1Start || null,
+      sprint1End: sprint1End || null,
+      sprint2Start: sprint2Start || null,
+      sprint2End: sprint2End || null,
+      sprint3Start: sprint3Start || null,
+      sprint3End: sprint3End || null,
+      sprint4Start: sprint4Start || null,
+      sprint4End: sprint4End || null,
+      sprint5Start: sprint5Start || null,
+      sprint5End: sprint5End || null,
+      sprint6Start: sprint6Start || null,
+      sprint6End: sprint6End || null
     }, {headers: {'Content-Type': 'application/json'}, observe: 'body', responseType: 'json'})
       .pipe(map(data => new Pi().deserialize(data)));
   }
@@ -98,12 +112,26 @@ export class ApiService {
     );
   }
 
-  public updatePi(piId: number, piName: string, startDate: string, endDate: string, amountOfSprints: number): void {
+  public updatePi(piId: number, piName: string, startDate: string, endDate: string, amountOfSprints: number,
+                  sprint1Start, sprint1End, sprint2Start, sprint2End, sprint3Start, sprint3End, sprint4Start, sprint4End,
+                  sprint5Start, sprint5End, sprint6Start, sprint6End): void {
     this.httpService.put(`${this.baseUrl}pi/${piId}/update`, {
         piShortname: piName,
         piStart: startDate,
         piEnd: endDate,
-        sprintCounts: amountOfSprints
+        sprintCounts: amountOfSprints,
+        sprint1Start: sprint1Start || null,
+        sprint1End: sprint1End || null,
+        sprint2Start: sprint2Start || null,
+        sprint2End: sprint2End || null,
+        sprint3Start: sprint3Start || null,
+        sprint3End: sprint3End || null,
+        sprint4Start: sprint4Start || null,
+        sprint4End: sprint4End || null,
+        sprint5Start: sprint5Start || null,
+        sprint5End: sprint5End || null,
+        sprint6Start: sprint6Start || null,
+        sprint6End: sprint6End || null
       },
       {headers: {'Content-Type': 'application/json'}, observe: 'body', responseType: 'json'})
       .subscribe(response => response );

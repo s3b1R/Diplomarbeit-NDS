@@ -202,10 +202,24 @@ describe('ApiService', () => {
       piShortname: '2106',
       piStart: '2021-04-01',
       piEnd: '2021-06-09',
-      sprintCounts: 5
+      sprintCounts: 5,
+      sprint1Start: null,
+      sprint1End: null,
+      sprint2Start: null,
+      sprint2End: null,
+      sprint3Start: null,
+      sprint3End: null,
+      sprint4Start: null,
+      sprint4End: null,
+      sprint5Start: null,
+      sprint5End: null,
+      sprint6Start: null,
+      sprint6End: null
     });
 
-    service.newPi('2106', '2021-04-01', '2021-06-09', 5)
+    service.newPi('2106', '2021-04-01', '2021-06-09', 5, null,
+      null, null, null, null, null, null, null,
+      null, null, null, null)
       .subscribe( pi => {
       expect(pi).toEqual(dummyPi);
       expect(pi).toBeInstanceOf(Pi);
@@ -223,13 +237,37 @@ describe('ApiService', () => {
         piShortname: '2106',
         piStart: '2021-04-01',
         piEnd: '2021-06-09',
-        sprintCounts: 5
+        sprintCounts: 5,
+        sprint1Start: null,
+        sprint1End: null,
+        sprint2Start: null,
+        sprint2End: null,
+        sprint3Start: null,
+        sprint3End: null,
+        sprint4Start: null,
+        sprint4End: null,
+        sprint5Start: null,
+        sprint5End: null,
+        sprint6Start: null,
+        sprint6End: null
       }), new Pi().deserialize({
       id: 2,
       piShortname: '2103',
       piStart: '2021-01-13',
       piEnd: '2021-03-30',
-      sprintCounts: 5
+      sprintCounts: 5,
+      sprint1Start: null,
+      sprint1End: null,
+      sprint2Start: null,
+      sprint2End: null,
+      sprint3Start: null,
+      sprint3End: null,
+      sprint4Start: null,
+      sprint4End: null,
+      sprint5Start: null,
+      sprint5End: null,
+      sprint6Start: null,
+      sprint6End: null
     })
     ];
 
@@ -244,7 +282,9 @@ describe('ApiService', () => {
   });
 
   it('should update a pi', () => {
-    expect((service.updatePi(1, '2106', '2021-04-01', '2021-06-19', 6))).toBeUndefined();
+    expect((service.updatePi(1, '2106', '2021-04-01', '2021-06-19', 6, null,
+      null, null, null, null, null, null, null,
+      null, null, null, null))).toBeUndefined();
 
     const updateRequest = httpMock.expectOne(`${service.baseUrl}pi/1/update`);
     expect(updateRequest.request.method).toBe('PUT');
