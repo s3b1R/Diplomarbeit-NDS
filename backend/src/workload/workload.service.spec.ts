@@ -29,6 +29,14 @@ describe('WorkloadService', () => {
     expect(workloadsFromDB[1].storyPoints).toBe('0.8');
   });
 
+  it('should return sum of storypoints of an user', async () => {
+    const workloadSumFromDB: any = await workloadService.getStoryPointsForUserInSprint(
+      'name',
+      'sprint',
+    );
+    expect(workloadSumFromDB.sum).toBe(3.5);
+  });
+
   it('should create one', async () => {
     const newWorkload: Workload = await workloadService.create(new Workload());
 
@@ -75,4 +83,12 @@ export const mockRepository = jest.fn(() => ({
       resolve(new Workload());
     }),
   clear: () => undefined,
+  createQueryBuilder: () => ({
+    select: jest.fn().mockReturnThis(),
+    where: jest.fn().mockReturnThis(),
+    andWhere: jest.fn().mockReturnThis(),
+    getRawOne: jest.fn().mockReturnValueOnce({
+      sum: 3.5,
+    }),
+  }),
 }));

@@ -20,6 +20,18 @@ export class WorkloadService {
     });
   }
 
+  async getStoryPointsForUserInSprint(
+    name: string,
+    sprint: string,
+  ): Promise<any> {
+    return await this.workloadRepository
+      .createQueryBuilder('workload')
+      .select('SUM(workload.storyPoints)', 'sum')
+      .where(`workload.assignee = "${name}"`)
+      .andWhere(`workload.sprint LIKE "%${sprint}%"`)
+      .getRawOne();
+  }
+
   async create(workload: Workload): Promise<Workload> {
     return await this.workloadRepository.save(workload);
   }

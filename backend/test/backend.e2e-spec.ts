@@ -474,6 +474,30 @@ describe('WorkloadModule (e2e)', () => {
     expect(body).toHaveLength(2);
   });
 
+  it('should return sum of storypoints of an user', async () => {
+    await request(app.getHttpServer())
+      .post('/workload/create')
+      .set('Accept', 'application/json')
+      .send({
+        assignee: 'Hanna Muster',
+        sprint: 'E2E 2101-5 (23.12.-5.1.)',
+        storyPoints: '0.8',
+        project: 'Best E2E',
+      });
+
+    const { body } = await request(app.getHttpServer())
+      .get('/workload/storypoints')
+      .set('Accept', 'application/json')
+      .send({
+        name: 'Hanna Muster',
+        sprint: '2101-5',
+      })
+      .expect(200);
+    expect(body).toEqual({
+      sum: '1.6',
+    });
+  });
+
   it('should clear workload table', async () => {
     const { body } = await request(app.getHttpServer())
       .delete('/workload/delete')
