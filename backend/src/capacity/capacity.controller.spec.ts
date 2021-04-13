@@ -29,6 +29,16 @@ describe('CapacityController', () => {
     expect(await capacityController.index()).toHaveLength(3);
   });
 
+  it('should return sum of capacity from an user', async () => {
+    const mockedCapaSum = { capasum: 9.0 };
+    jest
+      .spyOn(capacityService, 'getCapacityForUserInSprint')
+      .mockResolvedValue(mockedCapaSum);
+    expect(
+      await capacityController.getCapacityForUserInSprint(1, 'start', 'end'),
+    ).toBe(mockedCapaSum);
+  });
+
   it('should find capacities by month', async () => {
     const mockedValues = [new Capacity(), new Capacity()];
     const mockedMonth = '2021-03';

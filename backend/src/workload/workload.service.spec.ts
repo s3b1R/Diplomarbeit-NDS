@@ -29,7 +29,7 @@ describe('WorkloadService', () => {
     expect(workloadsFromDB[1].storyPoints).toBe('0.8');
   });
 
-  it('should return sum of storypoints of an user', async () => {
+  it('should return sum of storypoints from a user', async () => {
     const workloadSumFromDB: any = await workloadService.getStoryPointsForUserInSprint(
       'name',
       'sprint',
