@@ -15,7 +15,7 @@ export class WorkloadController {
   async getStoryPointsForUserInSprint(
     @Body('name') name,
     @Body('sprint') sprint,
-  ): Promise<number> {
+  ): Promise<any> {
     return this.workloadService.getStoryPointsForUserInSprint(name, sprint);
   }
 

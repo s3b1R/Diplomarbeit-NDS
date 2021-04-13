@@ -37,6 +37,15 @@ export class CapacityController {
     return this.capacityService.findDateAndUser(date, id);
   }
 
+  @Get(':id/:start/:end/capa')
+  async getCapacityForUserInSprint(
+    @Param('id') id,
+    @Param('start') start,
+    @Param('end') end,
+  ): Promise<any> {
+    return this.capacityService.getCapacityForUserInSprint(id, start, end);
+  }
+
   @Post('create')
   async create(@Body() capacityData: Capacity): Promise<any> {
     return this.capacityService.create(capacityData);
