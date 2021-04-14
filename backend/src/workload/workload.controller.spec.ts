@@ -29,13 +29,13 @@ describe('WorkloadController', () => {
     expect(await workloadController.index()).toHaveLength(3);
   });
 
-  it('should return sum of storypoints from a user', async () => {
+  it('should return sum of workload from a user', async () => {
     const mockedWorkload = { sum: 2.5 };
     jest
-      .spyOn(workloadService, 'getStoryPointsForUserInSprint')
+      .spyOn(workloadService, 'getWorkloadForUserInSprint')
       .mockResolvedValue(mockedWorkload);
     expect(
-      await workloadController.getStoryPointsForUserInSprint('Name', 'Sprint'),
+      await workloadController.getWorkloadForUserInSprint('Name', 'Sprint'),
     ).toBe(mockedWorkload);
   });
 

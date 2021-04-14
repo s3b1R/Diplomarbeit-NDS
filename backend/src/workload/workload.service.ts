@@ -20,7 +20,7 @@ export class WorkloadService {
     });
   }
 
-  async getStoryPointsForUserInSprint(
+  async getWorkloadForUserInSprint(
     name: string,
     sprint: string,
   ): Promise<any> {

@@ -474,7 +474,7 @@ describe('WorkloadModule (e2e)', () => {
     expect(body).toHaveLength(2);
   });
 
-  it('should return sum of storypoints of an user', async () => {
+  it('should return sum of workload of an user', async () => {
     await request(app.getHttpServer())
       .post('/workload/create')
       .set('Accept', 'application/json')

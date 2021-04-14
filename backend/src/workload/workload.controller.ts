@@ -12,11 +12,11 @@ export class WorkloadController {
   }
 
   @Get(':name/:sprint/storypoints')
-  async getStoryPointsForUserInSprint(
+  async getWorkloadForUserInSprint(
     @Param('name') name,
     @Param('sprint') sprint,
   ): Promise<any> {
-    return this.workloadService.getStoryPointsForUserInSprint(name, sprint);
+    return this.workloadService.getWorkloadForUserInSprint(name, sprint);
   }
 
   @Post('create')
