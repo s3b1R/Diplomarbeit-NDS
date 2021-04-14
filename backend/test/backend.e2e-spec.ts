@@ -486,12 +486,8 @@ describe('WorkloadModule (e2e)', () => {
       });
 
     const { body } = await request(app.getHttpServer())
-      .get('/workload/storypoints')
+      .get('/workload/Hanna%20Muster/2101-5/storypoints')
       .set('Accept', 'application/json')
-      .send({
-        name: 'Hanna Muster',
-        sprint: '2101-5',
-      })
       .expect(200);
     expect(body).toEqual({
       sum: '1.6',

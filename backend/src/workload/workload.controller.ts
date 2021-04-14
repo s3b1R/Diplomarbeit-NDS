@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Delete, Param } from '@nestjs/common';
 import { Workload } from './workload.entity';
 import { WorkloadService } from './workload.service';
 
@@ -11,10 +11,10 @@ export class WorkloadController {
     return this.workloadService.findAll();
   }
 
-  @Get('storypoints')
+  @Get(':name/:sprint/storypoints')
   async getStoryPointsForUserInSprint(
-    @Body('name') name,
-    @Body('sprint') sprint,
+    @Param('name') name,
+    @Param('sprint') sprint,
   ): Promise<any> {
     return this.workloadService.getStoryPointsForUserInSprint(name, sprint);
   }
