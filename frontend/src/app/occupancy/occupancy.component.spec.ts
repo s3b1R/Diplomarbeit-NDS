@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ApiService } from '../shared/services/api.service';
 import { OccupancyComponent } from './occupancy.component';
 
 describe('OccupancyComponent', () => {
@@ -8,7 +9,7 @@ describe('OccupancyComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ OccupancyComponent ]
+      declarations: [ OccupancyComponent ], imports: [ HttpClientTestingModule ], providers: [ ApiService ]
     })
     .compileComponents();
   });

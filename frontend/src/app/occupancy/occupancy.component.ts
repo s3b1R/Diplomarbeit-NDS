@@ -8,7 +8,7 @@ import { ApiService } from '../shared/services/api.service';
   styleUrls: ['./occupancy.component.css']
 })
 export class OccupancyComponent implements OnInit {
-  workloadList: Workload[];
+  workloadList: Workload[] = [];
 
   constructor(private apiService: ApiService) { }
 
