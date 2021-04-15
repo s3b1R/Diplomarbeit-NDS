@@ -118,6 +118,18 @@ describe('ApiService', () => {
     dayAndIdRequest.flush(dummyCapacity);
   });
 
+  it('should get capacity sum for a sprint from a specific user', () => {
+    const dummyCapaSum = [{capasum: 3.5}];
+
+    service.getCapacityForUserInSprint(2, '2021-04-01', '2021-04-13').subscribe( result => {
+      expect(result).toBe(3.5);
+    });
+
+    const idAndDatesRequest = httpMock.expectOne(`${service.baseUrl}capacity/2/2021-04-01/2021-04-13/capa`);
+    expect(idAndDatesRequest.request.method).toBe('GET');
+    idAndDatesRequest.flush(dummyCapaSum);
+  });
+
   it('should update a capacity', () => {
     expect((service.updateCapacity(99, 1))).toBeUndefined();
 
@@ -187,6 +199,20 @@ describe('ApiService', () => {
     const workloadRequest = httpMock.expectOne(`${service.baseUrl}workload`);
     expect(workloadRequest.request.method).toBe('GET');
     workloadRequest.flush(dummyWorkloads);
+  });
+
+  it('should get workload sum for a specific user', () => {
+    const dummyWorkloadSum = {sum: 5.5};
+    const nameParam = 'Hans Muster';
+    const dateParam = '2106-1';
+
+    service.getWorkloadForUserInSprint('Hans Muster', '2106-1').subscribe( result => {
+      expect(result).toBe(5.5);
+    });
+
+      const workloadSumRequest = httpMock.expectOne(`${service.baseUrl}workload/${nameParam}/${dateParam}/storypoints`);
+      expect(workloadSumRequest.request.method).toBe('GET');
+      workloadSumRequest.flush(dummyWorkloadSum);
   });
 
   it('should clear all workloads', () => {

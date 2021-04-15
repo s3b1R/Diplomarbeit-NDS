@@ -47,6 +47,11 @@ export class ApiService {
       .pipe(map(data => data.map(data => new Capacity().deserialize(data))));
   }
 
+  public getCapacityForUserInSprint(userId: number, start: string, end: string): Observable<any>{
+    return this.httpService.get<any>(`${this.baseUrl}capacity/${userId}/${start}/${end}/capa`)
+      .pipe(map(data => data[0].capasum));
+  }
+
   public updateCapacity(capaId: number, newValue: number): void {
     this.httpService.put(`${this.baseUrl}capacity/${capaId}/update`, {capa: newValue},
       {headers: {'Content-Type': 'application/json'}, observe: 'body', responseType: 'json'})
@@ -76,6 +81,11 @@ export class ApiService {
     return this.httpService.get<Workload[]>(`${this.baseUrl}workload`).pipe(
       map(data => data.map(data => new Workload().deserialize(data)))
     );
+  }
+
+  public getWorkloadForUserInSprint(name: string, sprint: string): Observable<any> {
+    return this.httpService.get<any>(`${this.baseUrl}workload/${name}/${sprint}/storypoints`)
+      .pipe(map(data => data.sum));
   }
 
   public clearWorkload(): void {
