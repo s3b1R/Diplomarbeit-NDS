@@ -38,7 +38,7 @@ describe('PiController', () => {
 
   it('should create one', async () => {
     const mockedValues = {
-      piShortname: 2103,
+      piShortname: '2103',
       piStart: new Date(2021, 3, 1),
       piEnd: new Date(2021, 5, 9),
       sprintCounts: 5,
