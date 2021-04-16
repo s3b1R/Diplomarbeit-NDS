@@ -1,1 +1,39 @@
-<p>comparison works!</p>
+<mat-card>
+
+<table>
+  <caption>PI {{piName}}</caption>
+  <thead>
+  <tr>
+    <th class="name" rowspan="2" scope="col">Name</th>
+    <ng-container *ngFor="let sprint of sprints">
+      <td class="separator"></td>
+    <th class="sprints" scope="col" colspan="3" >Sprint {{sprint}}</th>
+    </ng-container>
+  </tr>
+  <tr>
+
+    <ng-container *ngFor="let sprint of sprints">
+      <td class="separator"></td>
+      <th class="capa" scope="col">Capa</th>
+      <th class="load" scope="col">Load</th>
+      <th class="difference" scope="col">&Delta;</th>
+    </ng-container>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let user of userList">
+    <td class="name">{{user.name}}</td>
+    <ng-container *ngFor="let sprint of sprints; let idx = index">
+      <ng-container>
+        <td class="separator"></td>
+        <td #capa class="capa">{{user.id | capaPipe: sprintStarts[idx] : sprintEnds[idx] | async }}</td>
+        <td #load class="load">{{user.name | workloadPipe: piName : sprint | async }}</td>
+        <td class="difference">{{capa.innerText | deltaPipe: load.innerText }}</td>
+      </ng-container>
+    </ng-container>
+  </tr>
+  </tbody>
+
+</table>
+
+</mat-card>
