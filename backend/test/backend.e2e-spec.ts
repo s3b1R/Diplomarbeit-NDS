@@ -245,17 +245,41 @@ describe('PiModule (e2e)', () => {
       .set('Accept', 'application/json')
       .send({
         piShortname: '2103',
-        piStart: '2021-01-06',
-        piEnd: '2021-03-01',
-        sprintCounts: '5',
+        piStart: '2021-12-23',
+        piEnd: '2021-03-03',
+        sprintCounts: 5,
+        sprint1Start: '2020-12-23',
+        sprint1End: '2021-01-05',
+        sprint2Start: '2021-01-06',
+        sprint2End: '2021-01-19',
+        sprint3Start: '2021-01-20',
+        sprint3End: '2021-02-02',
+        sprint4Start: '2021-02-03',
+        sprint4End: '2021-02-16',
+        sprint5Start: '2021-02-17',
+        sprint5End: '2021-03-03',
+        sprint6Start: null,
+        sprint6End: null,
       })
       .expect(201);
 
     expect(body).toEqual({
       piShortname: '2103',
-      piStart: '2021-01-06',
-      piEnd: '2021-03-01',
-      sprintCounts: '5',
+      piStart: '2021-12-23',
+      piEnd: '2021-03-03',
+      sprintCounts: 5,
+      sprint1Start: '2020-12-23',
+      sprint1End: '2021-01-05',
+      sprint2Start: '2021-01-06',
+      sprint2End: '2021-01-19',
+      sprint3Start: '2021-01-20',
+      sprint3End: '2021-02-02',
+      sprint4Start: '2021-02-03',
+      sprint4End: '2021-02-16',
+      sprint5Start: '2021-02-17',
+      sprint5End: '2021-03-03',
+      sprint6Start: null,
+      sprint6End: null,
       id: 1,
     });
   });
@@ -265,10 +289,22 @@ describe('PiModule (e2e)', () => {
       .post('/pi/create')
       .set('Accept', 'application/json')
       .send({
-        piShortname: '2105',
+        piShortname: '2107',
         piStart: '2021-05-06',
         piEnd: '2021-07-01',
-        sprintCounts: '5',
+        sprintCounts: 5,
+        sprint1Start: null,
+        sprint1End: null,
+        sprint2Start: null,
+        sprint2End: null,
+        sprint3Start: null,
+        sprint3End: null,
+        sprint4Start: null,
+        sprint4End: null,
+        sprint5Start: null,
+        sprint5End: null,
+        sprint6Start: null,
+        sprint6End: null,
       });
     const { body } = await request(app.getHttpServer())
       .get('/pi')
@@ -276,18 +312,42 @@ describe('PiModule (e2e)', () => {
       .expect(200);
     expect(body).toEqual([
       {
-        id: 1,
-        piShortname: 2103,
-        piStart: '2021-01-06',
-        piEnd: '2021-03-01',
-        sprintCounts: 5,
-      },
-      {
         id: 2,
-        piShortname: 2105,
+        piShortname: '2107',
         piStart: '2021-05-06',
         piEnd: '2021-07-01',
         sprintCounts: 5,
+        sprint1Start: null,
+        sprint1End: null,
+        sprint2Start: null,
+        sprint2End: null,
+        sprint3Start: null,
+        sprint3End: null,
+        sprint4Start: null,
+        sprint4End: null,
+        sprint5Start: null,
+        sprint5End: null,
+        sprint6Start: null,
+        sprint6End: null,
+      },
+      {
+        id: 1,
+        piShortname: '2103',
+        piStart: '2021-12-23',
+        piEnd: '2021-03-03',
+        sprintCounts: 5,
+        sprint1Start: '2020-12-23',
+        sprint1End: '2021-01-05',
+        sprint2Start: '2021-01-06',
+        sprint2End: '2021-01-19',
+        sprint3Start: '2021-01-20',
+        sprint3End: '2021-02-02',
+        sprint4Start: '2021-02-03',
+        sprint4End: '2021-02-16',
+        sprint5Start: '2021-02-17',
+        sprint5End: '2021-03-03',
+        sprint6Start: null,
+        sprint6End: null,
       },
     ]);
     expect(body).toHaveLength(2);
@@ -301,10 +361,22 @@ describe('PiModule (e2e)', () => {
     expect(body).toEqual([
       {
         id: 2,
-        piShortname: 2105,
+        piShortname: '2107',
         piStart: '2021-05-06',
         piEnd: '2021-07-01',
         sprintCounts: 5,
+        sprint1Start: null,
+        sprint1End: null,
+        sprint2Start: null,
+        sprint2End: null,
+        sprint3Start: null,
+        sprint3End: null,
+        sprint4Start: null,
+        sprint4End: null,
+        sprint5Start: null,
+        sprint5End: null,
+        sprint6Start: null,
+        sprint6End: null,
       },
     ]);
     expect(body).toHaveLength(1);
@@ -377,7 +449,7 @@ describe('WorkloadModule (e2e)', () => {
         assignee: 'Hanna Muster',
         sprint: 'E2E 2101-5 (23.12.-5.1.)',
         storyPoints: '0.8',
-        project: 'Go4 E2E',
+        project: 'Best E2E',
       });
     const { body } = await request(app.getHttpServer())
       .get('/workload')
@@ -385,21 +457,41 @@ describe('WorkloadModule (e2e)', () => {
       .expect(200);
     expect(body).toEqual([
       {
+        id: 2,
+        assignee: 'Hanna Muster',
+        sprint: 'E2E 2101-5 (23.12.-5.1.)',
+        storyPoints: '0.8',
+        project: 'Best E2E',
+      },
+      {
         id: 1,
         assignee: 'Hans Muster',
         sprint: 'E2E 2101-5 (23.12.-5.1.)',
         storyPoints: '1.0',
         project: 'Go4 E2E',
       },
-      {
-        id: 2,
+    ]);
+    expect(body).toHaveLength(2);
+  });
+
+  it('should return sum of workload of an user', async () => {
+    await request(app.getHttpServer())
+      .post('/workload/create')
+      .set('Accept', 'application/json')
+      .send({
         assignee: 'Hanna Muster',
         sprint: 'E2E 2101-5 (23.12.-5.1.)',
         storyPoints: '0.8',
-        project: 'Go4 E2E',
-      },
-    ]);
-    expect(body).toHaveLength(2);
+        project: 'Best E2E',
+      });
+
+    const { body } = await request(app.getHttpServer())
+      .get('/workload/Hanna%20Muster/2101-5/storypoints')
+      .set('Accept', 'application/json')
+      .expect(200);
+    expect(body).toEqual({
+      sum: '1.6',
+    });
   });
 
   it('should clear workload table', async () => {

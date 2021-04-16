@@ -7,11 +7,13 @@
 </mat-form-field>
 
 <table *ngIf="!isLoading" aria-describedby="Capacity">
+  <thead>
   <tr>
     <th scope="col">Name</th>
     <th scope="col" *ngFor="let day of intervalOfDates">{{day | dfnsFormatPure : 'dd. MMM'}}</th>
   </tr>
-
+  </thead>
+  <tbody>
   <tr *ngFor="let user of userList">
       <td>{{user.name}}</td>
 
@@ -27,6 +29,7 @@
       </ng-container>
     </ng-container>
   </tr>
+  </tbody>
 </table>
   <a *ngIf="!isLoading" mat-button routerLink="/massmutation">Mehrere Tage erfassen</a>
 

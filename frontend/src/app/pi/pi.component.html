@@ -7,19 +7,19 @@
     </mat-button-toggle-group>
   </div>
 
-  <form *ngIf="caseControl.value == 'new'" [formGroup]="newPi" (ngSubmit)="submitNewPi()">
+  <form *ngIf="caseControl.value == 'new'">
 
     <mat-form-field class="pi-input" appearance="fill">
       <mat-label>PI Bezeichnung</mat-label>
-      <input matInput type="text" formControlName="shortName" placeholder="YYMM">
-      <button mat-button *ngIf="newPi.value.shortName" matSuffix mat-icon-button aria-label="Clear" (click)="newPi.value.shortName=''">
+      <input matInput type="text" [formControl]="shortName" placeholder="YYMM">
+      <button mat-button *ngIf="shortName.value" matSuffix mat-icon-button aria-label="Clear" (click)="shortName.reset()">
         <mat-icon>close</mat-icon>
       </button>
     </mat-form-field>
 
     <mat-form-field class="pi-input" appearance="fill">
       <mat-label>PI Start</mat-label>
-      <input matInput [matDatepicker]="newPiStart" formControlName="startDate">
+      <input matInput [matDatepicker]="newPiStart" [formControl]="startDate">
       <mat-datepicker-toggle  matSuffix [for]="newPiStart"></mat-datepicker-toggle>
       <mat-datepicker #newPiStart></mat-datepicker>
     </mat-form-field>
@@ -27,18 +27,115 @@
 
     <mat-form-field class="pi-input" appearance="fill">
       <mat-label>PI Ende</mat-label>
-      <input matInput [matDatepicker]="newPiEnd" formControlName="endDate">
+      <input matInput [matDatepicker]="newPiEnd" [formControl]="endDate">
       <mat-datepicker-toggle  matSuffix [for]="newPiEnd"></mat-datepicker-toggle>
       <mat-datepicker #newPiEnd></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field class="pi-input" appearance="fill">
       <mat-label>Anzahl Sprints</mat-label>
-      <input matInput type="number" min="0" formControlName="sprintCounts">
+      <input matInput type="number" min="0" max="6" [formControl]="sprintCounts">
     </mat-form-field>
 
-    <button mat-button>Erfassen</button>
+      <div  *ngIf="sprintCounts.value > 0">
+        <mat-form-field class="pi-input" appearance="fill">
+          <mat-label>Sprint 1 Start</mat-label>
+          <input matInput [matDatepicker]="newSprintStart" [formControl]="sprint1Start">
+          <mat-datepicker-toggle  matSuffix [for]="newSprintStart"></mat-datepicker-toggle>
+          <mat-datepicker #newSprintStart></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="pi-input" appearance="fill">
+          <mat-label>Sprint 1 Ende</mat-label>
+          <input matInput [matDatepicker]="newSprintEnd" [formControl]="sprint1End">
+          <mat-datepicker-toggle  matSuffix [for]="newSprintEnd"></mat-datepicker-toggle>
+          <mat-datepicker #newSprintEnd></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+    <div  *ngIf="sprintCounts.value > 1">
+      <mat-form-field class="pi-input" appearance="fill">
+        <mat-label>Sprint 2 Start</mat-label>
+        <input matInput [matDatepicker]="newSprintStart" [formControl]="sprint2Start">
+        <mat-datepicker-toggle  matSuffix [for]="newSprintStart"></mat-datepicker-toggle>
+        <mat-datepicker #newSprintStart></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field class="pi-input" appearance="fill">
+        <mat-label>Sprint 2 Ende</mat-label>
+        <input matInput [matDatepicker]="newSprintEnd" [formControl]="sprint2End">
+        <mat-datepicker-toggle  matSuffix [for]="newSprintEnd"></mat-datepicker-toggle>
+        <mat-datepicker #newSprintEnd></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div  *ngIf="sprintCounts.value > 2">
+      <mat-form-field class="pi-input" appearance="fill">
+        <mat-label>Sprint 3 Start</mat-label>
+        <input matInput [matDatepicker]="newSprintStart" [formControl]="sprint3Start">
+        <mat-datepicker-toggle  matSuffix [for]="newSprintStart"></mat-datepicker-toggle>
+        <mat-datepicker #newSprintStart></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field class="pi-input" appearance="fill">
+        <mat-label>Sprint 3 Ende</mat-label>
+        <input matInput [matDatepicker]="newSprintEnd" [formControl]="sprint3End">
+        <mat-datepicker-toggle  matSuffix [for]="newSprintEnd"></mat-datepicker-toggle>
+        <mat-datepicker #newSprintEnd></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div  *ngIf="sprintCounts.value > 3">
+      <mat-form-field class="pi-input" appearance="fill">
+        <mat-label>Sprint 4 Start</mat-label>
+        <input matInput [matDatepicker]="newSprintStart" [formControl]="sprint4Start">
+        <mat-datepicker-toggle  matSuffix [for]="newSprintStart"></mat-datepicker-toggle>
+        <mat-datepicker #newSprintStart></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field class="pi-input" appearance="fill">
+        <mat-label>Sprint 4 Ende</mat-label>
+        <input matInput [matDatepicker]="newSprintEnd" [formControl]="sprint4End">
+        <mat-datepicker-toggle  matSuffix [for]="newSprintEnd"></mat-datepicker-toggle>
+        <mat-datepicker #newSprintEnd></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div  *ngIf="sprintCounts.value > 4">
+      <mat-form-field class="pi-input" appearance="fill">
+        <mat-label>Sprint 5 Start</mat-label>
+        <input matInput [matDatepicker]="newSprintStart" [formControl]="sprint5Start">
+        <mat-datepicker-toggle  matSuffix [for]="newSprintStart"></mat-datepicker-toggle>
+        <mat-datepicker #newSprintStart></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field class="pi-input" appearance="fill">
+        <mat-label>Sprint 5 Ende</mat-label>
+        <input matInput [matDatepicker]="newSprintEnd" [formControl]="sprint5End">
+        <mat-datepicker-toggle  matSuffix [for]="newSprintEnd"></mat-datepicker-toggle>
+        <mat-datepicker #newSprintEnd></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div  *ngIf="sprintCounts.value > 5">
+      <mat-form-field class="pi-input" appearance="fill">
+        <mat-label>Sprint 6 Start</mat-label>
+        <input matInput [matDatepicker]="newSprintStart" [formControl]="sprint6Start">
+        <mat-datepicker-toggle  matSuffix [for]="newSprintStart"></mat-datepicker-toggle>
+        <mat-datepicker #newSprintStart></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field class="pi-input" appearance="fill">
+        <mat-label>Sprint 6 Ende</mat-label>
+        <input matInput [matDatepicker]="newSprintEnd" [formControl]="sprint6End">
+        <mat-datepicker-toggle  matSuffix [for]="newSprintEnd"></mat-datepicker-toggle>
+        <mat-datepicker #newSprintEnd></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <button mat-button (click)="submitNewPi()">Erfassen</button>
   </form>
+
+
 
   <form *ngIf="caseControl.value == 'edit'">
     <div>
@@ -75,10 +172,105 @@
 
     <mat-form-field appearance="fill">
       <mat-label>Anzahl Sprints</mat-label>
-      <input matInput type="number" min="0" #editedSprintCount value="{{piControl.value?.sprintCounts}}">
+      <input matInput type="number" min="0" max="6" #editedSprintCount value="{{piControl.value?.sprintCounts}}">
     </mat-form-field>
 
-    <button mat-button (click)="updatePi(editedShortName.value, editedStartDate.value, editedEndDate.value, editedSprintCount.value)">Änderung Speichern</button>
+
+        <mat-form-field  class="pi-input" appearance="fill">
+          <mat-label>Sprint 1 Start</mat-label>
+          <input matInput [matDatepicker]="sprintStart" #editedSprint1Start value="{{piControl.value?.sprint1Start}}" >
+          <mat-datepicker-toggle *ngIf="editedSprintCount.value > 0" matSuffix [for]="sprintStart"></mat-datepicker-toggle>
+          <mat-datepicker #sprintStart></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="pi-input" appearance="fill">
+          <mat-label>Sprint 1 Ende</mat-label>
+          <input matInput [matDatepicker]="sprintEnd" #editedSprint1End value="{{piControl.value?.sprint1End}}" >
+          <mat-datepicker-toggle *ngIf="editedSprintCount.value > 0"  matSuffix [for]="sprintEnd"></mat-datepicker-toggle>
+          <mat-datepicker #sprintEnd></mat-datepicker>
+        </mat-form-field>
+
+
+
+        <mat-form-field class="pi-input" appearance="fill">
+          <mat-label>Sprint 2 Start</mat-label>
+          <input matInput [matDatepicker]="sprint2Start" #editedSprint2Start value="{{piControl.value?.sprint2Start}}" >
+          <mat-datepicker-toggle *ngIf="editedSprintCount.value > 1" matSuffix [for]="sprint2Start"></mat-datepicker-toggle>
+          <mat-datepicker #sprint2Start></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="pi-input" appearance="fill">
+          <mat-label>Sprint 2 Ende</mat-label>
+          <input matInput [matDatepicker]="sprint2End" #editedSprint2End value="{{piControl.value?.sprint2End}}" >
+          <mat-datepicker-toggle *ngIf="editedSprintCount.value > 1" matSuffix [for]="sprint2End"></mat-datepicker-toggle>
+          <mat-datepicker #sprint2End></mat-datepicker>
+        </mat-form-field>
+
+
+
+        <mat-form-field class="pi-input" appearance="fill">
+          <mat-label>Sprint 3 Start</mat-label>
+          <input matInput [matDatepicker]="sprint3Start" #editedSprint3Start value="{{piControl.value?.sprint3Start}}" >
+          <mat-datepicker-toggle *ngIf="editedSprintCount.value > 2" matSuffix [for]="sprint3Start"></mat-datepicker-toggle>
+          <mat-datepicker #sprint3Start></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="pi-input" appearance="fill">
+          <mat-label>Sprint 3 Ende</mat-label>
+          <input matInput [matDatepicker]="sprint3End" #editedSprint3End value="{{piControl.value?.sprint3End}}" >
+          <mat-datepicker-toggle *ngIf="editedSprintCount.value > 2" matSuffix [for]="sprint3End"></mat-datepicker-toggle>
+          <mat-datepicker #sprint3End></mat-datepicker>
+        </mat-form-field>
+
+
+
+        <mat-form-field class="pi-input" appearance="fill">
+          <mat-label>Sprint 4 Start</mat-label>
+          <input matInput [matDatepicker]="sprint4Start" #editedSprint4Start value="{{piControl.value?.sprint4Start}}" >
+          <mat-datepicker-toggle *ngIf="editedSprintCount.value > 3" matSuffix [for]="sprint4Start"></mat-datepicker-toggle>
+          <mat-datepicker #sprint4Start></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="pi-input" appearance="fill">
+          <mat-label>Sprint 4 Ende</mat-label>
+          <input matInput [matDatepicker]="sprint4End" #editedSprint4End value="{{piControl.value?.sprint4End}}" >
+          <mat-datepicker-toggle *ngIf="editedSprintCount.value > 3" matSuffix [for]="sprint4End"></mat-datepicker-toggle>
+          <mat-datepicker #sprint4End></mat-datepicker>
+        </mat-form-field>
+
+
+
+        <mat-form-field class="pi-input" appearance="fill">
+          <mat-label>Sprint 5 Start</mat-label>
+          <input matInput [matDatepicker]="sprint5Start" #editedSprint5Start value="{{piControl.value?.sprint5Start}}" >
+          <mat-datepicker-toggle *ngIf="editedSprintCount.value > 4" matSuffix [for]="sprint5Start"></mat-datepicker-toggle>
+          <mat-datepicker #sprint5Start></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="pi-input" appearance="fill">
+          <mat-label>Sprint 5 Ende</mat-label>
+          <input matInput [matDatepicker]="sprint5End" #editedSprint5End value="{{piControl.value?.sprint5End}}" >
+          <mat-datepicker-toggle *ngIf="editedSprintCount.value > 4" matSuffix [for]="sprint5End"></mat-datepicker-toggle>
+          <mat-datepicker #sprint5End></mat-datepicker>
+        </mat-form-field>
+
+
+        <mat-form-field class="pi-input" appearance="fill">
+          <mat-label>Sprint 6 Start</mat-label>
+          <input matInput [matDatepicker]="sprint6Start" #editedSprint6Start value="{{piControl.value?.sprint6Start}}" >
+          <mat-datepicker-toggle *ngIf="editedSprintCount.value > 5" matSuffix [for]="sprint6Start"></mat-datepicker-toggle>
+          <mat-datepicker #sprint6Start></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="pi-input" appearance="fill">
+          <mat-label>Sprint 6 Ende</mat-label>
+          <input matInput [matDatepicker]="sprint6End" #editedSprint6End value="{{piControl.value?.sprint6End}}" >
+          <mat-datepicker-toggle *ngIf="editedSprintCount.value > 5" matSuffix [for]="sprint6End"></mat-datepicker-toggle>
+          <mat-datepicker #sprint6End></mat-datepicker>
+        </mat-form-field>
+
+
+    <button mat-button (click)="updatePi(editedShortName.value, editedStartDate.value, editedEndDate.value, editedSprintCount.value, editedSprint1Start.value, editedSprint1End.value, editedSprint2Start.value, editedSprint2End.value, editedSprint3Start.value, editedSprint3End.value, editedSprint4Start.value, editedSprint4End.value, editedSprint5Start.value, editedSprint5End.value, editedSprint6Start.value, editedSprint6End.value)">Änderung Speichern</button>
     <button mat-button color="warn" (click)="openDialog()">PI Löschen</button>
     </div>
   </form>

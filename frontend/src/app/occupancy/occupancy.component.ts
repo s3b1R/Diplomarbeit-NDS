@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Workload } from '../shared/models/workload.model';
+import { ApiService } from '../shared/services/api.service';
 
 @Component({
   selector: 'app-occupancy',
@@ -6,10 +8,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./occupancy.component.css']
 })
 export class OccupancyComponent implements OnInit {
+  workloadList: Workload[] = [];
 
-  constructor() { }
+  constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
+    this.apiService.getWorkload().subscribe( result => {
+      this.workloadList = result;
+    });
   }
 
 }

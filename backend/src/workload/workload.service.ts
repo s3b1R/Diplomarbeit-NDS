@@ -11,7 +11,25 @@ export class WorkloadService {
   ) {}
 
   async findAll(): Promise<Workload[]> {
-    return await this.workloadRepository.find();
+    return await this.workloadRepository.find({
+      order: {
+        project: 'ASC',
+        sprint: 'ASC',
+        assignee: 'ASC',
+      },
+    });
+  }
+
+  async getWorkloadForUserInSprint(
+    name: string,
+    sprint: string,
+  ): Promise<any> {
+    return await this.workloadRepository
+      .createQueryBuilder('workload')
+      .select('SUM(workload.storyPoints)', 'sum')
+      .where(`workload.assignee = "${name}"`)
+      .andWhere(`workload.sprint LIKE "%${sprint}%"`)
+      .getRawOne();
   }
 
   async create(workload: Workload): Promise<Workload> {

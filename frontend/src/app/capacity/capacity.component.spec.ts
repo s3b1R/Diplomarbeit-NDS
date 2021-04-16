@@ -3,8 +3,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { CapacityComponent } from './capacity.component';
 import { DateFnsModule } from 'ngx-date-fns';
 import { ApiService } from '../shared/services/api.service';
-import {Capacity} from '../shared/models/capacity.model';
-import { User } from '../shared/models/user.model';
+
 
 describe('CapacityComponent', () => {
   let component: CapacityComponent;

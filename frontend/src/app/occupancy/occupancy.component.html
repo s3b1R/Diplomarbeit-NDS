@@ -1,8 +1,24 @@
 <mat-card>
-<div>
+<div class="useCaseSelector">
   <a mat-button routerLink="/workload">JIRA Import</a>
 </div>
 
+  <table *ngIf="workloadList.length > 0">
+    <caption>Aktueller Import</caption>
+    <tr>
+      <th scope="col">Project</th>
+      <th scope="col">Sprint</th>
+      <th scope="col">Assignee</th>
+      <th scope="col">Story Points</th>
+    </tr>
+
+    <tr *ngFor="let load of workloadList">
+      <td>{{load.project}}</td>
+      <td>{{load.sprint}}</td>
+      <td>{{load.assignee}}</td>
+      <td>{{load.storyPoints}}</td>
+    </tr>
+  </table>
 
 
 </mat-card>

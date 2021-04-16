@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { DeleteResult, Repository, UpdateResult } from 'typeorm';
+import { DeleteResult, getManager, Repository, UpdateResult } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Capacity } from './capacity.entity';
 
@@ -43,5 +43,16 @@ export class CapacityService {
       relations: ['user'],
       where: `date = "${date}" and userID = "${id}"`,
     });
+  }
+
+  async getCapacityForUserInSprint(
+    id: number,
+    start: string,
+    end: string,
+  ): Promise<any> {
+    const manager = getManager();
+    return await manager.query(
+      `select SUM(capa) as capasum from capacity where userId = '${id}' and  date between '${start}' and '${end}';`,
+    );
   }
 }

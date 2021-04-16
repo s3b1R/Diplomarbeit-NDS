@@ -118,6 +118,18 @@ describe('ApiService', () => {
     dayAndIdRequest.flush(dummyCapacity);
   });
 
+  it('should get capacity sum for a sprint from a specific user', () => {
+    const dummyCapaSum = [{capasum: 3.5}];
+
+    service.getCapacityForUserInSprint(2, '2021-04-01', '2021-04-13').subscribe( result => {
+      expect(result).toBe(3.5);
+    });
+
+    const idAndDatesRequest = httpMock.expectOne(`${service.baseUrl}capacity/2/2021-04-01/2021-04-13/capa`);
+    expect(idAndDatesRequest.request.method).toBe('GET');
+    idAndDatesRequest.flush(dummyCapaSum);
+  });
+
   it('should update a capacity', () => {
     expect((service.updateCapacity(99, 1))).toBeUndefined();
 
@@ -189,6 +201,20 @@ describe('ApiService', () => {
     workloadRequest.flush(dummyWorkloads);
   });
 
+  it('should get workload sum for a specific user', () => {
+    const dummyWorkloadSum = {sum: 5.5};
+    const nameParam = 'Hans Muster';
+    const dateParam = '2106-1';
+
+    service.getWorkloadForUserInSprint('Hans Muster', '2106-1').subscribe( result => {
+      expect(result).toBe(5.5);
+    });
+
+      const workloadSumRequest = httpMock.expectOne(`${service.baseUrl}workload/${nameParam}/${dateParam}/storypoints`);
+      expect(workloadSumRequest.request.method).toBe('GET');
+      workloadSumRequest.flush(dummyWorkloadSum);
+  });
+
   it('should clear all workloads', () => {
     expect((service.clearWorkload())).toBeUndefined();
 
@@ -202,10 +228,24 @@ describe('ApiService', () => {
       piShortname: '2106',
       piStart: '2021-04-01',
       piEnd: '2021-06-09',
-      sprintCounts: 5
+      sprintCounts: 5,
+      sprint1Start: null,
+      sprint1End: null,
+      sprint2Start: null,
+      sprint2End: null,
+      sprint3Start: null,
+      sprint3End: null,
+      sprint4Start: null,
+      sprint4End: null,
+      sprint5Start: null,
+      sprint5End: null,
+      sprint6Start: null,
+      sprint6End: null
     });
 
-    service.newPi('2106', '2021-04-01', '2021-06-09', 5)
+    service.newPi('2106', '2021-04-01', '2021-06-09', 5, null,
+      null, null, null, null, null, null, null,
+      null, null, null, null)
       .subscribe( pi => {
       expect(pi).toEqual(dummyPi);
       expect(pi).toBeInstanceOf(Pi);
@@ -223,13 +263,37 @@ describe('ApiService', () => {
         piShortname: '2106',
         piStart: '2021-04-01',
         piEnd: '2021-06-09',
-        sprintCounts: 5
+        sprintCounts: 5,
+        sprint1Start: null,
+        sprint1End: null,
+        sprint2Start: null,
+        sprint2End: null,
+        sprint3Start: null,
+        sprint3End: null,
+        sprint4Start: null,
+        sprint4End: null,
+        sprint5Start: null,
+        sprint5End: null,
+        sprint6Start: null,
+        sprint6End: null
       }), new Pi().deserialize({
       id: 2,
       piShortname: '2103',
       piStart: '2021-01-13',
       piEnd: '2021-03-30',
-      sprintCounts: 5
+      sprintCounts: 5,
+      sprint1Start: null,
+      sprint1End: null,
+      sprint2Start: null,
+      sprint2End: null,
+      sprint3Start: null,
+      sprint3End: null,
+      sprint4Start: null,
+      sprint4End: null,
+      sprint5Start: null,
+      sprint5End: null,
+      sprint6Start: null,
+      sprint6End: null
     })
     ];
 
@@ -244,7 +308,9 @@ describe('ApiService', () => {
   });
 
   it('should update a pi', () => {
-    expect((service.updatePi(1, '2106', '2021-04-01', '2021-06-19', 6))).toBeUndefined();
+    expect((service.updatePi(1, '2106', '2021-04-01', '2021-06-19', 6, null,
+      null, null, null, null, null, null, null,
+      null, null, null, null))).toBeUndefined();
 
     const updateRequest = httpMock.expectOne(`${service.baseUrl}pi/1/update`);
     expect(updateRequest.request.method).toBe('PUT');
