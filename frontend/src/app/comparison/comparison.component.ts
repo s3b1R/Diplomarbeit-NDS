@@ -25,7 +25,6 @@ export class ComparisonComponent implements OnInit {
     this.apiService.getPiData().subscribe(result => {
       this.piList = result;
       this.setPiToCompare(result[0]);
-
     });
 
     this.apiService.getAllUsers().subscribe(result => {
@@ -44,7 +43,7 @@ export class ComparisonComponent implements OnInit {
     this.sprintStarts = [];
     this.sprintEnds = [];
 
-    Object.keys(pi).map(key => {
+    Object.keys(pi).forEach(key => {
 
       if (key.includes('sprint') && key.includes('Start')){
         this.sprintStarts.push(pi[key]);
