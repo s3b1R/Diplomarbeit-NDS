@@ -31,6 +31,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { OccupancyComponent } from './occupancy/occupancy.component';
 import { PiComponent } from './pi/pi.component';
 import { ComparisonComponent } from './comparison/comparison.component';
+import { CapacityPipe } from './shared/pipes/capacity-pipe';
+import { WorkloadPipe } from './shared/pipes/workload-pipe';
+import { DeltaCapaLoad } from './shared/pipes/delta-capa-load';
 
 const germanConfig = new DateFnsConfigurationService();
 germanConfig.setLocale(de);
@@ -46,7 +49,10 @@ germanConfig.setLocale(de);
     WorkloadComponent,
     OccupancyComponent,
     PiComponent,
-    ComparisonComponent
+    ComparisonComponent,
+    CapacityPipe,
+    WorkloadPipe,
+    DeltaCapaLoad
   ],
   imports: [
     BrowserModule,
