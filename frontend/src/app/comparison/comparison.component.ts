@@ -24,10 +24,7 @@ export class ComparisonComponent implements OnInit {
   ngOnInit(): void {
     this.apiService.getPiData().subscribe(result => {
       this.piList = result;
-      this.shownPi = result[0];
-      this.sprints = Array(this.shownPi.sprintCounts).fill(1).map((x, i) => i + 1);
-      this.piName = this.shownPi.piShortname;
-      this.getSprintStartandEndDates(this.shownPi);
+      this.setPiToCompare(result[0]);
 
     });
 
@@ -36,21 +33,17 @@ export class ComparisonComponent implements OnInit {
     });
   }
 
-  getSprintCapa(userId: number, sprintStart: string, sprintEnd: string): number {
-    let capa = 0;
-    this.apiService.getCapacityForUserInSprint(userId, sprintStart, sprintEnd)
-      .subscribe(data => capa = data);
-    return capa;
+  private setPiToCompare(result: Pi): void {
+    this.shownPi = result;
+    this.sprints = Array(this.shownPi.sprintCounts).fill(1).map((x, i) => i + 1);
+    this.piName = this.shownPi.piShortname;
+    this.getSprintStartAndEndDates(this.shownPi);
   }
 
-  getSprintWorkload(name: string, sprint: string): number {
-    let workload = 0;
-    this.apiService.getWorkloadForUserInSprint(name, sprint)
-      .subscribe(data => workload = data);
-    return workload;
-  }
+  getSprintStartAndEndDates(pi): void {
+    this.sprintStarts = [];
+    this.sprintEnds = [];
 
-  getSprintStartandEndDates(pi): void {
     Object.keys(pi).map(key => {
 
       if (key.includes('sprint') && key.includes('Start')){
@@ -62,8 +55,7 @@ export class ComparisonComponent implements OnInit {
     });
   }
 
-
-
-
-
+  changePi(selectedPi: Pi): void {
+    this.setPiToCompare(selectedPi);
+  }
 }
