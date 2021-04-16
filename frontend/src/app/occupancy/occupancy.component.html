@@ -1,9 +1,10 @@
 <mat-card>
-<div>
+<div class="useCaseSelector">
   <a mat-button routerLink="/workload">JIRA Import</a>
 </div>
 
   <table *ngIf="workloadList.length > 0">
+    <caption>Aktueller Import</caption>
     <tr>
       <th scope="col">Project</th>
       <th scope="col">Sprint</th>
