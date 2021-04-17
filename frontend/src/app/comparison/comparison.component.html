@@ -1,13 +1,13 @@
 <mat-card>
   <div class="formcontroller">
-    <mat-form-field appearance="fill">
+    <mat-form-field>
       <mat-label>PI wählen</mat-label>
       <mat-select [(ngModel)]="shownPi" (selectionChange)="changePi($event.value)">
         <mat-option *ngFor="let pi of piList" [value]="pi">{{pi.piShortname}}</mat-option>
       </mat-select>
     </mat-form-field>
   </div>
-
+<div class="contend">
 <table>
   <caption>PI {{piName}}</caption>
   <thead>
@@ -43,5 +43,5 @@
   </tbody>
 
 </table>
-
+</div>
 </mat-card>

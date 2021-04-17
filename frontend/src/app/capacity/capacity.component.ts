@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { eachDayOfInterval, lastDayOfMonth, startOfMonth, format, isWeekend } from 'date-fns';
-import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import {MatDatepicker, MatDatepickerInputEvent} from '@angular/material/datepicker';
 import { ApiService } from '../shared/services/api.service';
 import { Capacity } from '../shared/models/capacity.model';
 import { User } from '../shared/models/user.model';
@@ -152,9 +152,10 @@ export class CapacityComponent implements OnInit {
     return this.cellTextOnFocus !== cellText;
   }
 
-  dateChangeHandler(event: MatDatepickerInputEvent<any>): void {
+  selectMonthToShow(event: Date, datepicker: MatDatepicker<any>): void {
     this.isLoading = true;
-    this.setInterval(event.value);
+    datepicker.close();
+    this.setInterval(event);
     this.getCapacitiesAndUsers();
   }
 

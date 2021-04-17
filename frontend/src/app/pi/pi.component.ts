@@ -31,7 +31,7 @@ export class PiComponent implements OnInit {
   sprint6Start = new FormControl(null);
   sprint6End = new FormControl(null);
   piControl = new FormControl(null);
-  caseControl = new FormControl(null);
+  caseControl = new FormControl('new');
 
 
   constructor(private apiService: ApiService, public dialog: MatDialog) { }
@@ -133,11 +133,6 @@ export class PiComponent implements OnInit {
 
   delay(ms: number): any {
     return new Promise( resolve => setTimeout(resolve, ms));
-  }
-
-  logMal(): void {
-    console.log(this.sprint1Start.value);
-    console.log(this.sprint2Start.value);
   }
 
   formatNewSprintDates(): void {

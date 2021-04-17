@@ -1,4 +1,16 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
-/*html, body { height: 100%; }*/
-/*body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }*/
+body {
+  margin: 20px;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  /*background: whitesmoke;*/
+}
+
+.formcontroller, .useCaseSelector, .contend, mat-form-field {
+  margin: 5px;
+}
+
+caption {
+  font-size: large;
+  font-weight: bold;
+}

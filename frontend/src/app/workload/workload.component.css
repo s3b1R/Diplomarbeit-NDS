@@ -26,3 +26,7 @@
   cursor: pointer;
   position: absolute;
 }
+
+.uploadButton {
+  margin-top: 10px;
+}
