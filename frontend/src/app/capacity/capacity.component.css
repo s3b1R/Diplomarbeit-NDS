@@ -17,3 +17,8 @@ button {
   height: 1px;
   visibility: hidden
 }
+
+.name {
+  width: 125px;
+  text-align: left;
+}

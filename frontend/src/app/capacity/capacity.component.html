@@ -27,7 +27,7 @@
   </thead>
   <tbody>
   <tr *ngFor="let user of userList">
-      <td>{{user.name}}</td>
+      <td class="name">{{user.name}}</td>
 
     <ng-container *ngFor="let day of intervalOfDates">
       <ng-container *ngFor="let capa of capacitiesToShow; let arrIndex = index;">
