@@ -1,8 +1,8 @@
 <mat-card>
 <div class="useCaseSelector">
-  <a mat-button routerLink="/workload">JIRA Import</a>
+  <a mat-flat-button color="primary" routerLink="/workload">JIRA Import</a>
 </div>
-
+<div class="contend">
   <table *ngIf="workloadList.length > 0">
     <caption>Aktueller Import</caption>
     <tr>
@@ -19,6 +19,6 @@
       <td>{{load.storyPoints}}</td>
     </tr>
   </table>
-
+</div>
 
 </mat-card>

@@ -13,7 +13,7 @@ import { ConfirmationDialogComponent } from '../shared/confirmation-dialog/confi
 export class UserComponent implements OnInit {
   newUserName: string;
   userList: User[];
-  caseControl = new FormControl();
+  caseControl = new FormControl('new');
   userControl = new FormControl();
 
   constructor(private apiService: ApiService, public dialog: MatDialog) { }

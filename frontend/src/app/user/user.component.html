@@ -7,6 +7,7 @@
     </mat-button-toggle-group>
   </div>
 
+  <div class="contend">
   <div *ngIf="caseControl.value == 'new'">
   <mat-form-field class="newUser">
     <mat-label>Neuen Benutzer anlegen</mat-label>
@@ -22,7 +23,7 @@
 
 <div *ngIf="caseControl.value == 'edit'">
 <div *ngIf="!userControl.value" >
-  <mat-form-field appearance="fill">
+  <mat-form-field>
     <mat-label>Benutzer auswählen</mat-label>
     <mat-select [formControl]="userControl">
       <mat-option></mat-option>
@@ -35,14 +36,17 @@
 
   <div *ngIf="userControl.value">
 
-    <mat-form-field appearance="fill">
+    <mat-form-field>
     <input matInput type="text" #editedName value="{{userControl.value?.name}}">
       <button mat-button *ngIf="userControl.value?.name" matSuffix mat-icon-button aria-label="Clear" (click)="userControl.reset()">
         <mat-icon>close</mat-icon>
       </button>
     </mat-form-field>
-  <button mat-button (click)="updateUser(editedName.value)">Änderung Speichern</button>
-  <button mat-button color="warn" (click)="openDialog()">Nutzer Löschen</button>
+    <section>
+      <button mat-flat-button color="warn" (click)="openDialog()">Nutzer Löschen</button>
+      <button mat-flat-button color="primary" (click)="updateUser(editedName.value)">Änderung Speichern</button>
+    </section>
 </div>
 </div>
+  </div>
 </mat-card>

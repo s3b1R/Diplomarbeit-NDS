@@ -1,12 +1,24 @@
 <mat-card>
-<mat-form-field *ngIf="!isLoading">
-  <mat-label>Datum</mat-label>
-  <input matInput [matDatepicker]="capaMonth" (dateChange)="dateChangeHandler($event)">
-  <mat-datepicker-toggle  matSuffix [for]="capaMonth"></mat-datepicker-toggle>
-  <mat-datepicker #capaMonth startView="year"></mat-datepicker>
-</mat-form-field>
+  <ng-conainer *ngIf="!isLoading">
+    <div class="formcontroller">
+      <button mat-flat-button color="primary"(click)="capaMonth.open()">Anzeigemonat wählen</button>
 
-<table *ngIf="!isLoading" aria-describedby="Capacity">
+
+
+      <a mat-flat-button color="primary" routerLink="/massmutation">Mehrere Tage erfassen</a>
+      <section>
+        <mat-form-field class="hiddenFormfield">
+          <input matInput [matDatepicker]="capaMonth">
+          <mat-datepicker #capaMonth startView="year" (monthSelected)="selectMonthToShow($event, capaMonth)"></mat-datepicker>
+        </mat-form-field>
+      </section>
+
+
+    </div>
+
+<div class="contend">
+<table aria-describedby="Capacity">
+  <caption>{{intervalOfDates[0] | dfnsFormat: 'MMMM yyyy'}}</caption>
   <thead>
   <tr>
     <th scope="col">Name</th>
@@ -31,9 +43,10 @@
   </tr>
   </tbody>
 </table>
-  <a *ngIf="!isLoading" mat-button routerLink="/massmutation">Mehrere Tage erfassen</a>
+</div>
+  </ng-conainer>
 
+  <img class="loading" *ngIf="isLoading" src="../../assets/images/spinner.gif" height="233" width="414" alt="loading"/>
 
-  <img *ngIf="isLoading" src="../../assets/images/spinner.gif" height="233" width="414" alt="loading"/>
 </mat-card>
 

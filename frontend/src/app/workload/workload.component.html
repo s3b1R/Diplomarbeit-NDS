@@ -15,7 +15,9 @@
   </mat-form-field>
 
   <div *ngIf="readyForUpload">
-    <button mat-button (click)="uploadWorkload()">Upload</button>
+    <span>Mit dem Upload, werden die vorhandenen Daten gelöscht und durch die Neuen ersetzt.</span>
+    <br>
+    <button class="uploadButton" mat-flat-button color="primary"(click)="uploadWorkload()">Upload</button>
   </div>
 
  </mat-card>
