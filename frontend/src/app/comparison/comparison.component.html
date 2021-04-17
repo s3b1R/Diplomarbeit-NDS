@@ -12,14 +12,17 @@
   <caption>PI {{piName}}</caption>
   <thead>
   <tr>
-    <th class="name" rowspan="2" scope="col">Name</th>
-    <ng-container *ngFor="let sprint of sprints">
+    <th class="nameHeader" rowspan="2" scope="col">Name</th>
+    <ng-container *ngFor="let sprint of sprints; let idx = index">
       <td class="separator"></td>
-    <th class="sprints" scope="col" colspan="3" >Sprint {{sprint}}</th>
+    <th class="sprints" scope="col" colspan="3" >Sprint {{sprint}}<br>
+      {{sprintStarts[idx] | dfnsParse: 'yyyy-MM-dd' : 0 | dfnsFormat: 'dd. MMM'}} -
+      {{sprintEnds[idx]  | dfnsParse: 'yyyy-MM-dd' : 0 | dfnsFormat: 'dd. MMM'}}
+    </th>
     </ng-container>
   </tr>
-  <tr>
 
+  <tr>
     <ng-container *ngFor="let sprint of sprints">
       <td class="separator"></td>
       <th class="capa" scope="col">Capa</th>
@@ -32,12 +35,14 @@
   <tr *ngFor="let user of userList">
     <td class="name">{{user.name}}</td>
     <ng-container *ngFor="let sprint of sprints; let idx = index">
-      <ng-container>
         <td class="separator"></td>
-        <td #capa class="capa">{{user.id | capaPipe: sprintStarts[idx] : sprintEnds[idx] | async }}</td>
+        <td #capa class="capa">{{user.id | capaPipe: sprintStarts[idx] : sprintEnds[idx] | async}}</td>
         <td #load class="load">{{user.name | workloadPipe: piName : sprint | async }}</td>
-        <td class="difference">{{capa.innerText | deltaPipe: load.innerText }}</td>
-      </ng-container>
+        <td [ngClass]="{ negative : (capa.innerText - load.innerText) < -0.9,
+                         positive : (capa.innerText - load.innerText) > 0.9 }" class="difference"
+        >
+          {{ capa.innerText | deltaPipe: load.innerText }}
+        </td>
     </ng-container>
   </tr>
   </tbody>

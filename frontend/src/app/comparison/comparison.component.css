@@ -7,3 +7,29 @@ td {
 .separator{
   border: none;
 }
+
+.capa, .load, .difference {
+  width: 50px;
+}
+
+.name {
+  width: auto;
+  text-align: left;
+}
+
+.negative {
+  background: #ff908e;
+}
+
+.positive {
+  background: #8aff95;
+}
+
+td.capa:empty:after {
+  content: '0.0';
+}
+
+td.load:empty:after {
+  content: '0.0';
+}
+
