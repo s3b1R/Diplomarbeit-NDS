@@ -1,5 +1,5 @@
 <mat-card>
-  <div class="formcontroller">
+  <div class="formcontroller" *ngIf="piList.length > 0">
     <mat-form-field>
       <mat-label>PI wählen</mat-label>
       <mat-select [(ngModel)]="shownPi" (selectionChange)="changePi($event.value)">
@@ -7,7 +7,7 @@
       </mat-select>
     </mat-form-field>
   </div>
-<div class="contend">
+<div class="contend" *ngIf="piList.length > 0; else instruction">
 <table>
   <caption>PI {{piName}}</caption>
   <thead>
@@ -49,4 +49,7 @@
 
 </table>
 </div>
+  <ng-template #instruction>
+  Es muss mindestens ein PI erfasst sein!
+  </ng-template>
 </mat-card>

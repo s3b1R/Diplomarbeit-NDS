@@ -10,7 +10,7 @@ import { ApiService } from '../shared/services/api.service';
   styleUrls: ['./comparison.component.css']
 })
 export class ComparisonComponent implements OnInit {
-  piList: Pi[];
+  piList: Pi[] = [];
   userList: User[];
   shownPi: Pi;
   sprints: number[];
