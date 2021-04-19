@@ -4,6 +4,7 @@
 
 # docker db
 /db-data/db/*
+!/db-data/db/info.txt
 
 # Logs
 logs
