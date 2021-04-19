@@ -11,7 +11,6 @@ import {Router} from '@angular/router';
 export class WorkloadComponent implements OnInit {
 
   csvRecords: any[] = [];
-  header = true;
   readyForUpload = false;
 
   constructor(private ngxCsvParser: NgxCsvParser, private apiService: ApiService, private router: Router) { }
@@ -24,7 +23,7 @@ export class WorkloadComponent implements OnInit {
   fileChangeListener($event: any): void {
     const files = $event.target.files;
 
-    this.ngxCsvParser.parse(files[0], {header: this.header, delimiter: ';'})
+    this.ngxCsvParser.parse(files[0], {header: true, delimiter: ';'})
       .pipe().subscribe((result: Array<any>) => {
       for (const workload of result){
         const lastComma = workload.Sprint.lastIndexOf(',');
