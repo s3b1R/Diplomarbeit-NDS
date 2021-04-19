@@ -3,7 +3,7 @@
 /node_modules
 
 # docker db
-/db-data/db/
+/db-data/db/*
 
 # Logs
 logs
