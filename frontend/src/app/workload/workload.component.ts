@@ -49,17 +49,13 @@ export class WorkloadComponent implements OnInit {
     this.readyForUpload = true;
   }
 
-  uploadWorkload(): void {
+  async uploadWorkload(): Promise<void> {
     this.apiService.clearWorkload();
-    for (const workload of this.csvRecords) {
+    this.csvRecords.forEach(workload => {
       this.apiService.newWorkload(workload.Assignee, workload.Sprint, workload['Story Points'], workload.Project)
         .subscribe();
-    }
-    this.waitAMomentAndShowWorkload();
-  }
-
-  delay(ms: number): any {
-    return new Promise( resolve => setTimeout(resolve, ms));
+    });
+    await this.waitAMomentAndShowWorkload();
   }
 
   async waitAMomentAndShowWorkload(): Promise<void> {
@@ -68,4 +64,7 @@ export class WorkloadComponent implements OnInit {
     await this.router.navigate(['occupancy']);
   }
 
+  delay(ms: number): any {
+    return new Promise( resolve => setTimeout(resolve, ms));
+  }
 }
