@@ -2,7 +2,7 @@
   "name": "resourceplanner",
   "version": "1.0.0",
   "scripts": {
-    "install": "(docker build -t sebisql .) && (docker run  --name sebsql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 -v $(pwd)/backend/db-data/db:/var/lib/mysql -d sebisql) && (cd backend && mv example.env .env) && (cd backend && npm install) && (cd frontend && npm install)",
+    "install": "(cd backend && cp example.env .env && cd db-data && mkdir db) && (docker build -t sebisql .) && (docker run  --name sebsql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 -v $(pwd)/backend/db-data/db:/var/lib/mysql -d sebisql) && (cd backend && npm install) && (cd frontend && npm install)",
     "start-local": "npm run start-docker & npm run start-backend & npm run start-frontend",
     "start-frontend": "cd frontend && npm run start",
     "start-backend": "cd backend && npm run start",
