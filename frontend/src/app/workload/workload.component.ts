@@ -20,12 +20,12 @@ export class WorkloadComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  fileChangeListener($event: any): void {
-    const file = $event.target.files;
+  fileChangeListener(event: any): void {
+    const file = event.target.files;
     this.parseCSV(file);
   }
 
-  private parseCSV(csvFile): void {
+  parseCSV(csvFile): void {
     this.ngxCsvParser.parse(csvFile[0], {header: true, delimiter: ';'})
       .pipe().subscribe((result: Array<any>) => {
       this.keepLastSprint(result);
@@ -34,7 +34,7 @@ export class WorkloadComponent implements OnInit {
     });
   }
 
-  private keepLastSprint(result: Array<any>): void {
+  keepLastSprint(result: Array<any>): void {
     for (const workload of result) {
       const lastComma = workload.Sprint.lastIndexOf(',');
       if (lastComma > 0) {
@@ -44,7 +44,7 @@ export class WorkloadComponent implements OnInit {
     this.makeReadyForUpload(result);
   }
 
-  private makeReadyForUpload(result: Array<any>): void {
+  makeReadyForUpload(result: Array<any>): void {
     this.csvRecords = result;
     this.readyForUpload = true;
   }
