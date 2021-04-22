@@ -50,14 +50,14 @@ export class UserComponent implements OnInit {
   }
 
   updateUser(editedName: string): void {
-    this.apiService.updateUser(this.userControl.value.id, editedName);
+    this.apiService.updateUser(this.userControl.value?.id, editedName);
     this.userControl.reset();
     this.loadUserList();
   }
 
 
   deleteUser(): void {
-    this.apiService.deleteUser(this.userControl.value.id);
+    this.apiService.deleteUser(this.userControl.value?.id);
     this.userControl.reset();
     this.loadUserList();
   }
