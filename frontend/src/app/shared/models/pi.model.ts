@@ -2,6 +2,7 @@ import { Deserializable } from './deserializable.model';
 
 export class Pi implements Deserializable{
 
+  public id: number;
   public piShortname: number;
   public piStart: string;
   public piEnd: string;
