@@ -52,6 +52,7 @@ export class UserComponent implements OnInit {
   updateUser(editedName: string): void {
     this.apiService.updateUser(this.userControl.value?.id, editedName);
     this.userControl.reset();
+    this.caseControl.setValue('new');
     this.loadUserList();
   }
 
