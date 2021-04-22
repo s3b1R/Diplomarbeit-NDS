@@ -55,18 +55,14 @@ describe('UserComponent', () => {
 
   it('openDialog() opens confirmation dialog', () => {
     spyOn(dialog, 'open').and.callThrough();
-
     component.openDialog();
     expect(dialog.open).toHaveBeenCalled();
-
   });
 
   it('confirmation dialog should call deleteUser() when true returns', () => {
     spyOn(dialog, 'open').and.callThrough();
     spyOn(component, 'deleteUser').and.stub();
-
     component.openDialog();
-    expect(dialog.open).toHaveBeenCalled();
     expect(component.deleteUser).toHaveBeenCalled();
   });
 
@@ -109,6 +105,13 @@ describe('UserComponent', () => {
     spyOn(apiService, 'updateUser').and.stub();
     component.updateUser('Fritz');
     expect(component.userControl.value).toBe(null);
+  });
+
+  it('updateUser() should set CaseControl value', () => {
+    component.caseControl.setValue('dummy');
+    spyOn(apiService, 'updateUser').and.stub();
+    component.updateUser('Fritz');
+    expect(component.caseControl.value).toBe('new');
   });
 
   it('updateUser() should call loadUserList()', () => {
