@@ -1,10 +1,10 @@
-import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import {ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiService} from '../shared/services/api.service';
 import { UserComponent } from './user.component';
-import {defer, Observable, of} from 'rxjs';
-import {User} from "../shared/models/user.model";
+import { of } from 'rxjs';
+import { User } from '../shared/models/user.model';
 
 describe('UserComponent', () => {
   let component: UserComponent;
@@ -13,7 +13,7 @@ describe('UserComponent', () => {
   let apiService: ApiService;
 
   class MatDialogMock {
-    open() {
+    open(): any {
       return {
         afterClosed: () => of(true)
       };
@@ -28,7 +28,9 @@ describe('UserComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UserComponent ], imports: [HttpClientTestingModule], providers: [{provide: MatDialog, useClass: MatDialogMock}, ApiService]
+      declarations: [ UserComponent ],
+      imports: [HttpClientTestingModule],
+      providers: [{provide: MatDialog, useClass: MatDialogMock}, ApiService]
     })
     .compileComponents();
   });
@@ -117,14 +119,14 @@ describe('UserComponent', () => {
     expect(component.loadUserList).toHaveBeenCalledTimes(1);
   });
 
-  it('deleteUser() should call apiServcie', () => {
+  it('deleteUser() should call apiService', () => {
     component.userControl.setValue({id: 1, name: 'Hans'});
     spyOn(apiService, 'deleteUser').and.stub();
     component.deleteUser();
     expect(apiService.deleteUser).toHaveBeenCalledTimes(1);
   });
 
-  it('deleteUser() should reset FormControll', () => {
+  it('deleteUser() should reset FormControl', () => {
     component.userControl.setValue({id: 1, name: 'Hans'});
     spyOn(apiService, 'deleteUser').and.stub();
     component.deleteUser();
@@ -149,6 +151,5 @@ describe('UserComponent', () => {
     const test = component.delay(1);
     expect(test).toBeInstanceOf(Promise);
   });
-
 
 });
