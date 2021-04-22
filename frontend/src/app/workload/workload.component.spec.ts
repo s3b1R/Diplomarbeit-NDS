@@ -16,6 +16,12 @@ describe('WorkloadComponent', () => {
   let apiService: ApiService;
   const mockRouter = {navigate: jasmine.createSpy('navigate')};
 
+  function asyncTestHelper(runAsync): any {
+    return (done) => {
+      runAsync().then(done, e => { fail(e); done(); });
+    };
+  }
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ WorkloadComponent ], imports: [HttpClientTestingModule],
@@ -109,9 +115,10 @@ describe('WorkloadComponent', () => {
     expect(component.waitAMomentAndShowWorkload).toHaveBeenCalledTimes(1);
   });
 
-  it('waitAMomentAndShowWorkload() route to another component', asyncTestHelper(async () => {
+  it('waitAMomentAndShowWorkload() should call delay()', asyncTestHelper(async () => {
+    spyOn(component, 'delay').and.stub();
     await component.waitAMomentAndShowWorkload();
-    expect(mockRouter.navigate).toHaveBeenCalledWith(['occupancy']);
+    expect(component.delay).toHaveBeenCalledTimes(1);
   }));
 
   it('waitAMomentAndShowWorkload() should set a global variable', asyncTestHelper(async () => {
@@ -119,21 +126,14 @@ describe('WorkloadComponent', () => {
     expect(component.readyForUpload).toBe(false);
   }));
 
-  it('waitAMomentAndShowWorkload() should call delay function', asyncTestHelper(async () => {
-    spyOn(component, 'delay').and.stub();
+  it('waitAMomentAndShowWorkload() route to another component', asyncTestHelper(async () => {
     await component.waitAMomentAndShowWorkload();
-    expect(component.delay).toHaveBeenCalledTimes(1);
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['occupancy']);
   }));
 
   it('delay() should return a Promise', () => {
     const test = component.delay(1);
     expect(test).toBeInstanceOf(Promise);
   });
-
-  function asyncTestHelper(runAsync): any {
-    return (done) => {
-      runAsync().then(done, e => { fail(e); done(); });
-    };
-  }
 
 });
