@@ -11,8 +11,8 @@ import { ConfirmationDialogComponent } from '../shared/confirmation-dialog/confi
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
-  newUserName: string;
-  userList: User[];
+  newUserName = '';
+  userList: User[] = [];
   caseControl = new FormControl('new');
   userControl = new FormControl();
 
@@ -24,7 +24,7 @@ export class UserComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: `${this.userControl.value.name} löschen?`
+      data: `${this.userControl.value?.name} löschen?`
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -35,7 +35,7 @@ export class UserComponent implements OnInit {
   }
 
 
-  private loadUserList(): void {
+  loadUserList(): void {
     this.waitAMoment().then(() => {
       this.apiService.getAllUsers().subscribe(results => {
         this.userList = results;
