@@ -111,7 +111,7 @@ export class PiComponent implements OnInit {
   deletePi(): void {
     this.apiService.deletePi(this.piControl.value.id);
     this.piControl.reset();
-    this.caseControl.reset();
+    this.caseControl.setValue('new');
     this.loadPiList();
   }
 

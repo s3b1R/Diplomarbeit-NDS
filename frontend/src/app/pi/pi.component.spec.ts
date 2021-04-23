@@ -21,12 +21,6 @@ describe('PiComponent', () => {
     }
   }
 
-  function asyncTestHelper(runAsync): any {
-    return (done) => {
-      runAsync().then(done, e => { fail(e); done(); });
-    };
-  }
-
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ PiComponent ], imports: [HttpClientTestingModule, DateFnsModule],
@@ -88,7 +82,7 @@ describe('PiComponent', () => {
     expect(component.formatUpdatedSprints).toHaveBeenCalledTimes(1);
   });
 
-  it('updatePI() should call apiService', () => {
+  it('updatePI() should call apiService for updating Pi in DB', () => {
     component.piControl.patchValue({id: 1});
     spyOn(apiService, 'updatePi').and.stub();
     component.updatePi('2104', '01/04/2021', '30/04/2021', '1', '', '', '', '', '', '', '', '', '', '', '', '');
@@ -132,6 +126,21 @@ describe('PiComponent', () => {
     spyOn(component, 'deletePi').and.stub();
     component.openDialog();
     expect(component.deletePi).toHaveBeenCalled();
+  });
+
+  it('deletePi() should call apiService to delete Pi in db', ()=> {
+    component.piControl.patchValue({id: 3});
+    spyOn(apiService, 'deletePi').and.stub();
+    component.deletePi();
+    expect(apiService.deletePi).toHaveBeenCalledWith(3);
+  });
+
+  it('deletePi() should reset FormControls', ()=> {
+    component.piControl.patchValue({id: 3});
+    spyOn(apiService, 'deletePi').and.stub();
+    component.deletePi();
+    expect(component.piControl.value).toBe(null);
+    expect(component.caseControl.value).toEqual('new');
   });
 
   it('loadPiList() should not reload Pi list before timeout', fakeAsync(() => {
