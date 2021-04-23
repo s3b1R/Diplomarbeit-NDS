@@ -37,7 +37,9 @@ export class CapacityMassmutationComponent implements OnInit {
       const dateFormatted = format(date, 'yyyy-MM-dd');
       this.safeCapaInDB(date, dateFormatted, forUser, capaValue);
     }
-    this.waitAMomentAndNavigateToCapaview();
+    setTimeout( async () => {
+      await this.router.navigate(['capaview']);
+    }, 500);
   }
 
   safeCapaInDB(date: Date, dateFormatted: string, forUser, capaValue): void {
@@ -62,12 +64,6 @@ export class CapacityMassmutationComponent implements OnInit {
 
   isNotWeekend(day): boolean {
     return !isWeekend(day);
-  }
-
-  waitAMomentAndNavigateToCapaview(): void {
-   setTimeout(() => {
-     this.router.navigate(['capaview']);
-   }, 500);
   }
 
 }
