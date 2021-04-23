@@ -86,8 +86,9 @@ describe('PiComponent', () => {
     component.piControl.patchValue({id: 1});
     spyOn(apiService, 'updatePi').and.stub();
     component.updatePi('2104', '01/04/2021', '30/04/2021', '1', '', '', '', '', '', '', '', '', '', '', '', '');
-    expect(apiService.updatePi).toHaveBeenCalledWith(1 , '2104', '2021-04-01', '2021-04-30', 1, null, null, null, null, null, null, null, null, null, null, null, null);
-  })
+    expect(apiService.updatePi)
+      .toHaveBeenCalledWith(1 , '2104', '2021-04-01', '2021-04-30', 1, null, null, null, null, null, null, null, null, null, null, null, null);
+  });
 
   it('updatePI() should reset FormControl', () => {
     component.piControl.patchValue({id: 1});
@@ -128,14 +129,14 @@ describe('PiComponent', () => {
     expect(component.deletePi).toHaveBeenCalled();
   });
 
-  it('deletePi() should call apiService to delete Pi in db', ()=> {
+  it('deletePi() should call apiService to delete Pi in db', () => {
     component.piControl.patchValue({id: 3});
     spyOn(apiService, 'deletePi').and.stub();
     component.deletePi();
     expect(apiService.deletePi).toHaveBeenCalledWith(3);
   });
 
-  it('deletePi() should reset FormControls', ()=> {
+  it('deletePi() should reset FormControls', () => {
     component.piControl.patchValue({id: 3});
     spyOn(apiService, 'deletePi').and.stub();
     component.deletePi();
