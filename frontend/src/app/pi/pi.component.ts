@@ -116,19 +116,11 @@ export class PiComponent implements OnInit {
   }
 
   loadPiList(): void {
-    this.waitAMoment().then(() => {
+    setTimeout(() => {
       this.apiService.getPiData().subscribe(results => {
         this.piList = results;
       });
-    });
-  }
-
-  async waitAMoment(): Promise<void> {
-    await this.delay(500);
-  }
-
-  delay(ms: number): any {
-    return new Promise( resolve => setTimeout(resolve, ms));
+    }, 500);
   }
 
   formatNewSprintDates(): void {

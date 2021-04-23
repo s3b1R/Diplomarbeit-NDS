@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, tick, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ApiService } from '../shared/services/api.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -134,22 +134,21 @@ describe('PiComponent', () => {
     expect(component.deletePi).toHaveBeenCalled();
   });
 
-  it('loadPiList() should call waitAMoment()',() => {
-      spyOn(component, 'waitAMoment').and.callThrough();
-      component.loadPiList();
-      expect(component.waitAMoment).toHaveBeenCalledTimes(1);
-  });
-
-  it('waitAMoment() should call delay()', asyncTestHelper(async () => {
-    spyOn(component, 'delay').and.stub();
-    await component.waitAMoment();
-    expect(component.delay).toHaveBeenCalledTimes(1);
+  it('loadPiList() should not reload Pi list before timeout', fakeAsync(() => {
+    spyOn(apiService, 'getPiData').and.returnValue(of([new Pi(), new Pi()]));
+    component.loadPiList();
+    expect(component.piList).toEqual([]);
+    expect(apiService.getPiData).not.toHaveBeenCalled();
+    tick(500);
   }));
 
-  it('delay() should return a Promise', () => {
-    const test = component.delay(1);
-    expect(test).toBeInstanceOf(Promise);
-  });
+  it('loadPiList() should reload Pi list after timeout', fakeAsync(() => {
+     spyOn(apiService, 'getPiData').and.returnValue(of([new Pi(), new Pi()]));
+     component.loadPiList();
+     tick(500);
+     expect(apiService.getPiData).toHaveBeenCalledTimes(1);
+     expect(component.piList.length).toEqual(2);
+  }));
 
   it('formatNewSprintDates() should format sprint dates', () => {
     component.sprint1Start.setValue(new Date(2021, 3, 19));
