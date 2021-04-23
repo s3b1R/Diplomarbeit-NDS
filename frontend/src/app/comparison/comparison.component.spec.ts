@@ -65,7 +65,6 @@ describe('ComparisonComponent', () => {
 
   it('ngOnInit() should call apiService for user list', () => {
     spyOn(apiService, 'getAllUsers').and.returnValue(of([new User(), new User()]));
-
     component.ngOnInit();
     expect(apiService.getAllUsers).toHaveBeenCalledTimes(1);
     expect(component.userList.length).toBe(2);
