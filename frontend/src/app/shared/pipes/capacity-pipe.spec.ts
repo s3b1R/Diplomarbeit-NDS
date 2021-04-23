@@ -25,5 +25,5 @@ describe('CapacityPipe', () => {
   it('should retunr an observable', () => {
 
     expect(pipe.transform(1, 'start', 'end')).toBeInstanceOf(Observable);
-  })
+  });
 });
