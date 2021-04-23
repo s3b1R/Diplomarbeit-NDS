@@ -1,4 +1,4 @@
-import {ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiService} from '../shared/services/api.service';
@@ -18,12 +18,6 @@ describe('UserComponent', () => {
         afterClosed: () => of(true)
       };
     }
-  }
-
-  function asyncTestHelper(runAsync): any {
-    return (done) => {
-      runAsync().then(done, e => { fail(e); done(); });
-    };
   }
 
   beforeEach(async () => {
@@ -66,11 +60,23 @@ describe('UserComponent', () => {
     expect(component.deleteUser).toHaveBeenCalled();
   });
 
-  it ('loadUserList() should call waitAMoment()',  () => {
-    spyOn(component, 'waitAMoment').and.callThrough();
+  it ('loadUserList() should call apiService and fill user list after timeout', fakeAsync( () => {
+    spyOn(apiService, 'getAllUsers').and.returnValue(of([new User(), new User(), new User()]));
+    component.userList = [];
     component.loadUserList();
-    expect(component.waitAMoment).toHaveBeenCalledTimes(1);
-  });
+    tick(500);
+    expect(component.userList.length).toEqual(3);
+    expect(apiService.getAllUsers).toHaveBeenCalledTimes(1);
+  }));
+
+  it ('loadUserList() should not call apiService and fill user list before timeout', fakeAsync( () => {
+    spyOn(apiService, 'getAllUsers').and.returnValue(of([new User(), new User(), new User()]));
+    component.userList = [];
+    component.loadUserList();
+    expect(component.userList.length).not.toEqual(3);
+    expect(apiService.getAllUsers).not.toHaveBeenCalledTimes(1);
+    tick(500);
+  }));
 
   it('saveNewUser() should call apiService', () => {
     component.newUserName = 'User Name';
@@ -126,7 +132,7 @@ describe('UserComponent', () => {
     component.userControl.setValue({id: 1, name: 'Hans'});
     spyOn(apiService, 'deleteUser').and.stub();
     component.deleteUser();
-    expect(apiService.deleteUser).toHaveBeenCalledTimes(1);
+    expect(apiService.deleteUser).toHaveBeenCalledWith(1);
   });
 
   it('deleteUser() should reset FormControl', () => {
@@ -142,17 +148,6 @@ describe('UserComponent', () => {
     spyOn(apiService, 'deleteUser').and.stub();
     component.deleteUser();
     expect(component.loadUserList).toHaveBeenCalledTimes(1);
-  });
-
-  it('waitAMoment() should call delay()', asyncTestHelper(async () => {
-    spyOn(component, 'delay').and.stub();
-    await component.waitAMoment();
-    expect(component.delay).toHaveBeenCalledTimes(1);
-  }));
-
-  it('delay() should return a Promise', () => {
-    const test = component.delay(1);
-    expect(test).toBeInstanceOf(Promise);
   });
 
 });

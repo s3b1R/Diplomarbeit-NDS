@@ -36,11 +36,11 @@ export class UserComponent implements OnInit {
 
 
   loadUserList(): void {
-    this.waitAMoment().then(() => {
+    setTimeout(() => {
       this.apiService.getAllUsers().subscribe(results => {
         this.userList = results;
       });
-    });
+    }, 500);
   }
 
   saveNewUser(): void {
@@ -61,14 +61,6 @@ export class UserComponent implements OnInit {
     this.apiService.deleteUser(this.userControl.value?.id);
     this.userControl.reset();
     this.loadUserList();
-  }
-
-  async waitAMoment(): Promise<void> {
-    await this.delay(500);
-  }
-
-  delay(ms: number): any {
-    return new Promise( resolve => setTimeout(resolve, ms));
   }
 
 }
