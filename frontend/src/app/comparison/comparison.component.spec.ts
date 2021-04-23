@@ -31,10 +31,36 @@ describe('ComparisonComponent', () => {
 
   it('ngOnInit() should call apiService for Pi list', () => {
     spyOn(apiService, 'getPiData').and.returnValue(of([new Pi(), new Pi()]));
-
+    spyOn(component, 'setPiToCompare').and.stub();
     component.ngOnInit();
     expect(apiService.getPiData).toHaveBeenCalledTimes(1);
     expect(component.piList.length).toBe(2);
+  });
+
+  it('ngOnInit() should call setPiToCompare()', () => {
+    const mockedPI = new Pi().deserialize({
+      id: 10,
+      piShortname: 2106,
+      piStart: '2021-04-01',
+      piEnd: '2021-06-09',
+      sprintCounts: 5,
+      sprint1Start: '2021-04-01',
+      sprint1End: '2021-04-13',
+      sprint2Start: '2021-04-14',
+      sprint2End: '2021-04-27',
+      sprint3Start: '2021-04-28',
+      sprint3End: '2021-05-11',
+      sprint4Start: '2021-05-12',
+      sprint4End: '2021-05-25',
+      sprint5Start: '2021-05-26',
+      sprint5End: '2021-06-09',
+      sprint6Start: null,
+      sprint6End: null
+    });
+    spyOn(apiService, 'getPiData').and.returnValue(of([mockedPI, new Pi()]));
+    spyOn(component, 'setPiToCompare').and.stub();
+    component.ngOnInit();
+    expect(component.setPiToCompare).toHaveBeenCalledWith(mockedPI);
   });
 
   it('ngOnInit() should call apiService for user list', () => {
@@ -72,8 +98,7 @@ describe('ComparisonComponent', () => {
   });
 
   it('setPiToCompare should call getSprintStartAndEndDates()', () => {
-    spyOn(component, 'getSprintStartAndEndDates').and.stub();
-    component.setPiToCompare(new Pi().deserialize({
+    const mockedPI = new Pi().deserialize({
       id: 10,
       piShortname: 2106,
       piStart: '2021-04-01',
@@ -91,7 +116,9 @@ describe('ComparisonComponent', () => {
       sprint5End: '2021-06-09',
       sprint6Start: null,
       sprint6End: null
-    }));
+    });
+    spyOn(component, 'getSprintStartAndEndDates').and.stub();
+    component.setPiToCompare(mockedPI);
     expect(component.getSprintStartAndEndDates).toHaveBeenCalledTimes(1);
   });
 
