@@ -14,8 +14,8 @@ describe('ApiService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({ imports: [ HttpClientTestingModule], providers: [ApiService]});
     injector = getTestBed();
-    service = injector.get(ApiService);
-    httpMock = injector.get(HttpTestingController);
+    service = injector.inject(ApiService);
+    httpMock = injector.inject(HttpTestingController);
   });
 
   afterEach(() => {
@@ -210,9 +210,9 @@ describe('ApiService', () => {
       expect(result).toBe(5.5);
     });
 
-      const workloadSumRequest = httpMock.expectOne(`${service.baseUrl}workload/${nameParam}/${dateParam}/storypoints`);
-      expect(workloadSumRequest.request.method).toBe('GET');
-      workloadSumRequest.flush(dummyWorkloadSum);
+    const workloadSumRequest = httpMock.expectOne(`${service.baseUrl}workload/${nameParam}/${dateParam}/storypoints`);
+    expect(workloadSumRequest.request.method).toBe('GET');
+    workloadSumRequest.flush(dummyWorkloadSum);
   });
 
   it('should clear all workloads', () => {

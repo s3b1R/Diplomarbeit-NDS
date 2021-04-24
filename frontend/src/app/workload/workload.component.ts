@@ -21,7 +21,7 @@ export class WorkloadComponent implements OnInit {
   }
 
   fileChangeListener(event: any): void {
-    const file = event.target.files;
+    const file = event.target?.files;
     this.parseCSV(file);
   }
 
@@ -49,22 +49,19 @@ export class WorkloadComponent implements OnInit {
     this.readyForUpload = true;
   }
 
-  async uploadWorkload(): Promise<void> {
+  uploadWorkload(): void {
     this.apiService.clearWorkload();
+    this.sendDataToDatabase();
+    setTimeout(async () => {
+      this.readyForUpload = false;
+      await this.router.navigate(['occupancy']);
+    }, 500);
+  }
+
+  sendDataToDatabase(): void {
     this.csvRecords.forEach(workload => {
       this.apiService.newWorkload(workload.Assignee, workload.Sprint, workload['Story Points'], workload.Project)
         .subscribe();
     });
-    await this.waitAMomentAndShowWorkload();
-  }
-
-  async waitAMomentAndShowWorkload(): Promise<void> {
-    await this.delay(500);
-    this.readyForUpload = false;
-    await this.router.navigate(['occupancy']);
-  }
-
-  delay(ms: number): any {
-    return new Promise( resolve => setTimeout(resolve, ms));
   }
 }

@@ -16,7 +16,8 @@ const routes: Routes = [
   {path: 'occupancy', component: OccupancyComponent},
   {path: 'workload', component: WorkloadComponent},
   {path: 'pi', component: PiComponent},
-  {path: 'comparison', component: ComparisonComponent}
+  {path: 'comparison', component: ComparisonComponent},
+  {path: '**', redirectTo: '/comparison'}
 ];
 
 @NgModule({

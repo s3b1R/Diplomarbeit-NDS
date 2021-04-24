@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { eachDayOfInterval, lastDayOfMonth, startOfMonth, format, isWeekend } from 'date-fns';
-import {MatDatepicker, MatDatepickerInputEvent} from '@angular/material/datepicker';
+import { MatDatepicker } from '@angular/material/datepicker';
 import { ApiService } from '../shared/services/api.service';
 import { Capacity } from '../shared/models/capacity.model';
 import { User } from '../shared/models/user.model';
@@ -17,9 +17,8 @@ export class CapacityComponent implements OnInit {
 
   constructor(private apiService: ApiService) { }
   intervalOfDates: any = [];
-  userList: User[];
-  capacityFromDB: Capacity[];
-  capacityPerUserFromDB = new Map();
+  userList: User[] = [];
+  capacityMapFromDbPerUser = new Map();
   capacitiesToShow: Capacity[];
   isLoading = false;
   cellTextOnFocus: number;
@@ -30,17 +29,6 @@ export class CapacityComponent implements OnInit {
     this.getCapacitiesAndUsers();
   }
 
-  getCapacitiesAndUsers(): void {
-    forkJoin([ this.apiService.getAllUsers(),
-      this.apiService.getCapacitiesForMonth(format(this.intervalOfDates[0], 'yyyy-MM')) ])
-      .subscribe(results => {
-        this.userList = results[0];
-        this.capacityFromDB = results[1];
-        this.mapDatabaseCapacitiesPerUser(this.capacityFromDB);
-        this.capacitiesToShow = this.addEmptyCapaToDatesWithoutEntries(this.capacityPerUserFromDB, this.userList);
-    });
-  }
-
   setInterval(date: Date): void{
     this.intervalOfDates = eachDayOfInterval({
       start: startOfMonth(new Date(date)),
@@ -48,96 +36,95 @@ export class CapacityComponent implements OnInit {
     });
   }
 
-  private mapDatabaseCapacitiesPerUser(capacityFromDB: Capacity[]): void {
+  getCapacitiesAndUsers(): void {
+    let capacityFromDB: Capacity[] = [];
+    forkJoin([ this.apiService.getAllUsers(),
+      this.apiService.getCapacitiesForMonth(format(this.intervalOfDates[0], 'yyyy-MM')) ])
+      .subscribe(results => {
+        this.userList = results[0];
+        capacityFromDB = results[1];
+        this.mapDatabaseCapacitiesPerUser(capacityFromDB);
+        this.capacitiesToShow = this.generateCapacityArrayToShow();
+    });
+  }
+
+  mapDatabaseCapacitiesPerUser(capacityFromDB: Capacity[]): void {
     let userMap = new Map();
+    let userCapacities = [];
 
     for (let index = 0; index < capacityFromDB.length; index++){
       const currentEntry = capacityFromDB[index];
       const nextEntry = capacityFromDB[index + 1];
+      const userName = currentEntry.user.name;
 
       if (nextEntry && currentEntry.user.id === nextEntry.user.id){
-        this.mapCapaToUser(currentEntry, userMap);
+        userCapacities.push(currentEntry);
       } else {
-        this.mapCapaToUser(currentEntry, userMap);
-        this.capacityPerUserFromDB.set(currentEntry.user.name, userMap);
+        userCapacities.push(currentEntry);
+        userMap.set(userName, userCapacities);
+        this.capacityMapFromDbPerUser.set(userName, userMap);
+        userCapacities = [];
         userMap = new Map();
       }
     }
   }
 
-  private mapCapaToUser(currentEntry: Capacity, userMap: Map<any, any>): void {
-    const userName = currentEntry.user.name;
-    let userCapacities = userMap.get(userName);
-
-    if (!userCapacities) {
-      userCapacities = [];
-    }
-    userCapacities.push(currentEntry);
-    userMap.set(userName, userCapacities);
-  }
-
-  private addEmptyCapaToDatesWithoutEntries(rawCapacityMap: Map<string, Map<string, Array<Capacity>>>, userList: User[]): Capacity[]{
+  generateCapacityArrayToShow(): Capacity[]{
     const capaForUserExists = [];
     const allCapacities = [];
 
-    userList.forEach(user => {
+    this.userList.forEach(user => {
       const userName = user.name;
 
       this.intervalOfDates.forEach(day => {
         const dayOfInterval = format(day, 'yyyy-MM-dd');
-        this.buildCapacityArray(rawCapacityMap, userName, dayOfInterval, day, allCapacities, user, capaForUserExists);
+
+        for (const [name, capacityMap] of this.capacityMapFromDbPerUser.entries()) {
+          if (this.capacityMapFromDbPerUser.has(userName)) {
+            if (name === userName) {
+              const capaArray = capacityMap.get(userName);
+              const daysWithCapacity = [];
+              capaArray.forEach((capacity) => {
+                daysWithCapacity.push(capacity.date);
+              });
+              if (daysWithCapacity.includes(dayOfInterval)) {
+                for (const capa of capaArray) {
+                  if (dayOfInterval === capa.date) {
+                    allCapacities.push(capa);
+                  }
+                }
+              } else {
+                allCapacities
+                  .push(new Capacity().deserialize({id: 0, capa: '0', date: dayOfInterval, user: {id: user.id, name: userName}}));
+              }
+            }
+          } else {
+            if (!capaForUserExists.includes(userName + dayOfInterval)) {
+              capaForUserExists.push(userName + dayOfInterval);
+              allCapacities.push(new Capacity().deserialize({id: 0, capa: '0', date: dayOfInterval, user: {id: user.id, name: userName}}));
+            }
+          }
+        }
       });
     });
     this.isLoading = false;
     return allCapacities;
   }
 
-  private buildCapacityArray(
-    rawCapacityMap: Map<string, Map<string, Array<Capacity>>>,
-    userName: string,
-    dayOfInterval: string,
-    day,
-    allCapacities: any[], user: User, capaForUserExists: any[]
-  ): void {
-    for (const [name, capacityMap] of rawCapacityMap.entries()) {
 
-      if (rawCapacityMap.has(userName)) {
-        if (name === userName) {
-          const capaArray = capacityMap.get(userName);
-          const dateArray = [];
-          capaArray.forEach((singleCapacity) => {
-            dateArray.push(singleCapacity.date);
-          });
-          if (dateArray.includes(dayOfInterval)) {
-            for (const capa of capaArray) {
-
-              if (format(day, 'yyyy-MM-dd') === capa.date) {
-
-                allCapacities.push(capa);
-              }
-            }
-          } else {
-            allCapacities.push({id: 0, capa: '0', date: dayOfInterval, user: {id: user.id, name: userName}});
-          }
-        }
-      } else {
-
-        if (!capaForUserExists.includes(userName + dayOfInterval)) {
-          capaForUserExists.push(userName + dayOfInterval);
-          allCapacities.push({id: 0, capa: '0', date: dayOfInterval, user: {id: user.id, name: userName}});
-        }
-      }
-    }
-  }
 
   onBlur(cellText, user, capacity, arrayIndex): void {
     if (this.capaValueHasChanged(cellText)) {
       const capaValue = cellText.replace(/\n/g, '').replace(/\s+/g, '').replace(/,/, '.');
-      this.persistInput(capacity, capaValue, user, arrayIndex);
+      this.saveInputToDB(capacity, capaValue, user, arrayIndex);
     }
   }
 
-  private persistInput(capacity, cellText, user, arrayIndex): void {
+  capaValueHasChanged(cellText): boolean {
+    return this.cellTextOnFocus !== cellText;
+  }
+
+  saveInputToDB(capacity, cellText, user, arrayIndex): void {
     if (capacity.id !== 0) {
       this.apiService.updateCapacity(capacity.id, cellText);
     } else {
@@ -146,10 +133,6 @@ export class CapacityComponent implements OnInit {
           this.capacitiesToShow[arrayIndex].id = data.id;
         });
     }
-  }
-
-  private capaValueHasChanged(cellText): boolean {
-    return this.cellTextOnFocus !== cellText;
   }
 
   selectMonthToShow(event: Date, datepicker: MatDatepicker<any>): void {

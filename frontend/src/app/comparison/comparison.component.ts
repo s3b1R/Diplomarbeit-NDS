@@ -32,7 +32,7 @@ export class ComparisonComponent implements OnInit {
     });
   }
 
-  private setPiToCompare(result: Pi): void {
+  setPiToCompare(result: Pi): void {
     this.shownPi = result;
     this.sprints = Array(this.shownPi.sprintCounts).fill(1).map((x, i) => i + 1);
     this.piName = this.shownPi.piShortname;

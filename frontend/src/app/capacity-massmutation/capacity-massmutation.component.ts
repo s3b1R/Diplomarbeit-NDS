@@ -31,26 +31,31 @@ export class CapacityMassmutationComponent implements OnInit {
   onFormSubmit(): void {
     const interval = this.getInterval();
     const forUser = this.massInputValues.value.user;
-    const capaValue = this.massInputValues.value.capa.replace(/\n/g, '').replace(/\s+/g, '').replace(/,/, '.');
+    const capaValue = this.massInputValues.value.capa.toString().replace(/\n/g, '').replace(/\s+/g, '').replace(/,/, '.');
 
     for (const date of interval) {
       const dateFormatted = format(date, 'yyyy-MM-dd');
-
-      if (this.isNotWeekend(date)){
-        this.apiService.getCapacityForDateAndUserid(dateFormatted, forUser)
-          .subscribe( capaArray => {
-            if (capaArray.length > 0) {
-              this.apiService.updateCapacity(capaArray[0].id, capaValue);
-            } else {
-              this.apiService.newCapacity(capaValue, dateFormatted, forUser).subscribe();
-            }
-          });
-      }
+      this.safeCapaInDB(date, dateFormatted, forUser, capaValue);
     }
-    this.waitAMoment();
+    setTimeout( async () => {
+      await this.router.navigate(['capaview']);
+    }, 500);
   }
 
-  private getInterval(): Date[] {
+  safeCapaInDB(date: Date, dateFormatted: string, forUser, capaValue): void {
+    if (this.isNotWeekend(date)) {
+      this.apiService.getCapacityForDateAndUserid(dateFormatted, forUser)
+        .subscribe(capaArray => {
+          if (capaArray.length > 0) {
+            this.apiService.updateCapacity(capaArray[0].id, capaValue);
+          } else {
+            this.apiService.newCapacity(capaValue, dateFormatted, forUser).subscribe();
+          }
+        });
+    }
+  }
+
+  getInterval(): Date[] {
     return eachDayOfInterval({
       start: this.massInputValues.value.start,
       end: this.massInputValues.value.end
@@ -59,15 +64,6 @@ export class CapacityMassmutationComponent implements OnInit {
 
   isNotWeekend(day): boolean {
     return !isWeekend(day);
-  }
-
-  delay(ms: number): any {
-    return new Promise( resolve => setTimeout(resolve, ms));
-  }
-
-  async waitAMoment(): Promise<void> {
-    await this.delay(500);
-    await this.router.navigate(['capaview']);
   }
 
 }

@@ -11,8 +11,8 @@ import { ConfirmationDialogComponent } from '../shared/confirmation-dialog/confi
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
-  newUserName: string;
-  userList: User[];
+  newUserName = '';
+  userList: User[] = [];
   caseControl = new FormControl('new');
   userControl = new FormControl();
 
@@ -24,7 +24,7 @@ export class UserComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: `${this.userControl.value.name} löschen?`
+      data: `${this.userControl.value?.name} löschen?`
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -35,12 +35,12 @@ export class UserComponent implements OnInit {
   }
 
 
-  private loadUserList(): void {
-    this.waitAMoment().then(() => {
+  loadUserList(): void {
+    setTimeout(() => {
       this.apiService.getAllUsers().subscribe(results => {
         this.userList = results;
       });
-    });
+    }, 500);
   }
 
   saveNewUser(): void {
@@ -50,24 +50,17 @@ export class UserComponent implements OnInit {
   }
 
   updateUser(editedName: string): void {
-    this.apiService.updateUser(this.userControl.value.id, editedName);
+    this.apiService.updateUser(this.userControl.value?.id, editedName);
     this.userControl.reset();
+    this.caseControl.setValue('new');
     this.loadUserList();
   }
 
 
   deleteUser(): void {
-    this.apiService.deleteUser(this.userControl.value.id);
+    this.apiService.deleteUser(this.userControl.value?.id);
     this.userControl.reset();
     this.loadUserList();
-  }
-
-  async waitAMoment(): Promise<void> {
-    await this.delay(500);
-  }
-
-  delay(ms: number): any {
-    return new Promise( resolve => setTimeout(resolve, ms));
   }
 
 }

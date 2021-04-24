@@ -13,7 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class PiComponent implements OnInit {
 
-  piList: Pi[];
+  piList: Pi[] = [];
   shortName = new FormControl();
   startDate = new FormControl();
   endDate = new FormControl();
@@ -59,7 +59,6 @@ export class PiComponent implements OnInit {
       this.sprint5End.value,
       this.sprint6Start.value,
       this.sprint6End.value).subscribe();
-    this.caseControl.reset();
     this.controlFieldsReset();
     this.loadPiList();
   }
@@ -72,9 +71,6 @@ export class PiComponent implements OnInit {
       newSprint4Start, newSprint4End, newSprint5Start, newSprint5End, newSprint6Start, newSprint6End];
 
     const formattedSprints = this.formatUpdatedSprints(sprintArray);
-
-    console.log(sprintArray);
-    console.log(formattedSprints);
 
     this.apiService.updatePi(
       this.piControl.value.id,
@@ -96,7 +92,7 @@ export class PiComponent implements OnInit {
       formattedSprints[11]
     );
     this.piControl.reset();
-    this.caseControl.reset();
+    this.caseControl.setValue('new');
     this.loadPiList();
   }
 
@@ -115,24 +111,16 @@ export class PiComponent implements OnInit {
   deletePi(): void {
     this.apiService.deletePi(this.piControl.value.id);
     this.piControl.reset();
-    this.caseControl.reset();
+    this.caseControl.setValue('new');
     this.loadPiList();
   }
 
-  private loadPiList(): void {
-    this.waitAMoment().then(() => {
+  loadPiList(): void {
+    setTimeout(() => {
       this.apiService.getPiData().subscribe(results => {
         this.piList = results;
       });
-    });
-  }
-
-  async waitAMoment(): Promise<void> {
-    await this.delay(500);
-  }
-
-  delay(ms: number): any {
-    return new Promise( resolve => setTimeout(resolve, ms));
+    }, 500);
   }
 
   formatNewSprintDates(): void {
