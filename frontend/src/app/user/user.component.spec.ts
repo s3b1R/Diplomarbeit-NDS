@@ -5,6 +5,7 @@ import { ApiService} from '../shared/services/api.service';
 import { UserComponent } from './user.component';
 import { of } from 'rxjs';
 import { User } from '../shared/models/user.model';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('UserComponent', () => {
   let component: UserComponent;
@@ -24,7 +25,8 @@ describe('UserComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ UserComponent ],
       imports: [HttpClientTestingModule],
-      providers: [{provide: MatDialog, useClass: MatDialogMock}, ApiService]
+      providers: [{provide: MatDialog, useClass: MatDialogMock}, ApiService],
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     })
     .compileComponents();
   });

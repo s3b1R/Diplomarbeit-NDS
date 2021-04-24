@@ -7,7 +7,6 @@ import { User } from '../shared/models/user.model';
 import { forkJoin } from 'rxjs';
 
 
-
 @Component({
   selector: 'app-capacity',
   templateUrl: './capacity.component.html',

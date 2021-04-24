@@ -6,6 +6,7 @@ import { PiComponent } from './pi.component';
 import { of } from 'rxjs';
 import { Pi } from '../shared/models/pi.model';
 import { DateFnsModule } from 'ngx-date-fns';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('PiComponent', () => {
   let component: PiComponent;
@@ -24,7 +25,7 @@ describe('PiComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ PiComponent ], imports: [HttpClientTestingModule, DateFnsModule],
-      providers: [{provide: MatDialog, useClass: MatDialogMock}, ApiService]
+      providers: [{provide: MatDialog, useClass: MatDialogMock}, ApiService], schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     })
     .compileComponents();
   });
