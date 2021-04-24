@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { eachDayOfInterval, lastDayOfMonth, startOfMonth, format, isWeekend } from 'date-fns';
-import {MatDatepicker, MatDatepickerInputEvent} from '@angular/material/datepicker';
+import {MatDatepicker } from '@angular/material/datepicker';
 import { ApiService } from '../shared/services/api.service';
 import { Capacity } from '../shared/models/capacity.model';
 import { User } from '../shared/models/user.model';
@@ -18,7 +18,6 @@ export class CapacityComponent implements OnInit {
   constructor(private apiService: ApiService) { }
   intervalOfDates: any = [];
   userList: User[];
-  capacityFromDB: Capacity[];
   capacityPerUserFromDB = new Map();
   capacitiesToShow: Capacity[];
   isLoading = false;
@@ -30,17 +29,6 @@ export class CapacityComponent implements OnInit {
     this.getCapacitiesAndUsers();
   }
 
-  getCapacitiesAndUsers(): void {
-    forkJoin([ this.apiService.getAllUsers(),
-      this.apiService.getCapacitiesForMonth(format(this.intervalOfDates[0], 'yyyy-MM')) ])
-      .subscribe(results => {
-        this.userList = results[0];
-        this.capacityFromDB = results[1];
-        this.mapDatabaseCapacitiesPerUser(this.capacityFromDB);
-        this.capacitiesToShow = this.addEmptyCapaToDatesWithoutEntries(this.capacityPerUserFromDB, this.userList);
-    });
-  }
-
   setInterval(date: Date): void{
     this.intervalOfDates = eachDayOfInterval({
       start: startOfMonth(new Date(date)),
@@ -48,9 +36,20 @@ export class CapacityComponent implements OnInit {
     });
   }
 
-  private mapDatabaseCapacitiesPerUser(capacityFromDB: Capacity[]): void {
-    let userMap = new Map();
+  getCapacitiesAndUsers(): void {
+    let capacityFromDB: Capacity[];
+    forkJoin([ this.apiService.getAllUsers(),
+      this.apiService.getCapacitiesForMonth(format(this.intervalOfDates[0], 'yyyy-MM')) ])
+      .subscribe(results => {
+        this.userList = results[0];
+        capacityFromDB = results[1];
+        this.mapDatabaseCapacitiesPerUser(capacityFromDB);
+        this.capacitiesToShow = this.addEmptyCapaToDatesWithoutEntries(this.capacityPerUserFromDB, this.userList);
+    });
+  }
 
+  mapDatabaseCapacitiesPerUser(capacityFromDB: Capacity[]): void {
+    let userMap = new Map();
     for (let index = 0; index < capacityFromDB.length; index++){
       const currentEntry = capacityFromDB[index];
       const nextEntry = capacityFromDB[index + 1];
@@ -65,7 +64,7 @@ export class CapacityComponent implements OnInit {
     }
   }
 
-  private mapCapaToUser(currentEntry: Capacity, userMap: Map<any, any>): void {
+  mapCapaToUser(currentEntry: Capacity, userMap: Map<any, any>): void {
     const userName = currentEntry.user.name;
     let userCapacities = userMap.get(userName);
 
@@ -76,7 +75,7 @@ export class CapacityComponent implements OnInit {
     userMap.set(userName, userCapacities);
   }
 
-  private addEmptyCapaToDatesWithoutEntries(rawCapacityMap: Map<string, Map<string, Array<Capacity>>>, userList: User[]): Capacity[]{
+  addEmptyCapaToDatesWithoutEntries(rawCapacityMap: Map<string, Map<string, Array<Capacity>>>, userList: User[]): Capacity[]{
     const capaForUserExists = [];
     const allCapacities = [];
 
@@ -92,7 +91,7 @@ export class CapacityComponent implements OnInit {
     return allCapacities;
   }
 
-  private buildCapacityArray(
+  buildCapacityArray(
     rawCapacityMap: Map<string, Map<string, Array<Capacity>>>,
     userName: string,
     dayOfInterval: string,
@@ -137,7 +136,7 @@ export class CapacityComponent implements OnInit {
     }
   }
 
-  private persistInput(capacity, cellText, user, arrayIndex): void {
+  persistInput(capacity, cellText, user, arrayIndex): void {
     if (capacity.id !== 0) {
       this.apiService.updateCapacity(capacity.id, cellText);
     } else {
@@ -148,7 +147,7 @@ export class CapacityComponent implements OnInit {
     }
   }
 
-  private capaValueHasChanged(cellText): boolean {
+  capaValueHasChanged(cellText): boolean {
     return this.cellTextOnFocus !== cellText;
   }
 
