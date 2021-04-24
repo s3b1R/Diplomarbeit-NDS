@@ -7,7 +7,7 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "webdriver-manager update --versions.chrome=88.0.4324.96 && webdriver-manager start --versions.chrome=88.0.4324.96 & ng e2e --webdriverUpdate=false"
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {

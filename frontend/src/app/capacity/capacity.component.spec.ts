@@ -27,10 +27,6 @@ describe('CapacityComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('ngOnInit() should set isLoading true', () => {
     component.isLoading = false;
     component.ngOnInit();
