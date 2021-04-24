@@ -5,6 +5,7 @@ import { ComparisonComponent } from './comparison.component';
 import { of } from 'rxjs';
 import { Pi } from '../shared/models/pi.model';
 import { User } from '../shared/models/user.model';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('ComparisonComponent', () => {
   let component: ComparisonComponent;
@@ -13,7 +14,8 @@ describe('ComparisonComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ComparisonComponent ], imports: [HttpClientTestingModule], providers: [ApiService]
+      declarations: [ ComparisonComponent ], imports: [HttpClientTestingModule], providers: [ApiService],
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     })
     .compileComponents();
   });

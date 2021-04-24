@@ -3,6 +3,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ApiService } from '../shared/services/api.service';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 
 import { CapacityMassmutationComponent } from './capacity-massmutation.component';
@@ -19,7 +20,7 @@ describe('CapacityMassmutationComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ CapacityMassmutationComponent ], imports: [HttpClientTestingModule],
-      providers: [ApiService, {provide: Router, useValue: mockRouter}]
+      providers: [ApiService, {provide: Router, useValue: mockRouter}], schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     })
     .compileComponents();
   });

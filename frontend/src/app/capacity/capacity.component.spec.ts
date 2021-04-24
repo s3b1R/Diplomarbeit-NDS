@@ -6,6 +6,7 @@ import { ApiService } from '../shared/services/api.service';
 import { of } from 'rxjs';
 import { User } from '../shared/models/user.model';
 import { Capacity } from '../shared/models/capacity.model';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 
 describe('CapacityComponent', () => {
@@ -15,7 +16,8 @@ describe('CapacityComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CapacityComponent ], imports: [HttpClientTestingModule, DateFnsModule], providers: [ ApiService ]
+      declarations: [ CapacityComponent ], imports: [HttpClientTestingModule, DateFnsModule], providers: [ ApiService ],
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA]
     })
     .compileComponents();
   });

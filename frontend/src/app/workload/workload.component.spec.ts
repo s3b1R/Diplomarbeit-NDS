@@ -7,7 +7,7 @@ import { WorkloadComponent } from './workload.component';
 import { File } from '@angular/compiler-cli/src/ngtsc/file_system/testing/src/mock_file_system';
 import {Observable, of } from 'rxjs';
 import { Workload } from '../shared/models/workload.model';
-
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('WorkloadComponent', () => {
   let component: WorkloadComponent;
@@ -20,7 +20,8 @@ describe('WorkloadComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ WorkloadComponent ], imports: [HttpClientTestingModule],
-      providers: [ApiService, NgxCsvParser, {provide: Router, useValue: mockRouter}]
+      providers: [ApiService, NgxCsvParser, {provide: Router, useValue: mockRouter}],
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     })
     .compileComponents();
   });

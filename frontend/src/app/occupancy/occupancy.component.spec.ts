@@ -4,6 +4,7 @@ import { ApiService } from '../shared/services/api.service';
 import { OccupancyComponent } from './occupancy.component';
 import { Workload } from '../shared/models/workload.model';
 import { of } from 'rxjs';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('OccupancyComponent', () => {
   let component: OccupancyComponent;
@@ -12,7 +13,8 @@ describe('OccupancyComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ OccupancyComponent ], imports: [ HttpClientTestingModule ], providers: [ ApiService ]
+      declarations: [ OccupancyComponent ], imports: [ HttpClientTestingModule ], providers: [ ApiService ],
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     })
     .compileComponents();
   });
