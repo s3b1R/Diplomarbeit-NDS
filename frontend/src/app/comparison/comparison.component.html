@@ -1,4 +1,5 @@
 <mat-card>
+  <div class="mat-card-content">
   <div class="formcontroller" *ngIf="piList.length > 0">
     <mat-form-field>
       <mat-label>PI wählen</mat-label>
@@ -7,12 +8,21 @@
       </mat-select>
     </mat-form-field>
   </div>
-<div class="contend" *ngIf="piList.length > 0; else instruction">
+
+  <div class="warn slow" *ngIf="!userList.length">
+    Es ist noch kein Nutzer erfasst.
+  </div>
+
+  <div class="warn slow" *ngIf="!piList.length">
+    Es ist noch kein PI erfasst.
+  </div>
+
+<div class="contend">
 <table>
-  <caption>PI {{piName}}</caption>
+  <caption *ngIf="piList.length > 0">PI {{piName}}</caption>
   <thead>
   <tr>
-    <th class="nameHeader" rowspan="2" scope="col">Name</th>
+    <th *ngIf="userList.length > 0" class="nameHeader" rowspan="2" scope="col">Name</th>
     <ng-container *ngFor="let sprint of sprints; let idx = index">
       <td class="separator"></td>
     <th class="sprints" scope="col" colspan="3" >Sprint {{sprint}}<br>
@@ -46,10 +56,7 @@
     </ng-container>
   </tr>
   </tbody>
-
 </table>
 </div>
-  <ng-template #instruction>
-  Es muss mindestens ein PI erfasst sein!
-  </ng-template>
+  </div>
 </mat-card>

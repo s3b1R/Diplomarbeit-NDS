@@ -11,7 +11,7 @@ import { ApiService } from '../shared/services/api.service';
 })
 export class ComparisonComponent implements OnInit {
   piList: Pi[] = [];
-  userList: User[];
+  userList: User[] = [];
   shownPi: Pi;
   sprints: number[];
   piName: number;

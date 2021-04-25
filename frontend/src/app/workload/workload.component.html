@@ -1,4 +1,5 @@
  <mat-card>
+   <div class="mat-card-content">
    <app-success *ngIf="readyForUpload === 'success'"></app-success>
   <mat-form-field *ngIf="readyForUpload === 'notReady'">
     <div>
@@ -16,10 +17,10 @@
   </mat-form-field>
 
   <div *ngIf="readyForUpload === 'ready'">
-    <span>Mit dem Upload, werden die vorhandenen Daten gelöscht und durch die Neuen ersetzt.</span>
+    <div class="warn">Mit dem Upload, werden die vorhandenen Daten gelöscht und durch die Neuen ersetzt.</div>
     <br>
     <button class="uploadButton" mat-flat-button color="primary"(click)="uploadWorkload()">Upload</button>
   </div>
-
+   </div>
  </mat-card>
 
