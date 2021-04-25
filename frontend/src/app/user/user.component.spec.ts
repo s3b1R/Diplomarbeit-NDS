@@ -6,12 +6,14 @@ import { UserComponent } from './user.component';
 import { of } from 'rxjs';
 import { User } from '../shared/models/user.model';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Router } from '@angular/router';
 
 describe('UserComponent', () => {
   let component: UserComponent;
   let fixture: ComponentFixture<UserComponent>;
   let dialog: MatDialog;
   let apiService: ApiService;
+  const mockRouter = {navigate: jasmine.createSpy('navigate')};
 
   class MatDialogMock {
     open(): any {
@@ -24,8 +26,8 @@ describe('UserComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ UserComponent ],
-      imports: [HttpClientTestingModule],
-      providers: [{provide: MatDialog, useClass: MatDialogMock}, ApiService],
+      imports: [ HttpClientTestingModule ],
+      providers: [ {provide: MatDialog, useClass: MatDialogMock}, ApiService, {provide: Router, useValue: mockRouter} ],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     })
     .compileComponents();
@@ -87,6 +89,20 @@ describe('UserComponent', () => {
     expect(apiService.newUser).toHaveBeenCalledWith('User Name');
   });
 
+  it('saveNewUser() should set caseControl value', () => {
+    spyOn(apiService, 'newUser').and.returnValue(of(new User()));
+    expect(component.caseControl.value).toEqual('new');
+    component.saveNewUser();
+    expect(component.caseControl.value).toEqual('success');
+  });
+
+  it('saveNewUser() should navigate home', () => {
+    spyOn(component, 'navigateHome').and.stub();
+    spyOn(apiService, 'newUser').and.returnValue(of(new User()));
+    component.saveNewUser();
+    expect(component.navigateHome).toHaveBeenCalledTimes(1);
+  });
+
   it('saveNewUser() should change newUserName value', () => {
     component.newUserName = 'User Name';
     spyOn(apiService, 'newUser').and.returnValue(of(new User()));
@@ -119,7 +135,7 @@ describe('UserComponent', () => {
     component.caseControl.setValue('dummy');
     spyOn(apiService, 'updateUser').and.stub();
     component.updateUser('Fritz');
-    expect(component.caseControl.value).toBe('new');
+    expect(component.caseControl.value).toBe('success');
   });
 
   it('updateUser() should call loadUserList()', () => {
@@ -130,11 +146,42 @@ describe('UserComponent', () => {
     expect(component.loadUserList).toHaveBeenCalledTimes(1);
   });
 
-  it('deleteUser() should call apiService', () => {
+  it('updateUser() should navigate home', () => {
+    spyOn(component, 'navigateHome').and.stub();
+    component.updateUser('Fritz');
+    expect(component.navigateHome).toHaveBeenCalledTimes(1);
+  });
+
+  it('deleteUser() should call apiService to delete capacities from user', () => {
+    component.userControl.setValue({id: 1, name: 'Hans'});
+    spyOn(apiService, 'deleteAllCapacityForUser').and.stub();
+    component.deleteUser();
+    expect(apiService.deleteAllCapacityForUser).toHaveBeenCalledWith(1);
+  });
+
+
+  it('deleteUser() should call apiService to delete user after timeout', fakeAsync( () => {
     component.userControl.setValue({id: 1, name: 'Hans'});
     spyOn(apiService, 'deleteUser').and.stub();
     component.deleteUser();
+    expect(apiService.deleteUser).not.toHaveBeenCalled();
+    tick(1500);
     expect(apiService.deleteUser).toHaveBeenCalledWith(1);
+  }));
+
+  it('deleteUser() should navigate home after timeout', fakeAsync( () => {
+    component.userControl.setValue({id: 1, name: 'Hans'});
+    spyOn(component, 'navigateHome').and.stub();
+    component.deleteUser();
+    tick(1500);
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['home']);
+  }));
+
+  it('deleteUser() should set value to caseControl', () => {
+    component.caseControl.setValue('edit');
+    expect(component.caseControl.value).toEqual('edit');
+    component.deleteUser();
+    expect(component.caseControl.value).toEqual('success');
   });
 
   it('deleteUser() should reset FormControl', () => {
@@ -151,5 +198,11 @@ describe('UserComponent', () => {
     component.deleteUser();
     expect(component.loadUserList).toHaveBeenCalledTimes(1);
   });
+
+  it('navigateHome() should call router after timeout', fakeAsync( () => {
+    component.navigateHome();
+    tick(1500);
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['home']);
+  }));
 
 });
