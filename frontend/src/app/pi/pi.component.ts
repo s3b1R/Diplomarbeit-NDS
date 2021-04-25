@@ -5,6 +5,7 @@ import { format, parse } from 'date-fns';
 import { ApiService } from '../shared/services/api.service';
 import { ConfirmationDialogComponent } from '../shared/confirmation-dialog/confirmation-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pi',
@@ -34,7 +35,7 @@ export class PiComponent implements OnInit {
   caseControl = new FormControl('new');
 
 
-  constructor(private apiService: ApiService, public dialog: MatDialog) { }
+  constructor(private apiService: ApiService, public dialog: MatDialog, private router: Router) { }
 
   ngOnInit(): void {
     this.loadPiList();
@@ -60,7 +61,8 @@ export class PiComponent implements OnInit {
       this.sprint6Start.value,
       this.sprint6End.value).subscribe();
     this.controlFieldsReset();
-    this.loadPiList();
+    this.caseControl.setValue('success');
+    this.navigateHome();
   }
 
   updatePi(newPiShortName: string, newStartDate: string, newEndDate: string, newSprintCount: string,
@@ -92,8 +94,8 @@ export class PiComponent implements OnInit {
       formattedSprints[11]
     );
     this.piControl.reset();
-    this.caseControl.setValue('new');
-    this.loadPiList();
+    this.caseControl.setValue('success');
+    this.navigateHome();
   }
 
   openDialog(): void {
@@ -111,16 +113,14 @@ export class PiComponent implements OnInit {
   deletePi(): void {
     this.apiService.deletePi(this.piControl.value.id);
     this.piControl.reset();
-    this.caseControl.setValue('new');
-    this.loadPiList();
+    this.caseControl.setValue('success');
+    this.navigateHome();
   }
 
   loadPiList(): void {
-    setTimeout(() => {
       this.apiService.getPiData().subscribe(results => {
         this.piList = results;
       });
-    }, 500);
   }
 
   formatNewSprintDates(): void {
@@ -191,6 +191,12 @@ export class PiComponent implements OnInit {
     this.sprint5End.reset();
     this.sprint6Start.reset();
     this.sprint6End.reset();
+  }
+
+  navigateHome(): void {
+    setTimeout( async () => {
+      await this.router.navigate(['home']);
+    }, 1500);
   }
 
 }

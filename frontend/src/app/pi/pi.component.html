@@ -1,5 +1,5 @@
 <mat-card>
-
+  <app-success *ngIf="caseControl.value == 'success'"></app-success>
   <div class="useCaseSelector">
     <mat-button-toggle-group [formControl]="caseControl">
       <mat-button-toggle value="new">Neues PI</mat-button-toggle>
