@@ -129,7 +129,7 @@ export class CapacityComponent implements OnInit {
     } else {
       this.apiService.newCapacity(cellText, capacity.date, user.id)
         .subscribe(data => {
-          this.capacitiesToShow[arrayIndex].id = data.id;
+          this.capacitiesToShow[arrayIndex].id = data?.id;
         });
     }
   }

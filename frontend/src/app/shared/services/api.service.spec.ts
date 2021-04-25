@@ -155,6 +155,13 @@ describe('ApiService', () => {
     newCapacityRequest.flush(dummyCapacity);
   });
 
+  it('should delete all capacities for one user', () => {
+    expect((service.deleteAllCapacityForUser(32))).toBeUndefined();
+
+    const deleteUserRequest = httpMock.expectOne(`${service.baseUrl}capacity/alldelete/32`);
+    expect(deleteUserRequest.request.method).toBe('DELETE');
+  });
+
   it('should create a new workload', () => {
     const dummyWorkload = new Workload().deserialize({
       id: 1,
