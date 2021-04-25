@@ -265,7 +265,7 @@ describe('CapacityComponent', () => {
     expect(component.saveInputToDB).not.toHaveBeenCalled();
   });
 
-  it('onBlur() should change comma period to  remove newlines, and whitespace from input before calling saveInputToDB', () => {
+  it('onBlur() should change comma to period and remove newlines and whitespace from input before calling saveInputToDB', () => {
     spyOn(component, 'capaValueHasChanged').and.returnValue(true);
     spyOn(component, 'saveInputToDB').and.stub();
     component.onBlur('0 , 1 \n', new User(), new Capacity(), 1);
@@ -303,14 +303,20 @@ describe('CapacityComponent', () => {
       date: '2021-04-30',
       user: { id: 1, name: 'Hans Muster' },
     });
+    const mockedReturnedCapacity = new Capacity().deserialize({
+      id: 44,
+      capa: '0.8',
+      date: '2021-04-30',
+      user: { id: 1, name: 'Hans Muster' },
+    });
     const mockedUser = new User().deserialize({ id: 1, name: 'Hans Muster' });
-    spyOn(apiService, 'newCapacity').and.returnValue(of(new Capacity()));
+    spyOn(apiService, 'newCapacity').and.returnValue(of(mockedReturnedCapacity));
 
     component.saveInputToDB(mockedCapacity, '0.5', mockedUser, 1);
     expect(apiService.newCapacity).toHaveBeenCalledWith('0.5', mockedCapacity.date, mockedUser.id);
   });
 
-  it('saveInputToDB() should replace the capacity in capacitiesToShow id after create new capacity', () => {
+  it('saveInputToDB() should replace the capacity in capacitiesToShow id after create new capacity', fakeAsync( () => {
     const mockedCapacity = new Capacity().deserialize({
       id: 0,
       capa: '0.8',
@@ -329,8 +335,9 @@ describe('CapacityComponent', () => {
 
     expect(component.capacitiesToShow[1].id).toBe(0);
     component.saveInputToDB(mockedCapacity, '0.5', mockedUser, 1);
+    tick(100);
     expect(component.capacitiesToShow[1].id).toBe(666);
-  });
+  }));
 
   it('compareDates() should return true if two dates are the same', () => {
     const date = new Date(2021, 3, 19);

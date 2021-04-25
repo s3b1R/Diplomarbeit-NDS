@@ -4,6 +4,7 @@ import { ApiService } from '../shared/services/api.service';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../shared/confirmation-dialog/confirmation-dialog.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user',
@@ -16,7 +17,7 @@ export class UserComponent implements OnInit {
   caseControl = new FormControl('new');
   userControl = new FormControl();
 
-  constructor(private apiService: ApiService, public dialog: MatDialog) { }
+  constructor(private apiService: ApiService, public dialog: MatDialog, private router: Router) { }
 
   ngOnInit(): void {
     this.loadUserList();
@@ -36,31 +37,40 @@ export class UserComponent implements OnInit {
 
 
   loadUserList(): void {
-    setTimeout(() => {
-      this.apiService.getAllUsers().subscribe(results => {
-        this.userList = results;
-      });
-    }, 500);
+    this.apiService.getAllUsers().subscribe(results => {
+      this.userList = results;
+    });
   }
 
   saveNewUser(): void {
     this.apiService.newUser(this.newUserName).subscribe();
+    this.caseControl.setValue('success');
     this.newUserName = '';
-    this.loadUserList();
+    this.navigateHome();
   }
 
   updateUser(editedName: string): void {
     this.apiService.updateUser(this.userControl.value?.id, editedName);
     this.userControl.reset();
-    this.caseControl.setValue('new');
-    this.loadUserList();
+    this.caseControl.setValue('success');
+    this.navigateHome();
   }
 
 
   deleteUser(): void {
-    this.apiService.deleteUser(this.userControl.value?.id);
+    const userId = this.userControl.value?.id;
+    this.apiService.deleteAllCapacityForUser(userId);
+    setTimeout(async () => {
+      this.apiService.deleteUser(userId);
+      await this.router.navigate(['home']);
+      }, 1500);
+    this.caseControl.setValue('success');
     this.userControl.reset();
-    this.loadUserList();
   }
 
+  navigateHome(): void {
+    setTimeout( async () => {
+      await this.router.navigate(['home']);
+    }, 1500);
+  }
 }

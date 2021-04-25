@@ -67,6 +67,10 @@ export class ApiService {
       .pipe(map(data => new Capacity().deserialize(data)));
   }
 
+  public deleteAllCapacityForUser(userId: number): void {
+    this.httpService.delete(`${this.baseUrl}capacity/alldelete/${userId}`).subscribe();
+  }
+
   public newWorkload(newAssigne: string, newSprint: string, newStoryPoints: number, newProject: string): Observable<Workload> {
     return this.httpService.post(`${this.baseUrl}workload/create`, {
       assignee: newAssigne,

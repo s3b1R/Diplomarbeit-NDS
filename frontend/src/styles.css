@@ -1,9 +1,33 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 body {
+  height: 100%;
   margin: 20px;
   font-family: Roboto, "Helvetica Neue", sans-serif;
-  /*background: whitesmoke;*/
+  background: lightsteelblue;
+}
+
+mat-card {
+  margin-top: 1px;
+  height: 80vh;
+  overflow: hidden;
+}
+
+.mat-card-content {
+  max-height: 100%;
+  overflow: auto;
+}
+
+.warn {
+  margin: 20px 0;
+  font-weight: bold;
+  font-size: large;
+}
+
+.loading {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .formcontroller, .useCaseSelector, .contend, mat-form-field {
@@ -13,4 +37,42 @@ body {
 caption {
   font-size: large;
   font-weight: bold;
+}
+
+nav{
+  background-color: whitesmoke;
+}
+
+.mat-tab-label {
+  color: black;
+}
+
+.mat-tab-link {
+  color: black;
+}
+
+.footer {
+  margin-top: 1px;
+  height: 5vh;
+  bottom: 0px;
+  width: 100%;
+  text-align: center;
+  background: #00373e;
+  color: white;
+}
+
+.footerdiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 5vh;
+}
+
+.slow {
+  animation: cssAnimation 0s 1s forwards;
+  opacity: 0;
+}
+
+@keyframes cssAnimation {
+  to { opacity: 1}
 }

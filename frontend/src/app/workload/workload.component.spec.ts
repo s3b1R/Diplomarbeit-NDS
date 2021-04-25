@@ -103,7 +103,7 @@ describe('WorkloadComponent', () => {
     ];
     component.makeReadyForUpload(mockedInput);
     expect(component.csvRecords).toEqual(mockedInput);
-    expect(component.readyForUpload).toEqual(true);
+    expect(component.readyForUpload).toEqual('ready');
   });
 
   it('uploadWorkload() should delete all workload in database', () => {
@@ -118,17 +118,16 @@ describe('WorkloadComponent', () => {
     expect(component.sendDataToDatabase).toHaveBeenCalledTimes(1);
   });
 
-  it('uploadWorkload() should set readyForUpload to false after timout', fakeAsync( () => {
-    component.readyForUpload = true;
+  it('uploadWorkload() should change variable readyForUpload ',  () => {
+    component.readyForUpload = 'ready';
     component.uploadWorkload();
-    tick(500);
-    expect(component.readyForUpload).toBeFalse();
-  }));
+    expect(component.readyForUpload).toEqual('success');
+  });
 
-  it('uploadWorkload() should set navigate to occupancy after timout', fakeAsync( () => {
+  it('uploadWorkload() should navigate to after timout', fakeAsync( () => {
     component.uploadWorkload();
-    tick(500);
-    expect(mockRouter.navigate).toHaveBeenCalledWith(['occupancy']);
+    tick(1500);
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['home']);
   }));
 
   it('sendDataToDatabase() should call apiService and send data to the database', () => {

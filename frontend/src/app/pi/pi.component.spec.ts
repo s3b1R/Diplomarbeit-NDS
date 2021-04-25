@@ -7,12 +7,14 @@ import { of } from 'rxjs';
 import { Pi } from '../shared/models/pi.model';
 import { DateFnsModule } from 'ngx-date-fns';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Router } from '@angular/router';
 
 describe('PiComponent', () => {
   let component: PiComponent;
   let fixture: ComponentFixture<PiComponent>;
   let apiService: ApiService;
   let dialog: MatDialog;
+  const mockRouter = {navigate: jasmine.createSpy('navigate')};
 
   class MatDialogMock {
     open(): any {
@@ -25,7 +27,8 @@ describe('PiComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ PiComponent ], imports: [HttpClientTestingModule, DateFnsModule],
-      providers: [{provide: MatDialog, useClass: MatDialogMock}, ApiService], schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+      providers: [{provide: MatDialog, useClass: MatDialogMock}, ApiService, {provide: Router, useValue: mockRouter} ],
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     })
     .compileComponents();
   });
@@ -69,10 +72,16 @@ describe('PiComponent', () => {
     expect(component.controlFieldsReset).toHaveBeenCalledTimes(1);
   });
 
-  it('submitNewPi() should call loadPiList()', () => {
-    spyOn(component, 'loadPiList').and.stub();
+  it('submitPi() should set caseControl value', () => {
+    component.caseControl.setValue('new');
     component.submitNewPi();
-    expect(component.loadPiList).toHaveBeenCalledTimes(1);
+    expect(component.caseControl.value).toEqual('success');
+  });
+
+  it('submitNewPi() should call navigateHome()', () => {
+    spyOn(component, 'navigateHome').and.stub();
+    component.submitNewPi();
+    expect(component.navigateHome).toHaveBeenCalledTimes(1);
   });
 
   it('updatePI() should call formatUpdatedSprints()', () => {
@@ -103,16 +112,16 @@ describe('PiComponent', () => {
     component.piControl.patchValue({id: 1});
     spyOn(apiService, 'updatePi').and.stub();
     component.updatePi('2104', '01/04/2021', '30/04/2021', '1', '', '', '', '', '', '', '', '', '', '', '', '');
-    expect(component.caseControl.value).toEqual('new');
+    expect(component.caseControl.value).toEqual('success');
   });
 
-  it('updatePI() should call loadPiList()', () => {
+  it('updatePI() should call navigateHome()', () => {
     component.caseControl.setValue('dummy');
     component.piControl.patchValue({id: 1});
-    spyOn(component, 'loadPiList').and.stub();
+    spyOn(component, 'navigateHome').and.stub();
     spyOn(apiService, 'updatePi').and.stub();
     component.updatePi('2104', '01/04/2021', '30/04/2021', '1', '', '', '', '', '', '', '', '', '', '', '', '');
-    expect(component.loadPiList).toHaveBeenCalledTimes(1);
+    expect(component.navigateHome).toHaveBeenCalledTimes(1);
   });
 
   it('openDialog() opens confirmation dialog', () => {
@@ -137,29 +146,30 @@ describe('PiComponent', () => {
     expect(apiService.deletePi).toHaveBeenCalledWith(3);
   });
 
-  it('deletePi() should reset FormControls', () => {
+  it('deletePi() should set new values to FormControls', () => {
     component.piControl.patchValue({id: 3});
     spyOn(apiService, 'deletePi').and.stub();
     component.deletePi();
     expect(component.piControl.value).toBe(null);
-    expect(component.caseControl.value).toEqual('new');
+    expect(component.caseControl.value).toEqual('success');
   });
 
-  it('loadPiList() should not reload Pi list before timeout', fakeAsync(() => {
-    spyOn(apiService, 'getPiData').and.returnValue(of([new Pi(), new Pi()]));
-    component.loadPiList();
-    expect(component.piList).toEqual([]);
-    expect(apiService.getPiData).not.toHaveBeenCalled();
-    tick(500);
-  }));
+  it('deletePi() should call navigateHome()', () => {
+    component.piControl.patchValue({id: 3});
+    spyOn(component, 'navigateHome').and.stub();
+    spyOn(apiService, 'deletePi').and.stub();
+    component.deletePi();
+    expect(component.navigateHome).toHaveBeenCalledTimes(1);
+  });
 
-  it('loadPiList() should reload Pi list after timeout', fakeAsync(() => {
+
+  it('loadPiList() should call apiService Pi list after timeout', () => {
      spyOn(apiService, 'getPiData').and.returnValue(of([new Pi(), new Pi()]));
+     component.piList = [];
      component.loadPiList();
-     tick(500);
      expect(apiService.getPiData).toHaveBeenCalledTimes(1);
      expect(component.piList.length).toEqual(2);
-  }));
+  });
 
   it('formatNewSprintDates() should format sprint dates', () => {
     component.sprint1Start.setValue(new Date(2021, 3, 19));
@@ -184,5 +194,11 @@ describe('PiComponent', () => {
     expect(component.sprintCounts.value).toBe(null);
     expect(component.sprint2End.value).toBe(null);
   });
+
+  it('navigateHome() should call router after timeout', fakeAsync( () => {
+    component.navigateHome();
+    tick(1500);
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['home']);
+  }));
 
 });

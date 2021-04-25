@@ -1,5 +1,6 @@
 <mat-card>
-
+  <div class="mat-card-content">
+  <app-success *ngIf="caseControl.value == 'success'"></app-success>
   <div class="useCaseSelector">
     <mat-button-toggle-group [formControl]="caseControl">
       <mat-button-toggle value="new">Neuer Benutzer</mat-button-toggle>
@@ -48,5 +49,6 @@
     </section>
 </div>
 </div>
+  </div>
   </div>
 </mat-card>

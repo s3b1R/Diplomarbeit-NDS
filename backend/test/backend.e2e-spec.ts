@@ -225,7 +225,7 @@ describe('CapacityModule (e2e)', () => {
 
   it('should delete all capacities for a user', async () => {
     const { body } = await request(app.getHttpServer())
-      .delete('/capacity/all/2')
+      .delete('/capacity/alldelete/2')
       .set('Accept', 'application/json')
       .expect(200);
     expect(body).toHaveProperty('affectedRows', 1);

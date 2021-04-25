@@ -11,7 +11,7 @@ import {Router} from '@angular/router';
 export class WorkloadComponent implements OnInit {
 
   csvRecords: any[] = [];
-  readyForUpload = false;
+  readyForUpload = 'notReady';
 
   constructor(private ngxCsvParser: NgxCsvParser, private apiService: ApiService, private router: Router) { }
 
@@ -46,16 +46,16 @@ export class WorkloadComponent implements OnInit {
 
   makeReadyForUpload(result: Array<any>): void {
     this.csvRecords = result;
-    this.readyForUpload = true;
+    this.readyForUpload = 'ready';
   }
 
   uploadWorkload(): void {
     this.apiService.clearWorkload();
     this.sendDataToDatabase();
+    this.readyForUpload = 'success';
     setTimeout(async () => {
-      this.readyForUpload = false;
-      await this.router.navigate(['occupancy']);
-    }, 500);
+      await this.router.navigate(['home']);
+    }, 1500);
   }
 
   sendDataToDatabase(): void {

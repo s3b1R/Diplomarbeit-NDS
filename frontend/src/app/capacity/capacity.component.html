@@ -1,4 +1,5 @@
 <mat-card>
+  <div class="mat-card-content">
   <ng-conainer *ngIf="!isLoading">
     <div class="formcontroller">
       <button mat-flat-button color="primary"(click)="capaMonth.open()">Anzeigemonat wählen</button>
@@ -47,6 +48,6 @@
   </ng-conainer>
 
   <img class="loading" *ngIf="isLoading" src="../../assets/images/spinner.gif" height="233" width="414" alt="loading"/>
-
+  </div>
 </mat-card>
 
