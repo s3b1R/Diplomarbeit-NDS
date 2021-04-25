@@ -106,4 +106,27 @@ describe('CapacityController', () => {
     jest.spyOn(capacityService, 'delete').mockResolvedValue(mockedValues);
     expect(await capacityController.delete(mockedID)).toBe(mockedValues);
   });
+
+  it('should delete all capacity for one user', async () => {
+    const mockedValues = {
+      raw: {
+        fieldCount: 0,
+        affectedRows: 12,
+        insertId: 0,
+        serverStatus: 2,
+        warningCount: 0,
+        message: '',
+        protocol41: true,
+        changedRows: 0,
+      },
+      affected: 1,
+    };
+    const mockedID = 123;
+    jest
+      .spyOn(capacityService, 'deleteAllCapacityForUser')
+      .mockResolvedValue(mockedValues);
+    expect(await capacityController.deleteAllCapacityForUser(mockedID)).toBe(
+      mockedValues,
+    );
+  });
 });

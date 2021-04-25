@@ -8,6 +8,7 @@ import { CapacityModule } from './../src/capacity/capacity.module';
 import { PiModule } from './../src/pi/pi.module';
 import { Workload } from './../src/workload/workload.entity';
 import { WorkloadModule } from './../src/workload/workload.module';
+import e from 'express';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
@@ -132,7 +133,7 @@ describe('CapacityModule (e2e)', () => {
     });
   });
 
-  it('should return an array of users', async () => {
+  it('should return an array of capacities', async () => {
     await request(app.getHttpServer())
       .post('/capacity/create')
       .set('Accept', 'application/json')
@@ -220,6 +221,14 @@ describe('CapacityModule (e2e)', () => {
       .expect(200);
     expect(body).toHaveProperty('raw.changedRows', 0);
     expect(body).toHaveProperty('affected', 1);
+  });
+
+  it('should delete all capacities for a user', async () => {
+    const { body } = await request(app.getHttpServer())
+      .delete('/capacity/all/2')
+      .set('Accept', 'application/json')
+      .expect(200);
+    expect(body).toHaveProperty('affectedRows', 1);
   });
 
   afterAll(async () => {
