@@ -54,9 +54,9 @@ export class CapacityComponent implements OnInit {
     for (let index = 0; index < capacityFromDB.length; index++){
       const currentEntry = capacityFromDB[index];
       const nextEntry = capacityFromDB[index + 1];
-      const userName = currentEntry.user.name;
+      const userName = currentEntry.user?.name;
 
-      if (nextEntry && currentEntry.user.id === nextEntry.user.id){
+      if (nextEntry && currentEntry.user?.id === nextEntry.user?.id){
         userCapacities.push(currentEntry);
       } else {
         userCapacities.push(currentEntry);
