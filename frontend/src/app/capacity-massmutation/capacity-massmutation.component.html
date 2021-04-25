@@ -1,5 +1,8 @@
 <mat-card>
-  <form [formGroup]="massInputValues" (ngSubmit)="onFormSubmit()">
+
+  <app-success *ngIf="entryStatus === 'success'"></app-success>
+
+  <form *ngIf="entryStatus === 'ready'" [formGroup]="massInputValues" (ngSubmit)="onFormSubmit()">
 
     <mat-form-field>
       <mat-label>Benutzer auswählen</mat-label>

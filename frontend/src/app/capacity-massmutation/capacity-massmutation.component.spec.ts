@@ -64,10 +64,17 @@ describe('CapacityMassmutationComponent', () => {
     expect(component.safeCapaInDB).toHaveBeenCalledWith(new Date(2021, 3, 1), '2021-04-01', 1, '0.8');
   });
 
+  it('onFormSubmit() should change value of entryStatus', () => {
+    component.entryStatus = 'ready';
+    component.massInputValues.patchValue({start: new Date(2021, 3, 1), end: new Date(2021, 3, 3), user: 1, capa: 0.8 });
+    component.onFormSubmit();
+    expect(component.entryStatus).toEqual('success');
+  });
+
   it('onFormSubmit() should navigate to capaview after timeout', fakeAsync( () => {
     component.massInputValues.patchValue({start: new Date(2021, 3, 1), end: new Date(2021, 3, 3), user: 1, capa: 0.8 });
     component.onFormSubmit();
-    tick(500);
+    tick(1500);
     expect(mockRouter.navigate).toHaveBeenCalledWith(['capaview']);
   }));
 

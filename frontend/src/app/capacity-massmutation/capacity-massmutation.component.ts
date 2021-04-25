@@ -21,6 +21,7 @@ export class CapacityMassmutationComponent implements OnInit {
     capa: new FormControl()
   });
   userList: User[];
+  entryStatus = 'ready';
 
   ngOnInit(): void {
     this.apiService.getAllUsers().subscribe(results => {
@@ -37,9 +38,10 @@ export class CapacityMassmutationComponent implements OnInit {
       const dateFormatted = format(date, 'yyyy-MM-dd');
       this.safeCapaInDB(date, dateFormatted, forUser, capaValue);
     }
+    this.entryStatus = 'success';
     setTimeout( async () => {
       await this.router.navigate(['capaview']);
-    }, 500);
+    }, 1500);
   }
 
   safeCapaInDB(date: Date, dateFormatted: string, forUser, capaValue): void {
