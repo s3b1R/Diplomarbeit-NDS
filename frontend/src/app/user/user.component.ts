@@ -37,18 +37,15 @@ export class UserComponent implements OnInit {
 
 
   loadUserList(): void {
-    setTimeout(() => {
-      this.apiService.getAllUsers().subscribe(results => {
-        this.userList = results;
-      });
-    }, 500);
+    this.apiService.getAllUsers().subscribe(results => {
+      this.userList = results;
+    });
   }
 
   saveNewUser(): void {
     this.apiService.newUser(this.newUserName).subscribe();
     this.caseControl.setValue('success');
     this.newUserName = '';
-    this.loadUserList();
     this.navigateHome();
   }
 
@@ -56,7 +53,6 @@ export class UserComponent implements OnInit {
     this.apiService.updateUser(this.userControl.value?.id, editedName);
     this.userControl.reset();
     this.caseControl.setValue('success');
-    this.loadUserList();
     this.navigateHome();
   }
 
@@ -70,7 +66,6 @@ export class UserComponent implements OnInit {
       }, 1500);
     this.caseControl.setValue('success');
     this.userControl.reset();
-    this.loadUserList();
   }
 
   navigateHome(): void {

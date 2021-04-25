@@ -64,23 +64,13 @@ describe('UserComponent', () => {
     expect(component.deleteUser).toHaveBeenCalled();
   });
 
-  it ('loadUserList() should call apiService and fill user list after timeout', fakeAsync( () => {
+  it ('loadUserList() should call apiService and fill user list', () => {
     spyOn(apiService, 'getAllUsers').and.returnValue(of([new User(), new User(), new User()]));
     component.userList = [];
     component.loadUserList();
-    tick(500);
     expect(component.userList.length).toEqual(3);
     expect(apiService.getAllUsers).toHaveBeenCalledTimes(1);
-  }));
-
-  it ('loadUserList() should not call apiService and fill user list before timeout', fakeAsync( () => {
-    spyOn(apiService, 'getAllUsers').and.returnValue(of([new User(), new User(), new User()]));
-    component.userList = [];
-    component.loadUserList();
-    expect(component.userList.length).not.toEqual(3);
-    expect(apiService.getAllUsers).not.toHaveBeenCalledTimes(1);
-    tick(500);
-  }));
+  });
 
   it('saveNewUser() should call apiService', () => {
     component.newUserName = 'User Name';
@@ -110,13 +100,6 @@ describe('UserComponent', () => {
     expect(component.newUserName).toEqual('');
   });
 
-  it('saveNewUser() should call loadUserList()', () => {
-    spyOn(component, 'loadUserList').and.stub();
-    spyOn(apiService, 'newUser').and.returnValue(of(new User()));
-    component.saveNewUser();
-    expect(component.loadUserList).toHaveBeenCalledTimes(1);
-  });
-
   it('updateUser() should call apiService', () => {
     component.userControl.setValue({id: 1, name: 'Hans'});
     spyOn(apiService, 'updateUser').and.stub();
@@ -136,14 +119,6 @@ describe('UserComponent', () => {
     spyOn(apiService, 'updateUser').and.stub();
     component.updateUser('Fritz');
     expect(component.caseControl.value).toBe('success');
-  });
-
-  it('updateUser() should call loadUserList()', () => {
-    component.userControl.setValue({id: 1, name: 'Hans'});
-    spyOn(component, 'loadUserList').and.stub();
-    spyOn(apiService, 'updateUser').and.stub();
-    component.updateUser('Fitz');
-    expect(component.loadUserList).toHaveBeenCalledTimes(1);
   });
 
   it('updateUser() should navigate home', () => {
@@ -189,14 +164,6 @@ describe('UserComponent', () => {
     spyOn(apiService, 'deleteUser').and.stub();
     component.deleteUser();
     expect(component.userControl.value).toBe(null);
-  });
-
-  it('deleteUser() should call loadUserList()', () => {
-    component.userControl.setValue({id: 1, name: 'Hans'});
-    spyOn(component, 'loadUserList').and.stub();
-    spyOn(apiService, 'deleteUser').and.stub();
-    component.deleteUser();
-    expect(component.loadUserList).toHaveBeenCalledTimes(1);
   });
 
   it('navigateHome() should call router after timeout', fakeAsync( () => {
