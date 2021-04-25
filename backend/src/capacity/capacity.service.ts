@@ -55,4 +55,11 @@ export class CapacityService {
       `select SUM(capa) as capasum from capacity where userId = '${id}' and  date between '${start}' and '${end}';`,
     );
   }
+
+  async deleteAllCapacityForUser(userId: number): Promise<any> {
+    const manager = getManager();
+    return await manager.query(
+      `delete from capacity where userId = '${userId}';`,
+    );
+  }
 }

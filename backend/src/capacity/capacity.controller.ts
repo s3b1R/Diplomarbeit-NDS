@@ -61,4 +61,9 @@ export class CapacityController {
   async delete(@Param('id') id): Promise<any> {
     return this.capacityService.delete(id);
   }
+
+  @Delete('all/:userId')
+  async deleteAllCapacityForUser(@Param('userId') userId): Promise<any> {
+    return this.capacityService.deleteAllCapacityForUser(userId);
+  }
 }
