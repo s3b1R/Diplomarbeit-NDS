@@ -35,6 +35,7 @@ import { CapacityPipe } from './shared/pipes/capacity-pipe';
 import { WorkloadPipe } from './shared/pipes/workload-pipe';
 import { DeltaCapaLoad } from './shared/pipes/delta-capa-load';
 import { SuccessComponent } from './shared/success/success.component';
+import { FooterComponent } from './footer/footer.component';
 
 const germanConfig = new DateFnsConfigurationService();
 germanConfig.setLocale(de);
@@ -54,7 +55,8 @@ germanConfig.setLocale(de);
     CapacityPipe,
     WorkloadPipe,
     DeltaCapaLoad,
-    SuccessComponent
+    SuccessComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
