@@ -17,6 +17,7 @@ const routes: Routes = [
   {path: 'workload', component: WorkloadComponent},
   {path: 'pi', component: PiComponent},
   {path: 'comparison', component: ComparisonComponent},
+  {path: 'home', component: ComparisonComponent},
   {path: '**', redirectTo: '/comparison'}
 ];
 
