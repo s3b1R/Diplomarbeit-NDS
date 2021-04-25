@@ -1,0 +1,8 @@
+.success{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: lightgreen;
+  height: 40px;
+  font-size: large;
+}
