@@ -1,0 +1,38 @@
+<mat-card>
+  <div class="mat-card-content">
+
+  <app-success *ngIf="entryStatus === 'success'"></app-success>
+
+  <form *ngIf="entryStatus === 'ready'" [formGroup]="massInputValues" (ngSubmit)="onFormSubmit()">
+
+    <mat-form-field>
+      <mat-label>Benutzer auswählen</mat-label>
+      <mat-select formControlName="user" >
+        <mat-option></mat-option>
+        <mat-option *ngFor="let user of userList" [value]="user.id">{{user.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Zeitraum</mat-label>
+      <mat-date-range-input  [rangePicker]="multiRange">
+        <input matStartDate formControlName="start" placeholder="Start Datum">
+        <input matEndDate formControlName="end" placeholder="End Datum">
+      </mat-date-range-input>
+      <mat-datepicker-toggle matSuffix [for]="multiRange"></mat-datepicker-toggle>
+      <mat-date-range-picker #multiRange></mat-date-range-picker>
+    </mat-form-field>
+
+    <mat-form-field class="capa-input">
+      <mat-label>Kapazität</mat-label>
+      <input matInput type="text" formControlName="capa">
+      <button mat-button *ngIf="massInputValues.value.capa" matSuffix mat-icon-button aria-label="Clear" (click)="massInputValues.value.capa=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <section>
+      <button mat-flat-button color="primary">Erfassen</button>
+    </section>
+  </form>
+  </div>
+</mat-card>

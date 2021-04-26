@@ -1,0 +1,7 @@
+<div mat-dialog-content class="dialog">
+  {{message}}
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="onNoClick()">Nein</button>
+  <button mat-raised-button [mat-dialog-close]="true">Ja, weiter</button>
+</div>

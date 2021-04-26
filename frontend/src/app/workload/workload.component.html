@@ -1,0 +1,26 @@
+ <mat-card>
+   <div class="mat-card-content">
+   <app-success *ngIf="readyForUpload === 'success'"></app-success>
+  <mat-form-field *ngIf="readyForUpload === 'notReady'">
+    <div>
+      <mat-toolbar>
+
+        <input matInput type="text" placeholder="Quelldatei">
+        <button mat-flat-button color="primary">
+          Durchsuchen
+        </button>
+      </mat-toolbar>
+
+      <input type="file" #fileImportInput name="File Upload" id="csvFileUpload" (change)="fileChangeListener($event)"
+             accept=".csv" />
+    </div>
+  </mat-form-field>
+
+  <div *ngIf="readyForUpload === 'ready'">
+    <div class="warn">Mit dem Upload, werden die vorhandenen Daten gelöscht und durch die Neuen ersetzt.</div>
+    <br>
+    <button class="uploadButton" mat-flat-button color="primary"(click)="uploadWorkload()">Upload</button>
+  </div>
+   </div>
+ </mat-card>
+

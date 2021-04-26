@@ -1,18 +1,92 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { HttpClientModule } from '@angular/common/http';
+import { CapacityComponent } from './capacity/capacity.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {DateFnsConfigurationService, DateFnsModule} from 'ngx-date-fns';
+import { de } from 'date-fns/locale';
+import { NgxMatDateFnsDateModule} from 'ngx-mat-datefns-date-adapter';
+import {MAT_DATE_LOCALE} from '@angular/material/core';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatCardModule } from '@angular/material/card';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule} from '@angular/material/icon';
+import { CapacityMassmutationComponent } from './capacity-massmutation/capacity-massmutation.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatDialogModule } from '@angular/material/dialog';
+import { HeaderComponent } from './header/header.component';
+import { UserComponent } from './user/user.component';
+import { ConfirmationDialogComponent } from './shared/confirmation-dialog/confirmation-dialog.component';
+import { WorkloadComponent } from './workload/workload.component';
+import { NgxCsvParserModule } from 'ngx-csv-parser';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { OccupancyComponent } from './occupancy/occupancy.component';
+import { PiComponent } from './pi/pi.component';
+import { ComparisonComponent } from './comparison/comparison.component';
+import { CapacityPipe } from './shared/pipes/capacity-pipe';
+import { WorkloadPipe } from './shared/pipes/workload-pipe';
+import { DeltaCapaLoad } from './shared/pipes/delta-capa-load';
+import { SuccessComponent } from './shared/success/success.component';
+import { FooterComponent } from './footer/footer.component';
+
+const germanConfig = new DateFnsConfigurationService();
+germanConfig.setLocale(de);
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CapacityComponent,
+    CapacityMassmutationComponent,
+    HeaderComponent,
+    UserComponent,
+    ConfirmationDialogComponent,
+    WorkloadComponent,
+    OccupancyComponent,
+    PiComponent,
+    ComparisonComponent,
+    CapacityPipe,
+    WorkloadPipe,
+    DeltaCapaLoad,
+    SuccessComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    DateFnsModule.forRoot(),
+    NgxMatDateFnsDateModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCardModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTabsModule,
+    MatButtonToggleModule,
+    MatDialogModule,
+    NgxCsvParserModule,
+    MatToolbarModule,
   ],
-  providers: [],
+  providers: [
+    {provide: MAT_DATE_LOCALE, useValue: 'de'},
+    {provide: DateFnsConfigurationService, useValue: germanConfig }
+    ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
