@@ -1,0 +1,43 @@
+version: "3.3"
+
+services:
+  docker-db:
+    image: ./dockerdb
+    volumes:
+      - ./db-data/db:/var/lib/mysql
+    ports:
+    - 3306:3306
+    expose:
+      - 3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=${ROOTPASS}
+    networks:
+      - resplan
+
+  backend:
+    build: ./backend
+    depends_on:
+      - docker-db
+    environment:
+      - DATABASE_HOST=docker-db
+      - DATABASE_SCHEMA=${DATABASE_SCHEMA}
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+    ports:
+    - 3000:3000
+    networks:
+      - resplan
+
+  frontend:
+    build: ./frontend
+    depends_on:
+      - docker-db
+      - backend
+    ports:
+      - 80:80
+    networks:
+      - resplan
+
+networks:
+  resplan:
+    driver: bridge
