@@ -13,6 +13,8 @@ import { PiModule } from './pi/pi.module';
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'mysql',
+      host: process.env.DATABASE_HOST || 'localhost',
+      port: 3306,
       database: process.env.DATABASE_SCHEMA,
       username: process.env.DATABASE_USER,
       password: process.env.DATABASE_PASSWORD,
