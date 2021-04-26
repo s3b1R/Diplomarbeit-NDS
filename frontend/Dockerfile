@@ -8,3 +8,4 @@ RUN npm run build
 FROM nginx
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY --from=build /usr/src/app/dist/frontend /usr/share/nginx/html
+EXPOSE 80
