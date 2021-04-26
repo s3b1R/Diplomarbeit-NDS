@@ -2,7 +2,7 @@ version: "3.3"
 
 services:
   docker-db:
-    image: ./dockerdb
+    build: ./dockerdb
     volumes:
       - ./db-data/db:/var/lib/mysql
     ports:
