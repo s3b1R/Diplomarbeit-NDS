@@ -2,13 +2,13 @@
   "name": "resourceplanner",
   "version": "1.0.0",
   "scripts": {
-    "install": "(cd backend && cp example.env .env) && (cd dockerdb && docker build -t sebisql .) && (docker run  --name sebsql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 -v $(pwd)/db-data/db:/var/lib/mysql -d sebisql) && (cd backend && npm install) && (cd frontend && npm install)",
+    "install": "(cd backend && cp example.env .env) && (cd dockerdb && docker build -t sebisql8 .) && (docker run  --name sebsql8 -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 -v $(pwd)/db-data/db:/var/lib/mysql -d sebisql8 mysqld --default-authentication-plugin=mysql_native_password) && (cd backend && npm install) && (cd frontend && npm install)",
     "start:local": "npm run start-docker & npm run start-backend & npm run start-frontend",
     "start-frontend": "cd frontend && npm run start",
     "start-backend": "cd backend && npm run start",
-    "start-docker": "docker start sebsql",
-    "seed:db": "(cd dockerdb/sql && cat 02-seed.sql | docker exec -i sebsql /usr/bin/mysql -u root --password=123456 resourceplanner)",
-    "install-docker-only": "(cd dockerdb && docker build -t sebisql .) && (docker run  --name sebsql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 -v $(pwd)/db-data/db:/var/lib/mysql -d sebisql)"
+    "start-docker": "docker start sebsql8",
+    "seed:db": "(cd dockerdb/sql && cat 02-seed.sql | docker exec -i sebsql8 /usr/bin/mysql -u root --password=123456 resourceplanner)",
+    "install-docker-only": "(cd dockerdb && docker build -t sebisql8 .) && (docker run  --name sebsql8 -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 -v $(pwd)/db-data/db:/var/lib/mysql -d sebisql8 mysqld --default-authentication-plugin=mysql_native_password)"
 
   },
   "author": "Sebastian Rüegg",
