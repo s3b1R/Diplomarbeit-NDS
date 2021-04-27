@@ -11,7 +11,8 @@ import { Pi } from '../models/pi.model';
   providedIn: 'root'
 })
 export class ApiService {
-  readonly baseUrl = 'http://localhost:3000/';
+  hostname = window.location.hostname
+  readonly baseUrl = `http://${this.hostname}:3000/`;
 
   constructor(private httpService: HttpClient){
   }
