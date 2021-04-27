@@ -4,6 +4,7 @@
   "scripts": {
     "install": "mkdir dockervolume && (cd backend && cp example.env .env) && (cd dockerdb && docker build -t database .) && (docker run  --name database -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 -v $(pwd)/dockervolume:/var/lib/mysql -d database mysqld --default-authentication-plugin=mysql_native_password) && (cd backend && npm install) && (cd frontend && npm install)",
     "start:local": "npm run start-docker & npm run start-backend & npm run start-frontend",
+    "start:docker": "mkdir dockervolume && docker-compose up",
     "start-frontend": "cd frontend && npm run start",
     "start-backend": "cd backend && npm run start",
     "start-docker": "docker start database",
