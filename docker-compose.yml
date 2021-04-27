@@ -9,6 +9,8 @@ services:
       - ./dockervolume:/var/lib/mysql
     ports:
     - 3306:3306
+    security_opt:
+      - seccomp:unconfined
     expose:
       - 3306
     environment:
