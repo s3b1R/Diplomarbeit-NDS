@@ -9,7 +9,8 @@
     "start-backend": "cd backend && npm run start",
     "seed:localdb": "(cd dockerdb/sql && cat 02-seed.sql | docker exec -i databaseforlocal /usr/bin/mysql -u root --password=123456 resourceplanner)",
     "start:docker": "cp example.env .env && mkdir -p dockervolume && docker-compose up",
-    "seed:db": "(cd dockerdb/sql && cat 02-seed.sql | docker exec -i database /usr/bin/mysql -u root --password=123456 resourceplanner)"
+    "seed:db": "(cd dockerdb/sql && cat 02-seed.sql | docker exec -i database /usr/bin/mysql -u root --password=123456 resourceplanner)",
+    "test-db": "docker run  --name databasefortest -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 -v $(pwd)/dockerdb/sql/1-create.sql:/docker-entrypoint-initdb.d/1-create.sql -d database mysqld --default-authentication-plugin=mysql_native_password"
   },
   "author": "Sebastian Rüegg",
   "license": "MIT"
