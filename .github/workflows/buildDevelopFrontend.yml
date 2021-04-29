@@ -17,11 +17,6 @@ on:
 jobs:
   tests:
     runs-on: ubuntu-latest
-    services:
-      backend:
-        image: sebirhz/resplan-backend:latest
-        ports:
-          - 3000:3000
     env:
       DATABASE_SCHEMA: test_db
       DATABASE_USER: root
@@ -55,6 +50,8 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+      - name: backend
+        uses: sebirhz/resplan-backend:latest
       - run: cd frontend/ && npm ci
       - run: cd frontend/ && npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
       - run: cd frontend/ && npm run start & cd frontend/ && npm run cy:run
