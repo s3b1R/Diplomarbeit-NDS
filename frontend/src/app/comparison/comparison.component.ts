@@ -33,10 +33,12 @@ export class ComparisonComponent implements OnInit {
   }
 
   setPiToCompare(result: Pi): void {
-    this.shownPi = result;
-    this.sprints = Array(this.shownPi.sprintCounts).fill(1).map((x, i) => i + 1);
-    this.piName = this.shownPi.piShortname;
-    this.getSprintStartAndEndDates(this.shownPi);
+    if (result != null){
+      this.shownPi = result;
+      this.sprints = Array(this.shownPi.sprintCounts).fill(1).map((x, i) => i + 1);
+      this.piName = this.shownPi.piShortname;
+      this.getSprintStartAndEndDates(this.shownPi);
+    }
   }
 
   getSprintStartAndEndDates(pi): void {
