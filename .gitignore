@@ -1,5 +1,5 @@
 .env
 db-data/
 dockervolume/
-/videos
-/screenshots
+videos/
+screenshots/
