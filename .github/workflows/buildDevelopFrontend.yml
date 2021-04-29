@@ -17,10 +17,16 @@ on:
 jobs:
   tests:
     runs-on: ubuntu-latest
+    services:
+      backend:
+        image: sebirhz/resplan-backend:latest
+        ports:
+          - 3000:3000
     env:
       DATABASE_SCHEMA: test_db
       DATABASE_USER: root
       DATABASE_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: ${{ secrets.ROOTPASSWORD }}
 
     strategy:
       matrix:
@@ -51,5 +57,4 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: cd frontend/ && npm ci
       - run: cd frontend/ && npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
-      - run: cd backend/ && npm start
       - run: cd frontend/ && npm cy:run
