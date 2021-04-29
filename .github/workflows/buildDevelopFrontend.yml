@@ -51,7 +51,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: backend
-        uses: sebirhz/resplan-backend:latest
+        uses: docker://sebirhz/resplan-backend:latest
       - run: cd frontend/ && npm ci
       - run: cd frontend/ && npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
       - run: cd frontend/ && npm run start & cd frontend/ && npm run cy:run
