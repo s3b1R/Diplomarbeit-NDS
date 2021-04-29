@@ -149,7 +149,7 @@ describe('UserComponent', () => {
     spyOn(component, 'navigateHome').and.stub();
     component.deleteUser();
     tick(1500);
-    expect(mockRouter.navigate).toHaveBeenCalledWith(['home']);
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['']);
   }));
 
   it('deleteUser() should set value to caseControl', () => {
@@ -169,7 +169,7 @@ describe('UserComponent', () => {
   it('navigateHome() should call router after timeout', fakeAsync( () => {
     component.navigateHome();
     tick(1500);
-    expect(mockRouter.navigate).toHaveBeenCalledWith(['home']);
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['']);
   }));
 
 });

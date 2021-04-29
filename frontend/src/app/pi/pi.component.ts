@@ -195,7 +195,7 @@ export class PiComponent implements OnInit {
 
   navigateHome(): void {
     setTimeout( async () => {
-      await this.router.navigate(['home']);
+      await this.router.navigate(['']);
     }, 1500);
   }
 
