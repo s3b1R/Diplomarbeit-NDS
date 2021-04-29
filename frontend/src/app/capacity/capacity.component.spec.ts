@@ -222,6 +222,35 @@ describe('CapacityComponent', () => {
     }));
   });
 
+  it('generateCapacityArrayToShow() should generate empty capacities if no workload is given at all', () => {
+    component.userList = [new User().deserialize({id: 2, name: 'Fritz Müller'})];
+    component.setInterval(new Date(2021, 3, 1));
+    component.capacityMapFromDbPerUser = new Map();
+
+    let testArray = [];
+
+    testArray = component.generateCapacityArrayToShow();
+    expect(testArray.length).toBe(30);
+    expect(testArray[0]).toEqual(new Capacity().deserialize({
+      id: 0,
+      capa: '0',
+      date: '2021-04-01',
+      user: { id: 2, name: 'Fritz Müller' },
+    }));
+    expect(testArray[29]).toEqual(new Capacity().deserialize({
+      id: 0,
+      capa: '0',
+      date: '2021-04-30',
+      user: { id: 2, name: 'Fritz Müller' },
+    }));
+    expect(testArray[18]).toEqual(new Capacity().deserialize({
+      id: 0,
+      capa: '0',
+      date: '2021-04-19',
+      user: { id: 2, name: 'Fritz Müller'},
+    }));
+  });
+
   it('generateCapacityArrayToShow() should set isLoading to false', () => {
     const dummyCapacities = [new Capacity().deserialize({
       id: 1,

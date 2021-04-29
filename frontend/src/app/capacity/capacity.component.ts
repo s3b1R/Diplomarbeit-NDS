@@ -78,6 +78,9 @@ export class CapacityComponent implements OnInit {
       this.intervalOfDates.forEach(day => {
         const dayOfInterval = format(day, 'yyyy-MM-dd');
 
+        if (this.capacityMapFromDbPerUser.size === 0) {
+          allCapacities.push(new Capacity().deserialize({id: 0, capa: '0', date: dayOfInterval, user: {id: user.id, name: userName}}));
+        }
         for (const [name, capacityMap] of this.capacityMapFromDbPerUser.entries()) {
           if (this.capacityMapFromDbPerUser.has(userName)) {
             if (name === userName) {
