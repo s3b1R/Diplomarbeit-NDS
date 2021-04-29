@@ -5,21 +5,21 @@
     <div>
       <mat-toolbar>
 
-        <input matInput type="text" placeholder="Quelldatei">
-        <button mat-flat-button color="primary">
+        <input matInput data-cy="source" type="text" placeholder="Quelldatei">
+        <button mat-flat-button data-cy="search" color="primary">
           Durchsuchen
         </button>
       </mat-toolbar>
 
-      <input type="file" #fileImportInput name="File Upload" id="csvFileUpload" (change)="fileChangeListener($event)"
+      <input data-cy="file" type="file" #fileImportInput name="File Upload" id="csvFileUpload" (change)="fileChangeListener($event)"
              accept=".csv" />
     </div>
   </mat-form-field>
 
   <div *ngIf="readyForUpload === 'ready'">
-    <div class="warn">Mit dem Upload, werden die vorhandenen Daten gelöscht und durch die Neuen ersetzt.</div>
+    <div data-cy="warning" class="warn">Mit dem Upload, werden die vorhandenen Daten gelöscht und durch die Neuen ersetzt.</div>
     <br>
-    <button class="uploadButton" mat-flat-button color="primary"(click)="uploadWorkload()">Upload</button>
+    <button data-cy="upload" class="uploadButton" mat-flat-button color="primary"(click)="uploadWorkload()">Upload</button>
   </div>
    </div>
  </mat-card>
