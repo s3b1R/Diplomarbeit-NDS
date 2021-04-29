@@ -57,4 +57,4 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: cd frontend/ && npm ci
       - run: cd frontend/ && npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
-      - run: cd frontend/ && npm run start & npm run cy:run
+      - run: cd frontend/ && npm run start & cd frontend/ && npm run cy:run
