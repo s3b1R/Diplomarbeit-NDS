@@ -18,6 +18,7 @@ describe('Frontend', () => {
     cy.get('[data-cy=newUserName]').type('John Snow');
     cy.get('[data-cy="saveNewUser"] > .mat-button-wrapper').click();
     cy.get('.success');
+    cy.wait(500);
     cy.contains('John Snow');
   });
 
@@ -166,18 +167,18 @@ describe('Frontend', () => {
     cy.contains('2021').click();
     cy.contains('APR').click();
     cy.get('.ng-star-inserted:nth-child(1) > .mat-calendar-body-cell:nth-child(2) > .mat-calendar-body-cell-content').click();
-    cy.get('.ng-star-inserted:nth-child(5) > .mat-calendar-body-cell:nth-child(5) > .mat-calendar-body-cell-content').click();
+    cy.get('.ng-star-inserted:nth-child(1) > .mat-calendar-body-cell:nth-child(2) > .mat-calendar-body-cell-content').click();
     cy.get('[data-cy=capa]').click();
-    cy.get('[data-cy=capa]').type('1');
+    cy.get('[data-cy=capa]').type('0.5');
     cy.get('[data-cy=clear]').click();
     cy.get('[data-cy=capa]').click();
     cy.get('[data-cy=capa]').clear();
-    cy.get('[data-cy=capa]').type('0.5');
+    cy.get('[data-cy=capa]').type('1');
     cy.get('[data-cy=submit]').click();
-    cy.get('.success');
+    cy.wait(1000);
     cy.visit('/');
-    cy.get('.capa:nth-child(7)').should('contain', '5');
-    cy.get('.difference:nth-child(13)').should('contain', '1.5');
+    cy.get('.capa:nth-child(3)').should('contain', '1.8');
+    cy.get('.difference:nth-child(5)').should('contain', '1.8');
   });
 
   it('should import workload csv', () => {
@@ -188,7 +189,7 @@ describe('Frontend', () => {
     cy.get('[data-cy="upload"]').click();
     cy.get('.success');
     cy.get('.load:nth-child(8)').should('contain', '6.5');
-    cy.get('.difference:nth-child(13)').should('contain', '-4');
+    cy.get('.difference:nth-child(9)').should('contain', '-6.5');
   });
 
   it('should colorize delta bigger as -0.9 in red', () => {
@@ -198,13 +199,13 @@ describe('Frontend', () => {
     cy.get('.mat-calendar-period-button > .mat-button-wrapper').click();
     cy.get('.mat-calendar-content').contains('2021').click();
     cy.get('.mat-calendar-content').contains('APR').click();
-    cy.get('.ng-star-inserted > .ng-star-inserted:nth-child(6)').click().clear().type('.1');
-    cy.get('.ng-star-inserted > .ng-star-inserted:nth-child(7)').click().clear().type('0');
-    cy.get('.ng-star-inserted > .ng-star-inserted:nth-child(8)').click().clear().type('0');
-    cy.get('.ng-star-inserted > .ng-star-inserted:nth-child(9)').click().clear().type('0');
-    cy.get('.ng-star-inserted > .ng-star-inserted:nth-child(10)').click().clear().type('0');
-    cy.get('.ng-star-inserted > .ng-star-inserted:nth-child(13)').click().clear().type('0');
-    cy.get('.ng-star-inserted > .ng-star-inserted:nth-child(14)').click().clear().type('0').blur();
+    cy.get('.ng-star-inserted > .ng-star-inserted:nth-child(3)').click().clear().type('.1');
+    cy.get('.ng-star-inserted > .ng-star-inserted:nth-child(15)').click().clear().type('.5');
+    cy.get('.ng-star-inserted > .ng-star-inserted:nth-child(16)').click().clear().type('1');
+    cy.get('.ng-star-inserted > .ng-star-inserted:nth-child(17)').click().clear().type('1');
+    cy.get('.ng-star-inserted > .ng-star-inserted:nth-child(20)').click().clear().type('1');
+    cy.get('.ng-star-inserted > .ng-star-inserted:nth-child(21)').click().clear().type('1');
+    cy.get('.ng-star-inserted > .ng-star-inserted:nth-child(22)').click().clear().type('1').blur();
     cy.visit('/');
     cy.get('.difference:nth-child(5)').should('have.css', 'background-color', 'rgba(0, 0, 0, 0)');
     cy.get('.difference:nth-child(9)').should('have.css', 'background-color', 'rgb(255, 144, 142)');
@@ -217,14 +218,11 @@ describe('Frontend', () => {
     cy.get('.mat-calendar-period-button > .mat-button-wrapper').click();
     cy.get('.mat-calendar-content').contains('2021').click();
     cy.get('.mat-calendar-content').contains('APR').click();
-    cy.get('.ng-star-inserted > .ng-star-inserted:nth-child(6)').click().clear().type('1');
-    cy.get('.ng-star-inserted > .ng-star-inserted:nth-child(7)').click().clear().type('0.9');
-    cy.get('.ng-star-inserted > .ng-star-inserted:nth-child(15)').click().clear().type('1');
-    cy.get('.ng-star-inserted > .ng-star-inserted:nth-child(16)').click().clear().type('1');
-    cy.get('.ng-star-inserted > .ng-star-inserted:nth-child(17)').click().clear().type('1');
-    cy.get('.ng-star-inserted > .ng-star-inserted:nth-child(20)').click().clear().type('1');
-    cy.get('.ng-star-inserted > .ng-star-inserted:nth-child(21)').click().clear().type('1');
-    cy.get('.ng-star-inserted > .ng-star-inserted:nth-child(22)').click().clear().type('1');
+    cy.get('.ng-star-inserted > .ng-star-inserted:nth-child(3)').click().clear().type('1');
+    cy.get('.ng-star-inserted > .ng-star-inserted:nth-child(6)').click().clear().type('0.9');
+    cy.get('.ng-star-inserted > .ng-star-inserted:nth-child(23)').click().clear().type('1');
+    cy.get('.ng-star-inserted > .ng-star-inserted:nth-child(24)').click().clear().type('1').blur();
+
     cy.visit('/');
     cy.get('.difference:nth-child(5)').should('have.css', 'background-color', 'rgba(0, 0, 0, 0)');
     cy.get('.difference:nth-child(9)').should('have.css', 'background-color', 'rgb(138, 255, 149)');
