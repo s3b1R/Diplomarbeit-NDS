@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { eachDayOfInterval, format, isWeekend } from 'date-fns';
-import { ApiService } from '../shared/services/api.service';
-import { User } from '../shared/models/user.model';
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {FormControl, FormGroup} from '@angular/forms';
+import {eachDayOfInterval, format, isWeekend} from 'date-fns';
+import {ApiService} from '../shared/services/api.service';
+import {User} from '../shared/models/user.model';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-capacity-massmutation',
@@ -11,8 +11,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./capacity-massmutation.component.css']
 })
 export class CapacityMassmutationComponent implements OnInit {
-
-  constructor(private apiService: ApiService, private router: Router) { }
 
   massInputValues = new FormGroup({
     start: new FormControl(),
@@ -23,10 +21,13 @@ export class CapacityMassmutationComponent implements OnInit {
   userList: User[];
   entryStatus = 'ready';
 
+  constructor(private apiService: ApiService, private router: Router) {
+  }
+
   ngOnInit(): void {
     this.apiService.getAllUsers().subscribe(results => {
       this.userList = results;
-      });
+    });
   }
 
   onFormSubmit(): void {
@@ -39,7 +40,7 @@ export class CapacityMassmutationComponent implements OnInit {
       this.safeCapaInDB(date, dateFormatted, forUser, capaValue);
     }
     this.entryStatus = 'success';
-    setTimeout( async () => {
+    setTimeout(async () => {
       await this.router.navigate(['capaview']);
     }, 1500);
   }

@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Workload } from '../shared/models/workload.model';
-import { ApiService } from '../shared/services/api.service';
+import {Component, OnInit} from '@angular/core';
+import {Workload} from '../shared/models/workload.model';
+import {ApiService} from '../shared/services/api.service';
 
 @Component({
   selector: 'app-occupancy',
@@ -10,10 +10,11 @@ import { ApiService } from '../shared/services/api.service';
 export class OccupancyComponent implements OnInit {
   workloadList: Workload[] = [];
 
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService) {
+  }
 
   ngOnInit(): void {
-    this.apiService.getWorkload().subscribe( result => {
+    this.apiService.getWorkload().subscribe(result => {
       this.workloadList = result;
     });
   }

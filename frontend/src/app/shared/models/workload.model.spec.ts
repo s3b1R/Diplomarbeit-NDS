@@ -1,4 +1,4 @@
-import { Workload } from './workload.model';
+import {Workload} from './workload.model';
 
 describe('Workload.Model', () => {
   let model: Workload;

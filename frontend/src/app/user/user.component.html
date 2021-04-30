@@ -1,54 +1,57 @@
 <mat-card>
   <div class="mat-card-content">
-  <app-success *ngIf="caseControl.value == 'success'"></app-success>
-  <div class="useCaseSelector">
-    <mat-button-toggle-group [formControl]="caseControl">
-      <mat-button-toggle value="new">Neuer Benutzer</mat-button-toggle>
-      <mat-button-toggle value="edit">Benutzer ändern</mat-button-toggle>
-    </mat-button-toggle-group>
-  </div>
+    <app-success *ngIf="caseControl.value == 'success'"></app-success>
+    <div class="useCaseSelector">
+      <mat-button-toggle-group [formControl]="caseControl">
+        <mat-button-toggle data-cy="newUser" value="new">Neuer Benutzer</mat-button-toggle>
+        <mat-button-toggle data-cy="editUser" value="edit">Benutzer ändern</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
 
-  <div class="contend">
-  <div *ngIf="caseControl.value == 'new'">
-  <mat-form-field class="newUser">
-    <mat-label>Neuen Benutzer anlegen</mat-label>
-    <input matInput type="text" [(ngModel)]="newUserName">
-    <button mat-button *ngIf="newUserName" matSuffix mat-icon-button aria-label="Clear" (click)="newUserName=''">
-      <mat-icon>close</mat-icon>
-    </button>
-  </mat-form-field>
+    <div class="contend">
+      <div *ngIf="caseControl.value == 'new'">
+        <mat-form-field class="newUser">
+          <mat-label>Neuen Benutzer anlegen</mat-label>
+          <input [(ngModel)]="newUserName" data-cy="newUserName" matInput type="text">
+          <button (click)="newUserName=''" *ngIf="newUserName" aria-label="Clear" mat-button mat-icon-button matSuffix>
+            <mat-icon data-cy="clearNewUserName">close</mat-icon>
+          </button>
+        </mat-form-field>
 
-    <button *ngIf="newUserName" mat-button (click)="saveNewUser()">Speichern</button>
+        <button (click)="saveNewUser()" *ngIf="newUserName" data-cy="saveNewUser" mat-button>Speichern</button>
 
-  </div>
+      </div>
 
-<div *ngIf="caseControl.value == 'edit'">
-<div *ngIf="!userControl.value" >
-  <mat-form-field>
-    <mat-label>Benutzer auswählen</mat-label>
-    <mat-select [formControl]="userControl">
-      <mat-option></mat-option>
-      <mat-option *ngFor="let user of userList" [value]="user">
-        {{user.name}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-</div>
+      <div *ngIf="caseControl.value == 'edit'">
+        <div *ngIf="!userControl.value">
+          <mat-form-field>
+            <mat-label>Benutzer auswählen</mat-label>
+            <mat-select [formControl]="userControl">
+              <mat-option></mat-option>
+              <mat-option *ngFor="let user of userList" [value]="user">
+                {{user.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
 
-  <div *ngIf="userControl.value">
+        <div *ngIf="userControl.value">
 
-    <mat-form-field>
-    <input matInput type="text" #editedName value="{{userControl.value?.name}}">
-      <button mat-button *ngIf="userControl.value?.name" matSuffix mat-icon-button aria-label="Clear" (click)="userControl.reset()">
-        <mat-icon>close</mat-icon>
-      </button>
-    </mat-form-field>
-    <section>
-      <button mat-flat-button color="warn" (click)="openDialog()">Nutzer Löschen</button>
-      <button mat-flat-button color="primary" (click)="updateUser(editedName.value)">Änderung Speichern</button>
-    </section>
-</div>
-</div>
-  </div>
+          <mat-form-field>
+            <input #editedName data-cy="editName" matInput type="text" value="{{userControl.value?.name}}">
+            <button (click)="userControl.reset()" *ngIf="userControl.value?.name" aria-label="Clear" mat-button mat-icon-button
+                    matSuffix>
+              <mat-icon data-cy="clearEditName">close</mat-icon>
+            </button>
+          </mat-form-field>
+          <section>
+            <button (click)="openDialog()" color="warn" data-cy="deleteUser" mat-flat-button>Nutzer Löschen</button>
+            <button (click)="updateUser(editedName.value)" color="primary" data-cy="saveUser" mat-flat-button>Änderung
+              Speichern
+            </button>
+          </section>
+        </div>
+      </div>
+    </div>
   </div>
 </mat-card>

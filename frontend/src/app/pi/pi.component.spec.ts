@@ -1,13 +1,13 @@
-import { ComponentFixture, fakeAsync, tick, TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ApiService } from '../shared/services/api.service';
-import { MatDialog } from '@angular/material/dialog';
-import { PiComponent } from './pi.component';
-import { of } from 'rxjs';
-import { Pi } from '../shared/models/pi.model';
-import { DateFnsModule } from 'ngx-date-fns';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { Router } from '@angular/router';
+import {ComponentFixture, fakeAsync, tick, TestBed} from '@angular/core/testing';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {ApiService} from '../shared/services/api.service';
+import {MatDialog} from '@angular/material/dialog';
+import {PiComponent} from './pi.component';
+import {of} from 'rxjs';
+import {Pi} from '../shared/models/pi.model';
+import {DateFnsModule} from 'ngx-date-fns';
+import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {Router} from '@angular/router';
 
 describe('PiComponent', () => {
   let component: PiComponent;
@@ -26,11 +26,11 @@ describe('PiComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PiComponent ], imports: [HttpClientTestingModule, DateFnsModule],
-      providers: [{provide: MatDialog, useClass: MatDialogMock}, ApiService, {provide: Router, useValue: mockRouter} ],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+      declarations: [PiComponent], imports: [HttpClientTestingModule, DateFnsModule],
+      providers: [{provide: MatDialog, useClass: MatDialogMock}, ApiService, {provide: Router, useValue: mockRouter}],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
@@ -97,7 +97,7 @@ describe('PiComponent', () => {
     spyOn(apiService, 'updatePi').and.stub();
     component.updatePi('2104', '01/04/2021', '30/04/2021', '1', '', '', '', '', '', '', '', '', '', '', '', '');
     expect(apiService.updatePi)
-      .toHaveBeenCalledWith(1 , '2104', '2021-04-01', '2021-04-30', 1, null, null, null, null, null, null, null, null, null, null, null, null);
+      .toHaveBeenCalledWith(1, '2104', '2021-04-01', '2021-04-30', 1, null, null, null, null, null, null, null, null, null, null, null, null);
   });
 
   it('updatePI() should reset FormControl', () => {
@@ -164,11 +164,11 @@ describe('PiComponent', () => {
 
 
   it('loadPiList() should call apiService Pi list after timeout', () => {
-     spyOn(apiService, 'getPiData').and.returnValue(of([new Pi(), new Pi()]));
-     component.piList = [];
-     component.loadPiList();
-     expect(apiService.getPiData).toHaveBeenCalledTimes(1);
-     expect(component.piList.length).toEqual(2);
+    spyOn(apiService, 'getPiData').and.returnValue(of([new Pi(), new Pi()]));
+    component.piList = [];
+    component.loadPiList();
+    expect(apiService.getPiData).toHaveBeenCalledTimes(1);
+    expect(component.piList.length).toEqual(2);
   });
 
   it('formatNewSprintDates() should format sprint dates', () => {
@@ -195,10 +195,10 @@ describe('PiComponent', () => {
     expect(component.sprint2End.value).toBe(null);
   });
 
-  it('navigateHome() should call router after timeout', fakeAsync( () => {
+  it('navigateHome() should call router after timeout', fakeAsync(() => {
     component.navigateHome();
     tick(1500);
-    expect(mockRouter.navigate).toHaveBeenCalledWith(['home']);
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['']);
   }));
 
 });

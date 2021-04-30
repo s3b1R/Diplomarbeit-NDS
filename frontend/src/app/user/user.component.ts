@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { User } from '../shared/models/user.model';
-import { ApiService } from '../shared/services/api.service';
-import { FormControl } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
-import { ConfirmationDialogComponent } from '../shared/confirmation-dialog/confirmation-dialog.component';
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {User} from '../shared/models/user.model';
+import {ApiService} from '../shared/services/api.service';
+import {FormControl} from '@angular/forms';
+import {MatDialog} from '@angular/material/dialog';
+import {ConfirmationDialogComponent} from '../shared/confirmation-dialog/confirmation-dialog.component';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-user',
@@ -17,7 +17,8 @@ export class UserComponent implements OnInit {
   caseControl = new FormControl('new');
   userControl = new FormControl();
 
-  constructor(private apiService: ApiService, public dialog: MatDialog, private router: Router) { }
+  constructor(private apiService: ApiService, public dialog: MatDialog, private router: Router) {
+  }
 
   ngOnInit(): void {
     this.loadUserList();
@@ -62,15 +63,15 @@ export class UserComponent implements OnInit {
     this.apiService.deleteAllCapacityForUser(userId);
     setTimeout(async () => {
       this.apiService.deleteUser(userId);
-      await this.router.navigate(['home']);
-      }, 1500);
+      await this.router.navigate(['']);
+    }, 1500);
     this.caseControl.setValue('success');
     this.userControl.reset();
   }
 
   navigateHome(): void {
-    setTimeout( async () => {
-      await this.router.navigate(['home']);
+    setTimeout(async () => {
+      await this.router.navigate(['']);
     }, 1500);
   }
 }

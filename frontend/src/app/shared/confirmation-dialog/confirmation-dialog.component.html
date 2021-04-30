@@ -1,7 +1,7 @@
-<div mat-dialog-content class="dialog">
+<div class="dialog" mat-dialog-content>
   {{message}}
 </div>
 <div mat-dialog-actions>
-  <button mat-raised-button (click)="onNoClick()">Nein</button>
-  <button mat-raised-button [mat-dialog-close]="true">Ja, weiter</button>
+  <button (click)="onNoClick()" data-cy="selNo" mat-raised-button>Nein</button>
+  <button [mat-dialog-close]="true" data-cy="selYes" mat-raised-button>Ja, weiter</button>
 </div>

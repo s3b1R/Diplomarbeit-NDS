@@ -12,10 +12,10 @@ export class WorkloadComponent implements OnInit {
 
   csvRecords: any[] = [];
   readyForUpload = 'notReady';
+  @ViewChild('fileImportInput', {static: false}) fileImportInput: any;
 
-  constructor(private ngxCsvParser: NgxCsvParser, private apiService: ApiService, private router: Router) { }
-
-  @ViewChild('fileImportInput', { static: false }) fileImportInput: any;
+  constructor(private ngxCsvParser: NgxCsvParser, private apiService: ApiService, private router: Router) {
+  }
 
   ngOnInit(): void {
   }
@@ -54,7 +54,7 @@ export class WorkloadComponent implements OnInit {
     this.sendDataToDatabase();
     this.readyForUpload = 'success';
     setTimeout(async () => {
-      await this.router.navigate(['home']);
+      await this.router.navigate(['']);
     }, 1500);
   }
 

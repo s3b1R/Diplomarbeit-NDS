@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { eachDayOfInterval, lastDayOfMonth, startOfMonth, format, isWeekend } from 'date-fns';
-import { MatDatepicker } from '@angular/material/datepicker';
-import { ApiService } from '../shared/services/api.service';
-import { Capacity } from '../shared/models/capacity.model';
-import { User } from '../shared/models/user.model';
-import { forkJoin } from 'rxjs';
+import {Component, OnInit} from '@angular/core';
+import {eachDayOfInterval, lastDayOfMonth, startOfMonth, format, isWeekend} from 'date-fns';
+import {MatDatepicker} from '@angular/material/datepicker';
+import {ApiService} from '../shared/services/api.service';
+import {Capacity} from '../shared/models/capacity.model';
+import {User} from '../shared/models/user.model';
+import {forkJoin} from 'rxjs';
 
 
 @Component({
@@ -14,7 +14,6 @@ import { forkJoin } from 'rxjs';
 })
 export class CapacityComponent implements OnInit {
 
-  constructor(private apiService: ApiService) { }
   intervalOfDates: any = [];
   userList: User[] = [];
   capacityMapFromDbPerUser = new Map();
@@ -22,13 +21,16 @@ export class CapacityComponent implements OnInit {
   isLoading = false;
   cellTextOnFocus: number;
 
+  constructor(private apiService: ApiService) {
+  }
+
   ngOnInit(): void {
     this.isLoading = true;
     this.setInterval(new Date());
     this.getCapacitiesAndUsers();
   }
 
-  setInterval(date: Date): void{
+  setInterval(date: Date): void {
     this.intervalOfDates = eachDayOfInterval({
       start: startOfMonth(new Date(date)),
       end: lastDayOfMonth(new Date(date))
@@ -37,26 +39,26 @@ export class CapacityComponent implements OnInit {
 
   getCapacitiesAndUsers(): void {
     let capacityFromDB: Capacity[] = [];
-    forkJoin([ this.apiService.getAllUsers(),
-      this.apiService.getCapacitiesForMonth(format(this.intervalOfDates[0], 'yyyy-MM')) ])
+    forkJoin([this.apiService.getAllUsers(),
+      this.apiService.getCapacitiesForMonth(format(this.intervalOfDates[0], 'yyyy-MM'))])
       .subscribe(results => {
         this.userList = results[0];
         capacityFromDB = results[1];
         this.mapDatabaseCapacitiesPerUser(capacityFromDB);
         this.capacitiesToShow = this.generateCapacityArrayToShow();
-    });
+      });
   }
 
   mapDatabaseCapacitiesPerUser(capacityFromDB: Capacity[]): void {
     let userMap = new Map();
     let userCapacities = [];
 
-    for (let index = 0; index < capacityFromDB.length; index++){
+    for (let index = 0; index < capacityFromDB.length; index++) {
       const currentEntry = capacityFromDB[index];
       const nextEntry = capacityFromDB[index + 1];
       const userName = currentEntry.user?.name;
 
-      if (nextEntry && currentEntry.user?.id === nextEntry.user?.id){
+      if (nextEntry && currentEntry.user?.id === nextEntry.user?.id) {
         userCapacities.push(currentEntry);
       } else {
         userCapacities.push(currentEntry);
@@ -68,7 +70,7 @@ export class CapacityComponent implements OnInit {
     }
   }
 
-  generateCapacityArrayToShow(): Capacity[]{
+  generateCapacityArrayToShow(): Capacity[] {
     const capaForUserExists = [];
     const allCapacities = [];
 
@@ -78,6 +80,14 @@ export class CapacityComponent implements OnInit {
       this.intervalOfDates.forEach(day => {
         const dayOfInterval = format(day, 'yyyy-MM-dd');
 
+        if (this.capacityMapFromDbPerUser.size === 0) {
+          allCapacities.push(new Capacity().deserialize({
+            id: 0,
+            capa: '0',
+            date: dayOfInterval,
+            user: {id: user.id, name: userName}
+          }));
+        }
         for (const [name, capacityMap] of this.capacityMapFromDbPerUser.entries()) {
           if (this.capacityMapFromDbPerUser.has(userName)) {
             if (name === userName) {
@@ -94,13 +104,23 @@ export class CapacityComponent implements OnInit {
                 }
               } else {
                 allCapacities
-                  .push(new Capacity().deserialize({id: 0, capa: '0', date: dayOfInterval, user: {id: user.id, name: userName}}));
+                  .push(new Capacity().deserialize({
+                    id: 0,
+                    capa: '0',
+                    date: dayOfInterval,
+                    user: {id: user.id, name: userName}
+                  }));
               }
             }
           } else {
             if (!capaForUserExists.includes(userName + dayOfInterval)) {
               capaForUserExists.push(userName + dayOfInterval);
-              allCapacities.push(new Capacity().deserialize({id: 0, capa: '0', date: dayOfInterval, user: {id: user.id, name: userName}}));
+              allCapacities.push(new Capacity().deserialize({
+                id: 0,
+                capa: '0',
+                date: dayOfInterval,
+                user: {id: user.id, name: userName}
+              }));
             }
           }
         }
@@ -109,7 +129,6 @@ export class CapacityComponent implements OnInit {
     this.isLoading = false;
     return allCapacities;
   }
-
 
 
   onBlur(cellText, user, capacity, arrayIndex): void {
@@ -141,7 +160,7 @@ export class CapacityComponent implements OnInit {
     this.getCapacitiesAndUsers();
   }
 
-  compareDates(dayOfMonth: any, capaDate: any): boolean{
+  compareDates(dayOfMonth: any, capaDate: any): boolean {
     const dayOutOfTable = format(dayOfMonth, 'yyyy-MM-dd');
     return dayOutOfTable === capaDate;
   }

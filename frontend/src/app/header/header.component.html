@@ -1,9 +1,12 @@
-<nav mat-tab-nav-bar>
-  <a mat-tab-link
-     *ngFor="let link of navLinks"
-     [routerLink]="link.link"
-     routerLinkActive #rla="routerLinkActive"
-     [active]="rla.isActive">
-    {{link.label}}
-  </a>
-</nav>
+<div class="header">
+  <div class="title">VAS Service Tribe Ressourcen Planer</div>
+  <nav class="navbar" mat-tab-nav-bar>
+    <a #rla="routerLinkActive"
+       *ngFor="let link of navLinks"
+       [active]="rla.isActive"
+       [routerLink]="link.link" mat-tab-link
+       routerLinkActive>
+      {{link.label}}
+    </a>
+  </nav>
+</div>

@@ -1,5 +1,9 @@
 {
-  "extends": "tslint:recommended",
+  "extends": "./tsconfig.json",
+  "compilerOptoins": {
+    "noEmit": true
+  },
+  "exclude": [],
   "rulesDirectory": [
     "codelyzer"
   ],

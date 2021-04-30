@@ -1,4 +1,4 @@
-import { Pi } from './pi.model';
+import {Pi} from './pi.model';
 
 describe('Pi.Model', () => {
   let model: Pi;

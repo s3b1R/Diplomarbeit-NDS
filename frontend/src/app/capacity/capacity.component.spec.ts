@@ -1,12 +1,12 @@
-import { ComponentFixture, fakeAsync, flushMicrotasks, TestBed, tick} from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { CapacityComponent } from './capacity.component';
-import { DateFnsModule } from 'ngx-date-fns';
-import { ApiService } from '../shared/services/api.service';
-import { of } from 'rxjs';
-import { User } from '../shared/models/user.model';
-import { Capacity } from '../shared/models/capacity.model';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {ComponentFixture, fakeAsync, flushMicrotasks, TestBed, tick} from '@angular/core/testing';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {CapacityComponent} from './capacity.component';
+import {DateFnsModule} from 'ngx-date-fns';
+import {ApiService} from '../shared/services/api.service';
+import {of} from 'rxjs';
+import {User} from '../shared/models/user.model';
+import {Capacity} from '../shared/models/capacity.model';
+import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 
 describe('CapacityComponent', () => {
@@ -16,10 +16,10 @@ describe('CapacityComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CapacityComponent ], imports: [HttpClientTestingModule, DateFnsModule], providers: [ ApiService ],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA]
+      declarations: [CapacityComponent], imports: [HttpClientTestingModule, DateFnsModule], providers: [ApiService],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
@@ -90,7 +90,7 @@ describe('CapacityComponent', () => {
     expect(component.mapDatabaseCapacitiesPerUser).toHaveBeenCalledWith(capacityArray);
   });
 
-  it('getCapacitiesAndUsers() should call addEmptyCapaToDatesWithoutEntries()', fakeAsync( () => {
+  it('getCapacitiesAndUsers() should call addEmptyCapaToDatesWithoutEntries()', fakeAsync(() => {
     spyOn(component, 'mapDatabaseCapacitiesPerUser').and.stub();
     spyOn(component, 'generateCapacityArrayToShow').and.stub();
     spyOn(apiService, 'getAllUsers').and.returnValue(of([new User(), new User()]));
@@ -105,25 +105,25 @@ describe('CapacityComponent', () => {
       id: 1,
       capa: '0.8',
       date: '2021-04-12',
-      user: { id: 1, name: 'Hans Muster' },
+      user: {id: 1, name: 'Hans Muster'},
     }),
       new Capacity().deserialize({
         id: 2,
         capa: '0.8',
         date: '2021-04-13',
-        user: { id: 1, name: 'Hans Muster' },
+        user: {id: 1, name: 'Hans Muster'},
       }),
       new Capacity().deserialize({
         id: 3,
         capa: '1.0',
         date: '2021-04-13',
-        user: { id: 3, name: 'Peter Lustig' },
+        user: {id: 3, name: 'Peter Lustig'},
       }),
       new Capacity().deserialize({
         id: 4,
         capa: '0.8',
         date: '2021-04-13',
-        user: { id: 2, name: 'Hanna Muster' },
+        user: {id: 2, name: 'Hanna Muster'},
       })];
     expect(component.capacityMapFromDbPerUser.size).toBe(0);
     component.mapDatabaseCapacitiesPerUser(dummyCapacities);
@@ -135,13 +135,13 @@ describe('CapacityComponent', () => {
       id: 1,
       capa: '0.8',
       date: '2021-04-01',
-      user: { id: 1, name: 'Hans Muster' },
+      user: {id: 1, name: 'Hans Muster'},
     }),
       new Capacity().deserialize({
         id: 2,
         capa: '0.8',
         date: '2021-04-30',
-        user: { id: 1, name: 'Hans Muster' },
+        user: {id: 1, name: 'Hans Muster'},
       })];
     component.userList = [new User().deserialize({id: 1, name: 'Hans Muster'})];
     component.setInterval(new Date(2021, 3, 1));
@@ -158,13 +158,13 @@ describe('CapacityComponent', () => {
       id: 1,
       capa: '0.8',
       date: '2021-04-01',
-      user: { id: 1, name: 'Hans Muster' },
+      user: {id: 1, name: 'Hans Muster'},
     }),
       new Capacity().deserialize({
         id: 2,
         capa: '0.8',
         date: '2021-04-30',
-        user: { id: 1, name: 'Hans Muster' },
+        user: {id: 1, name: 'Hans Muster'},
       })];
     component.userList = [new User().deserialize({id: 1, name: 'Hans Muster'})];
     component.setInterval(new Date(2021, 3, 1));
@@ -178,7 +178,7 @@ describe('CapacityComponent', () => {
       id: 0,
       capa: '0',
       date: '2021-04-19',
-      user: { id: 1, name: 'Hans Muster' },
+      user: {id: 1, name: 'Hans Muster'},
     }));
   });
 
@@ -187,13 +187,13 @@ describe('CapacityComponent', () => {
       id: 1,
       capa: '0.8',
       date: '2021-04-01',
-      user: { id: 1, name: 'Hans Muster' },
+      user: {id: 1, name: 'Hans Muster'},
     }),
       new Capacity().deserialize({
         id: 2,
         capa: '0.8',
         date: '2021-04-30',
-        user: { id: 1, name: 'Hans Muster' },
+        user: {id: 1, name: 'Hans Muster'},
       })];
     component.userList = [new User().deserialize({id: 2, name: 'Fritz Müller'})];
     component.setInterval(new Date(2021, 3, 1));
@@ -206,19 +206,48 @@ describe('CapacityComponent', () => {
       id: 0,
       capa: '0',
       date: '2021-04-01',
-      user: { id: 2, name: 'Fritz Müller' },
+      user: {id: 2, name: 'Fritz Müller'},
     }));
     expect(testArray[29]).toEqual(new Capacity().deserialize({
       id: 0,
       capa: '0',
       date: '2021-04-30',
-      user: { id: 2, name: 'Fritz Müller' },
+      user: {id: 2, name: 'Fritz Müller'},
     }));
     expect(testArray[18]).toEqual(new Capacity().deserialize({
       id: 0,
       capa: '0',
       date: '2021-04-19',
-      user: { id: 2, name: 'Fritz Müller'},
+      user: {id: 2, name: 'Fritz Müller'},
+    }));
+  });
+
+  it('generateCapacityArrayToShow() should generate empty capacities if no workload is given at all', () => {
+    component.userList = [new User().deserialize({id: 2, name: 'Fritz Müller'})];
+    component.setInterval(new Date(2021, 3, 1));
+    component.capacityMapFromDbPerUser = new Map();
+
+    let testArray = [];
+
+    testArray = component.generateCapacityArrayToShow();
+    expect(testArray.length).toBe(30);
+    expect(testArray[0]).toEqual(new Capacity().deserialize({
+      id: 0,
+      capa: '0',
+      date: '2021-04-01',
+      user: {id: 2, name: 'Fritz Müller'},
+    }));
+    expect(testArray[29]).toEqual(new Capacity().deserialize({
+      id: 0,
+      capa: '0',
+      date: '2021-04-30',
+      user: {id: 2, name: 'Fritz Müller'},
+    }));
+    expect(testArray[18]).toEqual(new Capacity().deserialize({
+      id: 0,
+      capa: '0',
+      date: '2021-04-19',
+      user: {id: 2, name: 'Fritz Müller'},
     }));
   });
 
@@ -227,13 +256,13 @@ describe('CapacityComponent', () => {
       id: 1,
       capa: '0.8',
       date: '2021-04-01',
-      user: { id: 1, name: 'Hans Muster' },
+      user: {id: 1, name: 'Hans Muster'},
     }),
       new Capacity().deserialize({
         id: 2,
         capa: '0.8',
         date: '2021-04-30',
-        user: { id: 1, name: 'Hans Muster' },
+        user: {id: 1, name: 'Hans Muster'},
       })];
     component.isLoading = true;
     component.userList = [new User().deserialize({id: 1, name: 'Hans Muster'})];
@@ -287,9 +316,9 @@ describe('CapacityComponent', () => {
       id: 2,
       capa: '0.8',
       date: '2021-04-30',
-      user: { id: 1, name: 'Hans Muster' },
+      user: {id: 1, name: 'Hans Muster'},
     });
-    const mockedUser = new User().deserialize({ id: 1, name: 'Hans Muster' });
+    const mockedUser = new User().deserialize({id: 1, name: 'Hans Muster'});
     spyOn(apiService, 'updateCapacity').and.stub();
 
     component.saveInputToDB(mockedCapacity, 0.5, mockedUser, 1);
@@ -301,35 +330,35 @@ describe('CapacityComponent', () => {
       id: 0,
       capa: '0.8',
       date: '2021-04-30',
-      user: { id: 1, name: 'Hans Muster' },
+      user: {id: 1, name: 'Hans Muster'},
     });
     const mockedReturnedCapacity = new Capacity().deserialize({
       id: 44,
       capa: '0.8',
       date: '2021-04-30',
-      user: { id: 1, name: 'Hans Muster' },
+      user: {id: 1, name: 'Hans Muster'},
     });
-    const mockedUser = new User().deserialize({ id: 1, name: 'Hans Muster' });
+    const mockedUser = new User().deserialize({id: 1, name: 'Hans Muster'});
     spyOn(apiService, 'newCapacity').and.returnValue(of(mockedReturnedCapacity));
 
     component.saveInputToDB(mockedCapacity, '0.5', mockedUser, 1);
     expect(apiService.newCapacity).toHaveBeenCalledWith('0.5', mockedCapacity.date, mockedUser.id);
   });
 
-  it('saveInputToDB() should replace the capacity in capacitiesToShow id after create new capacity', fakeAsync( () => {
+  it('saveInputToDB() should replace the capacity in capacitiesToShow id after create new capacity', fakeAsync(() => {
     const mockedCapacity = new Capacity().deserialize({
       id: 0,
       capa: '0.8',
       date: '2021-04-30',
-      user: { id: 1, name: 'Hans Muster' },
+      user: {id: 1, name: 'Hans Muster'},
     });
     const mockedNewCapacity = new Capacity().deserialize({
       id: 666,
       capa: '0.8',
       date: '2021-04-30',
-      user: { id: 1, name: 'Hans Muster' },
+      user: {id: 1, name: 'Hans Muster'},
     });
-    const mockedUser = new User().deserialize({ id: 1, name: 'Hans Muster' });
+    const mockedUser = new User().deserialize({id: 1, name: 'Hans Muster'});
     component.capacitiesToShow = [new Capacity(), mockedCapacity];
     spyOn(apiService, 'newCapacity').and.returnValue(of(mockedNewCapacity));
 

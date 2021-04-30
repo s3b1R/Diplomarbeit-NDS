@@ -1,6 +1,6 @@
-import { Deserializable } from './deserializable.model';
+import {Deserializable} from './deserializable.model';
 
-export class Pi implements Deserializable{
+export class Pi implements Deserializable {
 
   public id: number;
   public piShortname: number;

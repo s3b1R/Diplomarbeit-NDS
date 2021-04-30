@@ -1,19 +1,20 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
 import {Capacity} from '../models/capacity.model';
-import { User } from '../models/user.model';
-import { map } from 'rxjs/operators';
-import { Workload } from '../models/workload.model';
-import { Pi } from '../models/pi.model';
+import {User} from '../models/user.model';
+import {map} from 'rxjs/operators';
+import {Workload} from '../models/workload.model';
+import {Pi} from '../models/pi.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-  readonly baseUrl = 'http://localhost:3000/';
+  hostname = window.location.hostname
+  readonly baseUrl = `http://${this.hostname}:3000/`;
 
-  constructor(private httpService: HttpClient){
+  constructor(private httpService: HttpClient) {
   }
 
   public getAllUsers(): Observable<User[]> {
@@ -42,12 +43,12 @@ export class ApiService {
       .pipe(map(data => data.map(data => new Capacity().deserialize(data))));
   }
 
-  public getCapacityForDateAndUserid(date: string, id: number): Observable<Capacity[]>{
+  public getCapacityForDateAndUserid(date: string, id: number): Observable<Capacity[]> {
     return this.httpService.get<Capacity[]>(`${this.baseUrl}capacity/${date}/${id}`)
       .pipe(map(data => data.map(data => new Capacity().deserialize(data))));
   }
 
-  public getCapacityForUserInSprint(userId: number, start: string, end: string): Observable<any>{
+  public getCapacityForUserInSprint(userId: number, start: string, end: string): Observable<any> {
     return this.httpService.get<any>(`${this.baseUrl}capacity/${userId}/${start}/${end}/capa`)
       .pipe(map(data => data[0].capasum));
   }
@@ -55,11 +56,11 @@ export class ApiService {
   public updateCapacity(capaId: number, newValue: number): void {
     this.httpService.put(`${this.baseUrl}capacity/${capaId}/update`, {capa: newValue},
       {headers: {'Content-Type': 'application/json'}, observe: 'body', responseType: 'json'})
-  .subscribe(response => response );
+      .subscribe(response => response);
   }
 
   public newCapacity(capaValue: string, onDate: string, forUser: number): Observable<Capacity> {
-    return  this.httpService.post(`${this.baseUrl}capacity/create`, {
+    return this.httpService.post(`${this.baseUrl}capacity/create`, {
       capa: capaValue,
       date: onDate,
       user: forUser
@@ -148,7 +149,7 @@ export class ApiService {
         sprint6End: sprint6End || null
       },
       {headers: {'Content-Type': 'application/json'}, observe: 'body', responseType: 'json'})
-      .subscribe(response => response );
+      .subscribe(response => response);
   }
 
   public deletePi(piId: number): void {

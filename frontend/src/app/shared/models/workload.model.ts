@@ -1,6 +1,6 @@
-import { Deserializable } from './deserializable.model';
+import {Deserializable} from './deserializable.model';
 
-export class Workload implements Deserializable{
+export class Workload implements Deserializable {
   public id: number;
   assignee: string;
   sprint: string;
