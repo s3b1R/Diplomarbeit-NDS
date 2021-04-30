@@ -11,6 +11,7 @@ on:
     branches:
     - develop
     paths:
+      - 'backend/**'
       - 'frontend/**'
       - '.github/workflows/**'
 
@@ -21,7 +22,6 @@ jobs:
       DATABASE_SCHEMA: test_db
       DATABASE_USER: root
       DATABASE_PASSWORD: root
-      MYSQL_ROOT_PASSWORD: ${{ secrets.ROOTPASSWORD }}
 
     strategy:
       matrix:
@@ -50,8 +50,9 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name: backend
-        uses: docker://sebirhz/resplan-backend:latest
+      - run: cd backend/ && npm ci
+      - run: cd backend/ && npm run test
+      - run: cd backend/ && npm run test:e2e
       - run: cd frontend/ && npm ci
       - run: cd frontend/ && npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
-      - run: cd frontend/ && npm run start & cd frontend/ && npm run cy:run
+      - run: cd frontend/ && npm run e2e
