@@ -154,7 +154,7 @@
     <div *ngIf="piControl.value">
     <mat-form-field>
       <mat-label>PI Bezeichnung</mat-label>
-      <input matInput data-cy="newshort" type="text" maxlength="4" #editedShortName value="{{piControl.value?.piShortname}}">
+      <input matInput data-cy="newshort" type="text" required maxlength="4" #editedShortName value="{{piControl.value?.piShortname}}">
       <button mat-button data-cy="newshortclear" *ngIf="editedShortName.value" matSuffix mat-icon-button aria-label="Clear" (click)="editedShortName.value=''">
         <mat-icon>close</mat-icon>
       </button>
@@ -162,21 +162,21 @@
 
     <mat-form-field class="pi-input">
       <mat-label>PI Start</mat-label>
-      <input matInput data-cy="newStartDate" [matDatepicker]="piStart" #editedStartDate value="{{piControl.value?.piStart}}" >
+      <input matInput data-cy="newStartDate" required [matDatepicker]="piStart" #editedStartDate value="{{piControl.value?.piStart}}" >
       <mat-datepicker-toggle  matSuffix [for]="piStart"></mat-datepicker-toggle>
       <mat-datepicker data-cy="newStartPicker" #piStart></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field class="pi-input">
       <mat-label>PI Ende</mat-label>
-      <input matInput data-cy="newEndDate" [matDatepicker]="piEnd" #editedEndDate value="{{piControl.value?.piEnd}}" >
+      <input matInput data-cy="newEndDate" required [matDatepicker]="piEnd" #editedEndDate value="{{piControl.value?.piEnd}}" >
       <mat-datepicker-toggle  matSuffix [for]="piEnd"></mat-datepicker-toggle>
       <mat-datepicker data-cy="newEndDatePicker" #piEnd></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field class="pi-input">
       <mat-label>Anzahl Sprints</mat-label>
-      <input matInput data-cy="newSprintCount" type="number" min="0" max="6" #editedSprintCount value="{{piControl.value?.sprintCounts}}">
+      <input matInput data-cy="newSprintCount" required type="number" min="0" max="6" #editedSprintCount value="{{piControl.value?.sprintCounts}}">
     </mat-form-field>
 
 <section>
