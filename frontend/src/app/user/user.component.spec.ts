@@ -1,12 +1,12 @@
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { MatDialog } from '@angular/material/dialog';
-import { ApiService} from '../shared/services/api.service';
-import { UserComponent } from './user.component';
-import { of } from 'rxjs';
-import { User } from '../shared/models/user.model';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { Router } from '@angular/router';
+import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {MatDialog} from '@angular/material/dialog';
+import {ApiService} from '../shared/services/api.service';
+import {UserComponent} from './user.component';
+import {of} from 'rxjs';
+import {User} from '../shared/models/user.model';
+import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import {Router} from '@angular/router';
 
 describe('UserComponent', () => {
   let component: UserComponent;
@@ -25,12 +25,12 @@ describe('UserComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UserComponent ],
-      imports: [ HttpClientTestingModule ],
-      providers: [ {provide: MatDialog, useClass: MatDialogMock}, ApiService, {provide: Router, useValue: mockRouter} ],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+      declarations: [UserComponent],
+      imports: [HttpClientTestingModule],
+      providers: [{provide: MatDialog, useClass: MatDialogMock}, ApiService, {provide: Router, useValue: mockRouter}],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
@@ -64,7 +64,7 @@ describe('UserComponent', () => {
     expect(component.deleteUser).toHaveBeenCalled();
   });
 
-  it ('loadUserList() should call apiService and fill user list', () => {
+  it('loadUserList() should call apiService and fill user list', () => {
     spyOn(apiService, 'getAllUsers').and.returnValue(of([new User(), new User(), new User()]));
     component.userList = [];
     component.loadUserList();
@@ -135,7 +135,7 @@ describe('UserComponent', () => {
   });
 
 
-  it('deleteUser() should call apiService to delete user after timeout', fakeAsync( () => {
+  it('deleteUser() should call apiService to delete user after timeout', fakeAsync(() => {
     component.userControl.setValue({id: 1, name: 'Hans'});
     spyOn(apiService, 'deleteUser').and.stub();
     component.deleteUser();
@@ -144,7 +144,7 @@ describe('UserComponent', () => {
     expect(apiService.deleteUser).toHaveBeenCalledWith(1);
   }));
 
-  it('deleteUser() should navigate home after timeout', fakeAsync( () => {
+  it('deleteUser() should navigate home after timeout', fakeAsync(() => {
     component.userControl.setValue({id: 1, name: 'Hans'});
     spyOn(component, 'navigateHome').and.stub();
     component.deleteUser();
@@ -166,7 +166,7 @@ describe('UserComponent', () => {
     expect(component.userControl.value).toBe(null);
   });
 
-  it('navigateHome() should call router after timeout', fakeAsync( () => {
+  it('navigateHome() should call router after timeout', fakeAsync(() => {
     component.navigateHome();
     tick(1500);
     expect(mockRouter.navigate).toHaveBeenCalledWith(['']);

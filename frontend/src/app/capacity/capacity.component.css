@@ -1,7 +1,11 @@
-table, td, th {border: 1px solid black; padding: 4px; border-collapse: collapse}
+table, td, th {
+  border: 1px solid black;
+  padding: 4px;
+  border-collapse: collapse
+}
 
 .weekend {
-  background-color: lightgray ;
+  background-color: lightgray;
 }
 
 td {

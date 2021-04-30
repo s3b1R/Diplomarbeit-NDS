@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { Pi } from '../shared/models/pi.model';
-import { format, parse } from 'date-fns';
-import { ApiService } from '../shared/services/api.service';
-import { ConfirmationDialogComponent } from '../shared/confirmation-dialog/confirmation-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {FormControl} from '@angular/forms';
+import {Pi} from '../shared/models/pi.model';
+import {format, parse} from 'date-fns';
+import {ApiService} from '../shared/services/api.service';
+import {ConfirmationDialogComponent} from '../shared/confirmation-dialog/confirmation-dialog.component';
+import {MatDialog} from '@angular/material/dialog';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-pi',
@@ -35,7 +35,8 @@ export class PiComponent implements OnInit {
   caseControl = new FormControl('new');
 
 
-  constructor(private apiService: ApiService, public dialog: MatDialog, private router: Router) { }
+  constructor(private apiService: ApiService, public dialog: MatDialog, private router: Router) {
+  }
 
   ngOnInit(): void {
     this.loadPiList();
@@ -103,7 +104,7 @@ export class PiComponent implements OnInit {
       data: `PI ${this.piControl.value.piShortname} löschen?`
     });
 
-    dialogRef.afterClosed().subscribe( result => {
+    dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.deletePi();
       }
@@ -118,54 +119,54 @@ export class PiComponent implements OnInit {
   }
 
   loadPiList(): void {
-      this.apiService.getPiData().subscribe(results => {
-        this.piList = results;
-      });
+    this.apiService.getPiData().subscribe(results => {
+      this.piList = results;
+    });
   }
 
   formatNewSprintDates(): void {
-    if (this.sprint1Start.value != null){
+    if (this.sprint1Start.value != null) {
       this.sprint1Start.setValue(format(this.sprint1Start.value, 'yyyy-MM-dd'));
-      }
-    if (this.sprint1End.value != null){
+    }
+    if (this.sprint1End.value != null) {
       this.sprint1End.setValue(format(this.sprint1End.value, 'yyyy-MM-dd'));
     }
-    if (this.sprint2Start.value != null){
+    if (this.sprint2Start.value != null) {
       this.sprint2Start.setValue(format(this.sprint2Start.value, 'yyyy-MM-dd'));
     }
-    if (this.sprint2End.value != null){
+    if (this.sprint2End.value != null) {
       this.sprint2End.setValue(format(this.sprint2End.value, 'yyyy-MM-dd'));
     }
-    if (this.sprint3Start.value != null){
+    if (this.sprint3Start.value != null) {
       this.sprint3Start.setValue(format(this.sprint3Start.value, 'yyyy-MM-dd'));
     }
-    if (this.sprint3End.value != null){
+    if (this.sprint3End.value != null) {
       this.sprint3End.setValue(format(this.sprint3End.value, 'yyyy-MM-dd'));
     }
-    if (this.sprint4Start.value != null){
+    if (this.sprint4Start.value != null) {
       this.sprint4Start.setValue(format(this.sprint4Start.value, 'yyyy-MM-dd'));
     }
-    if (this.sprint4End.value != null){
+    if (this.sprint4End.value != null) {
       this.sprint4End.setValue(format(this.sprint4End.value, 'yyyy-MM-dd'));
     }
-    if (this.sprint5Start.value != null){
+    if (this.sprint5Start.value != null) {
       this.sprint5Start.setValue(format(this.sprint5Start.value, 'yyyy-MM-dd'));
     }
-    if (this.sprint5End.value != null){
+    if (this.sprint5End.value != null) {
       this.sprint5End.setValue(format(this.sprint5End.value, 'yyyy-MM-dd'));
     }
-    if (this.sprint6Start.value != null){
+    if (this.sprint6Start.value != null) {
       this.sprint6Start.setValue(format(this.sprint6Start.value, 'yyyy-MM-dd'));
     }
-    if (this.sprint6End.value != null){
+    if (this.sprint6End.value != null) {
       this.sprint6End.setValue(format(this.sprint6End.value, 'yyyy-MM-dd'));
     }
   }
 
-  formatUpdatedSprints(sprintList: any[]): any[]{
+  formatUpdatedSprints(sprintList: any[]): any[] {
     const tempArray = [];
-    for (const sprint of sprintList){
-      if (sprint === ''){
+    for (const sprint of sprintList) {
+      if (sprint === '') {
         tempArray.push(null);
       } else {
         tempArray.push(format(parse(sprint, 'dd/MM/yyyy', new Date()), 'yyyy-MM-dd'));
@@ -194,7 +195,7 @@ export class PiComponent implements OnInit {
   }
 
   navigateHome(): void {
-    setTimeout( async () => {
+    setTimeout(async () => {
       await this.router.navigate(['']);
     }, 1500);
   }

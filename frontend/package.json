@@ -8,7 +8,8 @@
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
-    "lint": "ng lint",
+    "lint": "ng lint --project tslint.json",
+    "lint:cypress": "ng ling --project cypress/tsconfig.json",
     "e2e": "ng e2e"
   },
   "private": true,

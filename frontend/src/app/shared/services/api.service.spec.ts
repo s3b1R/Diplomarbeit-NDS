@@ -1,10 +1,10 @@
-import { TestBed, getTestBed } from '@angular/core/testing';
+import {TestBed, getTestBed} from '@angular/core/testing';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
-import { ApiService } from './api.service';
-import { User } from '../models/user.model';
-import { Capacity } from '../models/capacity.model';
-import { Workload } from '../models/workload.model';
-import { Pi } from '../models/pi.model';
+import {ApiService} from './api.service';
+import {User} from '../models/user.model';
+import {Capacity} from '../models/capacity.model';
+import {Workload} from '../models/workload.model';
+import {Pi} from '../models/pi.model';
 
 describe('ApiService', () => {
   let injector: TestBed;
@@ -12,7 +12,7 @@ describe('ApiService', () => {
   let httpMock: HttpTestingController;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({ imports: [ HttpClientTestingModule], providers: [ApiService]});
+    TestBed.configureTestingModule({imports: [HttpClientTestingModule], providers: [ApiService]});
     injector = getTestBed();
     service = injector.inject(ApiService);
     httpMock = injector.inject(HttpTestingController);
@@ -32,7 +32,7 @@ describe('ApiService', () => {
       name: 'Hans Muster',
     });
 
-    service.newUser('Hans Muster').subscribe( user => {
+    service.newUser('Hans Muster').subscribe(user => {
       expect(user).toEqual(dummyUser);
       expect(user).toBeInstanceOf(User);
     });
@@ -57,7 +57,7 @@ describe('ApiService', () => {
   });
 
   it('should get all users', () => {
-    const dummyUsers = [ new User().deserialize(
+    const dummyUsers = [new User().deserialize(
       {id: 1, name: 'Hans Muster'}), new User().deserialize({id: 2, name: 'Peter Müller'})
     ];
 
@@ -76,19 +76,19 @@ describe('ApiService', () => {
       id: 1,
       capa: '0.8',
       date: '2021-04-12',
-      user: { id: 1, name: 'Hans Muster' },
+      user: {id: 1, name: 'Hans Muster'},
     }),
       new Capacity().deserialize({
         id: 2,
         capa: '0.8',
         date: '2021-04-13',
-        user: { id: 2, name: 'Sebastian Rüegg' },
+        user: {id: 2, name: 'Sebastian Rüegg'},
       }),
       new Capacity().deserialize({
         id: 3,
         capa: '1.0',
         date: '2021-04-13',
-        user: { id: 3, name: 'Peter Lustig' },
+        user: {id: 3, name: 'Peter Lustig'},
       })];
 
     service.getCapacitiesForMonth('2021-04').subscribe(capa => {
@@ -106,7 +106,7 @@ describe('ApiService', () => {
       id: 2,
       capa: '0.8',
       date: '2021-04-13',
-      user: { id: 1, name: 'Hans Muster' }
+      user: {id: 1, name: 'Hans Muster'}
     })];
 
     service.getCapacityForDateAndUserid('2021-04-13', 1).subscribe(capa => {
@@ -121,7 +121,7 @@ describe('ApiService', () => {
   it('should get capacity sum for a sprint from a specific user', () => {
     const dummyCapaSum = [{capasum: 3.5}];
 
-    service.getCapacityForUserInSprint(2, '2021-04-01', '2021-04-13').subscribe( result => {
+    service.getCapacityForUserInSprint(2, '2021-04-01', '2021-04-13').subscribe(result => {
       expect(result).toBe(3.5);
     });
 
@@ -142,10 +142,10 @@ describe('ApiService', () => {
       id: 1,
       capa: '0.8',
       date: '2021-04-12',
-      user: { id: 1, name: 'Hans Muster' },
+      user: {id: 1, name: 'Hans Muster'},
     });
 
-    service.newCapacity('0.8', '2021-04-12', 1).subscribe( capacity => {
+    service.newCapacity('0.8', '2021-04-12', 1).subscribe(capacity => {
       expect(capacity).toEqual(dummyCapacity);
       expect(capacity).toBeInstanceOf(Capacity);
     });
@@ -171,7 +171,7 @@ describe('ApiService', () => {
       project: 'dummyProject',
     });
 
-    service.newWorkload('Hans Muster', 'dummySprint', 0.8, 'dummyProject').subscribe( workload => {
+    service.newWorkload('Hans Muster', 'dummySprint', 0.8, 'dummyProject').subscribe(workload => {
       expect(workload).toEqual(dummyWorkload);
       expect(workload).toBeInstanceOf(Workload);
     });
@@ -182,7 +182,7 @@ describe('ApiService', () => {
   });
 
   it('should get all workloads', () => {
-    const dummyWorkloads = [ new Workload().deserialize(
+    const dummyWorkloads = [new Workload().deserialize(
       {
         id: 1,
         assignee: 'Hans Muster',
@@ -213,7 +213,7 @@ describe('ApiService', () => {
     const nameParam = 'Hans Muster';
     const dateParam = '2106-1';
 
-    service.getWorkloadForUserInSprint('Hans Muster', '2106-1').subscribe( result => {
+    service.getWorkloadForUserInSprint('Hans Muster', '2106-1').subscribe(result => {
       expect(result).toBe(5.5);
     });
 
@@ -253,10 +253,10 @@ describe('ApiService', () => {
     service.newPi('2106', '2021-04-01', '2021-06-09', 5, null,
       null, null, null, null, null, null, null,
       null, null, null, null)
-      .subscribe( pi => {
-      expect(pi).toEqual(dummyPi);
-      expect(pi).toBeInstanceOf(Pi);
-    });
+      .subscribe(pi => {
+        expect(pi).toEqual(dummyPi);
+        expect(pi).toBeInstanceOf(Pi);
+      });
 
     const newPiRequest = httpMock.expectOne(`${service.baseUrl}pi/create`);
     expect(newPiRequest.request.method).toBe('POST');
@@ -264,7 +264,7 @@ describe('ApiService', () => {
   });
 
   it('should get all pi', () => {
-    const dummyPis = [ new Pi().deserialize(
+    const dummyPis = [new Pi().deserialize(
       {
         id: 1,
         piShortname: '2106',

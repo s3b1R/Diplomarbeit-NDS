@@ -1,13 +1,13 @@
 import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ApiService } from '../shared/services/api.service';
-import { NgxCsvParser } from 'ngx-csv-parser';
-import { Router } from '@angular/router';
-import { WorkloadComponent } from './workload.component';
-import { File } from '@angular/compiler-cli/src/ngtsc/file_system/testing/src/mock_file_system';
-import {Observable, of } from 'rxjs';
-import { Workload } from '../shared/models/workload.model';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {ApiService} from '../shared/services/api.service';
+import {NgxCsvParser} from 'ngx-csv-parser';
+import {Router} from '@angular/router';
+import {WorkloadComponent} from './workload.component';
+import {File} from '@angular/compiler-cli/src/ngtsc/file_system/testing/src/mock_file_system';
+import {Observable, of} from 'rxjs';
+import {Workload} from '../shared/models/workload.model';
+import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 describe('WorkloadComponent', () => {
   let component: WorkloadComponent;
@@ -19,11 +19,11 @@ describe('WorkloadComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ WorkloadComponent ], imports: [HttpClientTestingModule],
+      declarations: [WorkloadComponent], imports: [HttpClientTestingModule],
       providers: [ApiService, NgxCsvParser, {provide: Router, useValue: mockRouter}],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
@@ -55,7 +55,12 @@ describe('WorkloadComponent', () => {
     const mockedParseResult = [
       {Assignee: 'Haris Besic', Sprint: 'Lucky 2106-2 (14.-27.4.)', 'Story Points': 1, Project: 'Go4 100 SME&Mila'},
       {Assignee: 'Haris Besic', Sprint: 'Lucky 2106-5 (26.5.-9.6.)', 'Story Points': 1, Project: 'Go4 100 SME&Mila'},
-      {Assignee: 'Jan Troeltsch', Sprint: 'Dagobert 2101-3 (25.11.-8.12.), Dagobert 2103-5 (17.-31.3.)', 'Story Points': 1, Project: 'Go4 100 Mio'}
+      {
+        Assignee: 'Jan Troeltsch',
+        Sprint: 'Dagobert 2101-3 (25.11.-8.12.), Dagobert 2103-5 (17.-31.3.)',
+        'Story Points': 1,
+        Project: 'Go4 100 Mio'
+      }
     ];
     const mockedFile = new File([], 'test.csv', {type: 'text/csv'});
     spyOn(parser, 'parse').and.returnValue(of(mockedParseResult));
@@ -68,7 +73,12 @@ describe('WorkloadComponent', () => {
     const mockedInput = [
       {Assignee: 'Haris Besic', Sprint: 'Lucky 2106-2 (14.-27.4.)', 'Story Points': 1, Project: 'Go4 100 SME&Mila'},
       {Assignee: 'Haris Besic', Sprint: 'Lucky 2106-5 (26.5.-9.6.)', 'Story Points': 1, Project: 'Go4 100 SME&Mila'},
-      {Assignee: 'Jan Troeltsch', Sprint: 'Dagobert 2101-3 (25.11.-8.12.), Dagobert 2103-5 (17.-31.3.)', 'Story Points': 1, Project: 'Go4 100 Mio'}
+      {
+        Assignee: 'Jan Troeltsch',
+        Sprint: 'Dagobert 2101-3 (25.11.-8.12.), Dagobert 2103-5 (17.-31.3.)',
+        'Story Points': 1,
+        Project: 'Go4 100 Mio'
+      }
     ];
     const mockedResult = [
       {Assignee: 'Haris Besic', Sprint: 'Lucky 2106-2 (14.-27.4.)', 'Story Points': 1, Project: 'Go4 100 SME&Mila'},
@@ -83,7 +93,12 @@ describe('WorkloadComponent', () => {
     const mockedInput = [
       {Assignee: 'Haris Besic', Sprint: 'Lucky 2106-2 (14.-27.4.)', 'Story Points': 1, Project: 'Go4 100 SME&Mila'},
       {Assignee: 'Haris Besic', Sprint: 'Lucky 2106-5 (26.5.-9.6.)', 'Story Points': 1, Project: 'Go4 100 SME&Mila'},
-      {Assignee: 'Jan Troeltsch', Sprint: 'Dagobert 2101-3 (25.11.-8.12.), Dagobert 2103-5 (17.-31.3.)', 'Story Points': 1, Project: 'Go4 100 Mio'}
+      {
+        Assignee: 'Jan Troeltsch',
+        Sprint: 'Dagobert 2101-3 (25.11.-8.12.), Dagobert 2103-5 (17.-31.3.)',
+        'Story Points': 1,
+        Project: 'Go4 100 Mio'
+      }
     ];
     const mockedResult = [
       {Assignee: 'Haris Besic', Sprint: 'Lucky 2106-2 (14.-27.4.)', 'Story Points': 1, Project: 'Go4 100 SME&Mila'},
@@ -95,7 +110,7 @@ describe('WorkloadComponent', () => {
     expect(component.makeReadyForUpload).toHaveBeenCalledWith(mockedResult);
   });
 
-  it ('makeReadyForUpload() should set variables', () => {
+  it('makeReadyForUpload() should set variables', () => {
     const mockedInput = [
       {Assignee: 'Haris Besic', Sprint: 'Lucky 2106-2 (14.-27.4.)', 'Story Points': 1, Project: 'Go4 100 SME&Mila'},
       {Assignee: 'Haris Besic', Sprint: 'Lucky 2106-5 (26.5.-9.6.)', 'Story Points': 1, Project: 'Go4 100 SME&Mila'},
@@ -118,13 +133,13 @@ describe('WorkloadComponent', () => {
     expect(component.sendDataToDatabase).toHaveBeenCalledTimes(1);
   });
 
-  it('uploadWorkload() should change variable readyForUpload ',  () => {
+  it('uploadWorkload() should change variable readyForUpload ', () => {
     component.readyForUpload = 'ready';
     component.uploadWorkload();
     expect(component.readyForUpload).toEqual('success');
   });
 
-  it('uploadWorkload() should navigate to home after timout', fakeAsync( () => {
+  it('uploadWorkload() should navigate to home after timout', fakeAsync(() => {
     component.uploadWorkload();
     tick(1500);
     expect(mockRouter.navigate).toHaveBeenCalledWith(['']);

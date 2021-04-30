@@ -1,26 +1,30 @@
- <mat-card>
-   <div class="mat-card-content">
-   <app-success *ngIf="readyForUpload === 'success'"></app-success>
-  <mat-form-field *ngIf="readyForUpload === 'notReady'">
-    <div>
-      <mat-toolbar>
+<mat-card>
+  <div class="mat-card-content">
+    <app-success *ngIf="readyForUpload === 'success'"></app-success>
+    <mat-form-field *ngIf="readyForUpload === 'notReady'">
+      <div>
+        <mat-toolbar>
 
-        <input matInput data-cy="source" type="text" placeholder="Quelldatei">
-        <button mat-flat-button data-cy="search" color="primary">
-          Durchsuchen
-        </button>
-      </mat-toolbar>
+          <input data-cy="source" matInput placeholder="Quelldatei" type="text">
+          <button color="primary" data-cy="search" mat-flat-button>
+            Durchsuchen
+          </button>
+        </mat-toolbar>
 
-      <input data-cy="file" type="file" #fileImportInput name="File Upload" id="csvFileUpload" (change)="fileChangeListener($event)"
-             accept=".csv" />
+        <input #fileImportInput (change)="fileChangeListener($event)" accept=".csv" data-cy="file" id="csvFileUpload"
+               name="File Upload"
+               type="file"/>
+      </div>
+    </mat-form-field>
+
+    <div *ngIf="readyForUpload === 'ready'">
+      <div class="warn" data-cy="warning">Mit dem Upload, werden die vorhandenen Daten gelöscht und durch die Neuen
+        ersetzt.
+      </div>
+      <br>
+      <button (click)="uploadWorkload()" class="uploadButton" color="primary" data-cy="upload" mat-flat-button>Upload
+      </button>
     </div>
-  </mat-form-field>
-
-  <div *ngIf="readyForUpload === 'ready'">
-    <div data-cy="warning" class="warn">Mit dem Upload, werden die vorhandenen Daten gelöscht und durch die Neuen ersetzt.</div>
-    <br>
-    <button data-cy="upload" class="uploadButton" mat-flat-button color="primary"(click)="uploadWorkload()">Upload</button>
   </div>
-   </div>
- </mat-card>
+</mat-card>
 

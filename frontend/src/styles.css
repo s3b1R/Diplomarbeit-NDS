@@ -9,7 +9,7 @@ body {
 
 mat-card {
   margin-top: 1px;
-  height: 80vh;
+  height: 78vh;
   overflow: hidden;
 }
 
@@ -43,7 +43,7 @@ caption {
 .title {
   margin: 20px 0;
   text-align: center;
-  font-size: large;
+  font-size: x-large;
   font-weight: bolder;
 }
 
@@ -64,9 +64,10 @@ caption {
   height: 5vh;
   bottom: 0px;
   width: 100%;
-  text-align: center;
   background: #00373e;
   color: white;
+  display: flex;
+  justify-content: space-around;
 }
 
 .footerdiv {
@@ -76,11 +77,21 @@ caption {
   height: 5vh;
 }
 
+.footerleft {
+  margin: 3px;
+}
+
+.footerright {
+  margin: 3px;
+}
+
 .slow {
   animation: cssAnimation 0s 1s forwards;
   opacity: 0;
 }
 
 @keyframes cssAnimation {
-  to { opacity: 1}
+  to {
+    opacity: 1
+  }
 }
