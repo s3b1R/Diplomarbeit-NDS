@@ -13,7 +13,7 @@
 
     <mat-form-field class="pi-input">
       <mat-label>PI Bezeichnung</mat-label>
-      <input matInput data-cy="shortName" type="text" [formControl]="shortName" placeholder="YYMM">
+      <input matInput data-cy="shortName" type="text" maxlength="4" required [formControl]="shortName" placeholder="YYMM">
       <button mat-button *ngIf="shortName.value" matSuffix mat-icon-button aria-label="Clear" (click)="shortName.reset()">
         <mat-icon data-cy="clear">close</mat-icon>
       </button>
@@ -21,7 +21,7 @@
 
     <mat-form-field class="pi-input">
       <mat-label>PI Start</mat-label>
-      <input matInput data-cy="startDate" [matDatepicker]="newPiStart" [formControl]="startDate">
+      <input matInput data-cy="startDate" required [matDatepicker]="newPiStart" [formControl]="startDate">
       <mat-datepicker-toggle data-cy="startPicker" matSuffix [for]="newPiStart"></mat-datepicker-toggle>
       <mat-datepicker #newPiStart></mat-datepicker>
     </mat-form-field>
@@ -29,14 +29,14 @@
 
     <mat-form-field class="pi-input">
       <mat-label>PI Ende</mat-label>
-      <input matInput data-cy="endDate" [matDatepicker]="newPiEnd" [formControl]="endDate">
+      <input matInput data-cy="endDate" required [matDatepicker]="newPiEnd" [formControl]="endDate">
       <mat-datepicker-toggle data-cy="endPicker" matSuffix [for]="newPiEnd"></mat-datepicker-toggle>
       <mat-datepicker #newPiEnd></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field class="pi-input">
       <mat-label>Anzahl Sprints</mat-label>
-      <input matInput data-cy="sprintCount" type="number" min="0" max="6" [formControl]="sprintCounts">
+      <input matInput data-cy="sprintCount" required type="number" min="0" max="6" [formControl]="sprintCounts">
     </mat-form-field>
 
       <div  *ngIf="sprintCounts.value > 0">
@@ -154,7 +154,7 @@
     <div *ngIf="piControl.value">
     <mat-form-field>
       <mat-label>PI Bezeichnung</mat-label>
-      <input matInput data-cy="newshort" type="text" #editedShortName value="{{piControl.value?.piShortname}}">
+      <input matInput data-cy="newshort" type="text" maxlength="4" #editedShortName value="{{piControl.value?.piShortname}}">
       <button mat-button data-cy="newshortclear" *ngIf="editedShortName.value" matSuffix mat-icon-button aria-label="Clear" (click)="editedShortName.value=''">
         <mat-icon>close</mat-icon>
       </button>
