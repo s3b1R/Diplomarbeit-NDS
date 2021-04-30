@@ -1,17 +1,16 @@
-import { inject, TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ApiService } from '../services/api.service';
-import { WorkloadPipe } from './workload-pipe';
+import {inject, TestBed} from '@angular/core/testing';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {ApiService} from '../services/api.service';
+import {WorkloadPipe} from './workload-pipe';
 import {Observable} from 'rxjs';
-
 
 
 describe('WorkloadPipe', () => {
   let pipe: WorkloadPipe;
 
-  beforeEach( () => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule], providers: [WorkloadPipe, { provide: ApiService }]
+      imports: [HttpClientTestingModule], providers: [WorkloadPipe, {provide: ApiService}]
     });
   });
 

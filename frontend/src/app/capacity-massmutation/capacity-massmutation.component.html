@@ -1,38 +1,39 @@
 <mat-card>
   <div class="mat-card-content">
 
-  <app-success *ngIf="entryStatus === 'success'"></app-success>
+    <app-success *ngIf="entryStatus === 'success'"></app-success>
 
-  <form  *ngIf="entryStatus === 'ready'" [formGroup]="massInputValues" (ngSubmit)="onFormSubmit()">
+    <form (ngSubmit)="onFormSubmit()" *ngIf="entryStatus === 'ready'" [formGroup]="massInputValues">
 
-    <mat-form-field>
-      <mat-label>Benutzer auswählen</mat-label>
-      <mat-select data-cy="userSelect" formControlName="user" >
-        <mat-option></mat-option>
-        <mat-option data-cy="user" *ngFor="let user of userList" [value]="user.id">{{user.name}}</mat-option>
-      </mat-select>
-    </mat-form-field>
+      <mat-form-field>
+        <mat-label>Benutzer auswählen</mat-label>
+        <mat-select data-cy="userSelect" formControlName="user">
+          <mat-option></mat-option>
+          <mat-option *ngFor="let user of userList" [value]="user.id" data-cy="user">{{user.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>Zeitraum</mat-label>
-      <mat-date-range-input data-cy="picker" [rangePicker]="multiRange">
-        <input data-cy="start" matStartDate formControlName="start" placeholder="Start Datum">
-        <input data-cy="end" matEndDate formControlName="end" placeholder="End Datum">
-      </mat-date-range-input>
-      <mat-datepicker-toggle matSuffix [for]="multiRange"></mat-datepicker-toggle>
-      <mat-date-range-picker #multiRange></mat-date-range-picker>
-    </mat-form-field>
+      <mat-form-field>
+        <mat-label>Zeitraum</mat-label>
+        <mat-date-range-input [rangePicker]="multiRange" data-cy="picker">
+          <input data-cy="start" formControlName="start" matStartDate placeholder="Start Datum">
+          <input data-cy="end" formControlName="end" matEndDate placeholder="End Datum">
+        </mat-date-range-input>
+        <mat-datepicker-toggle [for]="multiRange" matSuffix></mat-datepicker-toggle>
+        <mat-date-range-picker #multiRange></mat-date-range-picker>
+      </mat-form-field>
 
-    <mat-form-field class="capa-input">
-      <mat-label>Kapazität</mat-label>
-      <input data-cy="capa" matInput type="text" formControlName="capa">
-      <button mat-button *ngIf="massInputValues.value.capa" matSuffix mat-icon-button aria-label="Clear" (click)="massInputValues.value.capa=''">
-        <mat-icon data-cy="clear">close</mat-icon>
-      </button>
-    </mat-form-field>
-    <section>
-      <button data-cy="submit" mat-flat-button color="primary">Erfassen</button>
-    </section>
-  </form>
+      <mat-form-field class="capa-input">
+        <mat-label>Kapazität</mat-label>
+        <input data-cy="capa" formControlName="capa" matInput type="text">
+        <button (click)="massInputValues.value.capa=''" *ngIf="massInputValues.value.capa" aria-label="Clear" mat-button mat-icon-button
+                matSuffix>
+          <mat-icon data-cy="clear">close</mat-icon>
+        </button>
+      </mat-form-field>
+      <section>
+        <button color="primary" data-cy="submit" mat-flat-button>Erfassen</button>
+      </section>
+    </form>
   </div>
 </mat-card>

@@ -1,62 +1,62 @@
 <mat-card>
   <div class="mat-card-content">
-  <div class="formcontroller" *ngIf="piList.length > 0">
-    <mat-form-field>
-      <mat-label>PI wählen</mat-label>
-      <mat-select data-cy="selector" [(ngModel)]="shownPi" (selectionChange)="changePi($event.value)">
-        <mat-option data-cy="pi" *ngFor="let pi of piList" [value]="pi">{{pi.piShortname}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
+    <div *ngIf="piList.length > 0" class="formcontroller">
+      <mat-form-field>
+        <mat-label>PI wählen</mat-label>
+        <mat-select (selectionChange)="changePi($event.value)" [(ngModel)]="shownPi" data-cy="selector">
+          <mat-option *ngFor="let pi of piList" [value]="pi" data-cy="pi">{{pi.piShortname}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
 
-  <div data-cy="noUser" class="warn slow" *ngIf="!userList.length">
-    Es ist noch kein Nutzer erfasst.
-  </div>
+    <div *ngIf="!userList.length" class="warn slow" data-cy="noUser">
+      Es ist noch kein Nutzer erfasst.
+    </div>
 
-  <div data-cy="noPi" class="warn slow" *ngIf="!piList.length">
-    Es ist noch kein PI erfasst.
-  </div>
+    <div *ngIf="!piList.length" class="warn slow" data-cy="noPi">
+      Es ist noch kein PI erfasst.
+    </div>
 
-<div class="contend">
-<table>
-  <caption *ngIf="piList.length > 0">PI {{piName}}</caption>
-  <thead>
-  <tr>
-    <th *ngIf="userList.length > 0" class="nameHeader" rowspan="2" scope="col">Name</th>
-    <ng-container *ngFor="let sprint of sprints; let idx = index">
-      <td class="separator"></td>
-    <th class="sprints" scope="col" colspan="3" >Sprint {{sprint}}<br>
-      {{sprintStarts[idx] | dfnsParse: 'yyyy-MM-dd' : 0 | dfnsFormat: 'dd. MMM'}} -
-      {{sprintEnds[idx]  | dfnsParse: 'yyyy-MM-dd' : 0 | dfnsFormat: 'dd. MMM'}}
-    </th>
-    </ng-container>
-  </tr>
+    <div class="contend">
+      <table>
+        <caption *ngIf="piList.length > 0">PI {{piName}}</caption>
+        <thead>
+        <tr>
+          <th *ngIf="userList.length > 0" class="nameHeader" rowspan="2" scope="col">Name</th>
+          <ng-container *ngFor="let sprint of sprints; let idx = index">
+            <td class="separator"></td>
+            <th class="sprints" colspan="3" scope="col">Sprint {{sprint}}<br>
+              {{sprintStarts[idx] | dfnsParse: 'yyyy-MM-dd' : 0 | dfnsFormat: 'dd. MMM'}} -
+              {{sprintEnds[idx]  | dfnsParse: 'yyyy-MM-dd' : 0 | dfnsFormat: 'dd. MMM'}}
+            </th>
+          </ng-container>
+        </tr>
 
-  <tr>
-    <ng-container *ngFor="let sprint of sprints">
-      <td class="separator"></td>
-      <th class="capa" scope="col">Capa</th>
-      <th class="load" scope="col">Load</th>
-      <th class="difference" scope="col">&Delta;</th>
-    </ng-container>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let user of userList">
-    <td class="name">{{user.name}}</td>
-    <ng-container *ngFor="let sprint of sprints; let idx = index">
-        <td class="separator"></td>
-        <td #capa class="capa">{{user.id | capaPipe: sprintStarts[idx] : sprintEnds[idx] | async}}</td>
-        <td #load class="load">{{user.name | workloadPipe: piName : sprint | async }}</td>
-        <td [ngClass]="{ negative : (capa.innerText - load.innerText) < -0.9,
+        <tr>
+          <ng-container *ngFor="let sprint of sprints">
+            <td class="separator"></td>
+            <th class="capa" scope="col">Capa</th>
+            <th class="load" scope="col">Load</th>
+            <th class="difference" scope="col">&Delta;</th>
+          </ng-container>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let user of userList">
+          <td class="name">{{user.name}}</td>
+          <ng-container *ngFor="let sprint of sprints; let idx = index">
+            <td class="separator"></td>
+            <td #capa class="capa">{{user.id | capaPipe: sprintStarts[idx] : sprintEnds[idx] | async}}</td>
+            <td #load class="load">{{user.name | workloadPipe: piName : sprint | async }}</td>
+            <td [ngClass]="{ negative : (capa.innerText - load.innerText) < -0.9,
                          positive : (capa.innerText - load.innerText) > 0.9 }" class="difference"
-        >
-          {{ capa.innerText | deltaPipe: load.innerText }}
-        </td>
-    </ng-container>
-  </tr>
-  </tbody>
-</table>
-</div>
+            >
+              {{ capa.innerText | deltaPipe: load.innerText }}
+            </td>
+          </ng-container>
+        </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </mat-card>

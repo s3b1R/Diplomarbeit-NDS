@@ -1,4 +1,4 @@
-import { Capacity } from './capacity.model';
+import {Capacity} from './capacity.model';
 
 describe('Capacity.Model', () => {
   let model: Capacity;

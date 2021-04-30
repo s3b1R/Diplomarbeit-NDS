@@ -1,52 +1,55 @@
 <mat-card>
   <div class="mat-card-content">
-  <ng-conainer *ngIf="!isLoading">
-    <div class="formcontroller">
-      <button mat-flat-button data-cy="datepicker" color="primary"(click)="capaMonth.open()">Anzeigemonat wählen</button>
+    <ng-conainer *ngIf="!isLoading">
+      <div class="formcontroller">
+        <button (click)="capaMonth.open()" color="primary" data-cy="datepicker" mat-flat-button>Anzeigemonat wählen
+        </button>
 
 
+        <a color="primary" data-cy="mass" mat-flat-button routerLink="/massmutation">Mehrere Tage erfassen</a>
+        <section>
+          <mat-form-field class="hiddenFormfield">
+            <input [matDatepicker]="capaMonth" data-cy="date" matInput>
+            <mat-datepicker #capaMonth (monthSelected)="selectMonthToShow($event, capaMonth)" data-cy="picker"
+                            startView="year"></mat-datepicker>
+          </mat-form-field>
+        </section>
 
-      <a mat-flat-button data-cy="mass" color="primary" routerLink="/massmutation">Mehrere Tage erfassen</a>
-      <section>
-        <mat-form-field class="hiddenFormfield">
-          <input matInput data-cy="date" [matDatepicker]="capaMonth">
-          <mat-datepicker data-cy="picker" #capaMonth startView="year" (monthSelected)="selectMonthToShow($event, capaMonth)"></mat-datepicker>
-        </mat-form-field>
-      </section>
+      </div>
 
-    </div>
+      <div class="contend">
+        <table aria-describedby="Capacity">
+          <caption>{{intervalOfDates[0] | dfnsFormat: 'MMMM yyyy'}}</caption>
+          <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th *ngFor="let day of intervalOfDates" scope="col">{{day | dfnsFormatPure : 'dd. MMM'}}</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let user of userList; let namIndex = index;">
+            <td class="name">{{user.name}}</td>
 
-<div class="contend">
-<table aria-describedby="Capacity">
-  <caption>{{intervalOfDates[0] | dfnsFormat: 'MMMM yyyy'}}</caption>
-  <thead>
-  <tr>
-    <th scope="col">Name</th>
-    <th scope="col" *ngFor="let day of intervalOfDates">{{day | dfnsFormatPure : 'dd. MMM'}}</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let user of userList; let namIndex = index;">
-      <td class="name">{{user.name}}</td>
+            <ng-container *ngFor="let day of intervalOfDates">
+              <ng-container *ngFor="let capa of capacitiesToShow; let arrIndex = index;">
+                <ng-container *ngIf="capa.user.name === user.name">
+                  <td *ngIf="!isNotWeekend(day) && compareDates(day, capa.date)" class="weekend"></td>
+                  <td (blur)="onBlur($event.target.innerText, user, capa, arrIndex)" (focus)="onFocus($event.target.innerText)"
+                      *ngIf="isNotWeekend(day) && compareDates(day, capa.date)"
+                      contenteditable="true">
+                    {{capa.capa}}
+                  </td>
+                </ng-container>
+              </ng-container>
+            </ng-container>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </ng-conainer>
 
-    <ng-container *ngFor="let day of intervalOfDates">
-      <ng-container *ngFor="let capa of capacitiesToShow; let arrIndex = index;">
-        <ng-container *ngIf="capa.user.name === user.name">
-          <td *ngIf="!isNotWeekend(day) && compareDates(day, capa.date)" class="weekend"></td>
-          <td *ngIf="isNotWeekend(day) && compareDates(day, capa.date)" contenteditable="true"
-              (focus)="onFocus($event.target.innerText)" (blur)="onBlur($event.target.innerText, user, capa, arrIndex)">
-          {{capa.capa}}
-          </td>
-        </ng-container>
-      </ng-container>
-    </ng-container>
-  </tr>
-  </tbody>
-</table>
-</div>
-  </ng-conainer>
-
-  <img class="loading" *ngIf="isLoading" src="../../assets/images/spinner.gif" height="233" width="414" alt="loading"/>
+    <img *ngIf="isLoading" alt="loading" class="loading" height="233" src="../../assets/images/spinner.gif"
+         width="414"/>
   </div>
 </mat-card>
 

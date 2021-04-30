@@ -1,15 +1,15 @@
-import { inject, TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ApiService } from '../services/api.service';
-import { CapacityPipe } from './capacity-pipe';
+import {inject, TestBed} from '@angular/core/testing';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {ApiService} from '../services/api.service';
+import {CapacityPipe} from './capacity-pipe';
 import {Observable} from 'rxjs';
 
 describe('CapacityPipe', () => {
   let pipe: CapacityPipe;
 
-  beforeEach( () => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule], providers: [CapacityPipe, { provide: ApiService }]
+      imports: [HttpClientTestingModule], providers: [CapacityPipe, {provide: ApiService}]
     });
   });
 

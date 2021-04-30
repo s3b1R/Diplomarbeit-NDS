@@ -1,12 +1,11 @@
-import { DeltaCapaLoad } from './delta-capa-load';
+import {DeltaCapaLoad} from './delta-capa-load';
 import {inject, TestBed} from '@angular/core/testing';
-
 
 
 describe('DeltaCapaLoad', () => {
   let pipe;
 
-  beforeEach( () => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [DeltaCapaLoad]
     });

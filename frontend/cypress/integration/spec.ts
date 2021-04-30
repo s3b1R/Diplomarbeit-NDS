@@ -118,7 +118,7 @@ describe('Frontend', () => {
     cy.get('[data-cy=selYes]').click();
     cy.get('.success');
     cy.contains('PI 2106');
-    });
+  });
 
   it('should create a third new Pi', () => {
     cy.get('[ng-reflect-router-link="./pi"]').click();
