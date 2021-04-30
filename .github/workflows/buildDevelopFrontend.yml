@@ -28,7 +28,7 @@ jobs:
         node-version: [14.x]
 
     steps:
-      - uses: mirromutth/mysql-action@v1.1
+      - uses: haltuf/mysql-action@master
         with:
           host port: 3306
           container port: 3306
