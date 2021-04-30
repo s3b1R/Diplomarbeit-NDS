@@ -39,7 +39,6 @@ jobs:
           mysql root password: ${{ secrets.ROOTPASSWORD }}
           mysql user: ''
           mysql password: ''
-          authentication plugin: ''
       - uses: actions/cache@v2
         with:
           path: ~/.npm
