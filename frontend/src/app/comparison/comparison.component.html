@@ -3,17 +3,17 @@
   <div class="formcontroller" *ngIf="piList.length > 0">
     <mat-form-field>
       <mat-label>PI wählen</mat-label>
-      <mat-select [(ngModel)]="shownPi" (selectionChange)="changePi($event.value)">
-        <mat-option *ngFor="let pi of piList" [value]="pi">{{pi.piShortname}}</mat-option>
+      <mat-select data-cy="selector" [(ngModel)]="shownPi" (selectionChange)="changePi($event.value)">
+        <mat-option data-cy="pi" *ngFor="let pi of piList" [value]="pi">{{pi.piShortname}}</mat-option>
       </mat-select>
     </mat-form-field>
   </div>
 
-  <div class="warn slow" *ngIf="!userList.length">
+  <div data-cy="noUser" class="warn slow" *ngIf="!userList.length">
     Es ist noch kein Nutzer erfasst.
   </div>
 
-  <div class="warn slow" *ngIf="!piList.length">
+  <div data-cy="noPi" class="warn slow" *ngIf="!piList.length">
     Es ist noch kein PI erfasst.
   </div>
 

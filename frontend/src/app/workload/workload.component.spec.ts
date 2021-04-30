@@ -124,10 +124,10 @@ describe('WorkloadComponent', () => {
     expect(component.readyForUpload).toEqual('success');
   });
 
-  it('uploadWorkload() should navigate to after timout', fakeAsync( () => {
+  it('uploadWorkload() should navigate to home after timout', fakeAsync( () => {
     component.uploadWorkload();
     tick(1500);
-    expect(mockRouter.navigate).toHaveBeenCalledWith(['home']);
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['']);
   }));
 
   it('sendDataToDatabase() should call apiService and send data to the database', () => {

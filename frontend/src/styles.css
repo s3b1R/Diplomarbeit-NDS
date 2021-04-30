@@ -39,16 +39,24 @@ caption {
   font-weight: bold;
 }
 
-nav{
+
+.title {
+  margin: 20px 0;
+  text-align: center;
+  font-size: large;
+  font-weight: bolder;
+}
+
+.navbar {
   background-color: whitesmoke;
 }
 
-.mat-tab-label {
-  color: black;
+.mat-tab-link {
+  opacity: 1 !important;
 }
 
-.mat-tab-link {
-  color: black;
+.mat-tab-link:hover {
+  color: darkblue;
 }
 
 .footer {

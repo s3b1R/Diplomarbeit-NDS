@@ -3,8 +3,8 @@
   <app-success *ngIf="caseControl.value == 'success'"></app-success>
   <div class="useCaseSelector">
     <mat-button-toggle-group [formControl]="caseControl">
-      <mat-button-toggle value="new">Neuer Benutzer</mat-button-toggle>
-      <mat-button-toggle value="edit">Benutzer ändern</mat-button-toggle>
+      <mat-button-toggle data-cy="newUser" value="new">Neuer Benutzer</mat-button-toggle>
+      <mat-button-toggle data-cy="editUser" value="edit">Benutzer ändern</mat-button-toggle>
     </mat-button-toggle-group>
   </div>
 
@@ -12,13 +12,13 @@
   <div *ngIf="caseControl.value == 'new'">
   <mat-form-field class="newUser">
     <mat-label>Neuen Benutzer anlegen</mat-label>
-    <input matInput type="text" [(ngModel)]="newUserName">
+    <input matInput data-cy="newUserName" type="text" [(ngModel)]="newUserName">
     <button mat-button *ngIf="newUserName" matSuffix mat-icon-button aria-label="Clear" (click)="newUserName=''">
-      <mat-icon>close</mat-icon>
+      <mat-icon data-cy="clearNewUserName">close</mat-icon>
     </button>
   </mat-form-field>
 
-    <button *ngIf="newUserName" mat-button (click)="saveNewUser()">Speichern</button>
+    <button *ngIf="newUserName" mat-button data-cy="saveNewUser" (click)="saveNewUser()">Speichern</button>
 
   </div>
 
@@ -38,14 +38,14 @@
   <div *ngIf="userControl.value">
 
     <mat-form-field>
-    <input matInput type="text" #editedName value="{{userControl.value?.name}}">
+    <input matInput data-cy="editName" type="text" #editedName value="{{userControl.value?.name}}">
       <button mat-button *ngIf="userControl.value?.name" matSuffix mat-icon-button aria-label="Clear" (click)="userControl.reset()">
-        <mat-icon>close</mat-icon>
+        <mat-icon data-cy="clearEditName">close</mat-icon>
       </button>
     </mat-form-field>
     <section>
-      <button mat-flat-button color="warn" (click)="openDialog()">Nutzer Löschen</button>
-      <button mat-flat-button color="primary" (click)="updateUser(editedName.value)">Änderung Speichern</button>
+      <button mat-flat-button data-cy="deleteUser" color="warn" (click)="openDialog()">Nutzer Löschen</button>
+      <button mat-flat-button data-cy="saveUser" color="primary" (click)="updateUser(editedName.value)">Änderung Speichern</button>
     </section>
 </div>
 </div>

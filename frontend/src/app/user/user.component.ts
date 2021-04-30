@@ -62,7 +62,7 @@ export class UserComponent implements OnInit {
     this.apiService.deleteAllCapacityForUser(userId);
     setTimeout(async () => {
       this.apiService.deleteUser(userId);
-      await this.router.navigate(['home']);
+      await this.router.navigate(['']);
       }, 1500);
     this.caseControl.setValue('success');
     this.userControl.reset();
@@ -70,7 +70,7 @@ export class UserComponent implements OnInit {
 
   navigateHome(): void {
     setTimeout( async () => {
-      await this.router.navigate(['home']);
+      await this.router.navigate(['']);
     }, 1500);
   }
 }

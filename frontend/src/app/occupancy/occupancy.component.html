@@ -1,10 +1,10 @@
 <mat-card>
   <div class="mat-card-content">
 <div class="useCaseSelector">
-  <a mat-flat-button color="primary" routerLink="/workload">Import csv</a>
+  <a mat-flat-button data-cy="import" color="primary" routerLink="/workload">Import csv</a>
 </div>
 <div class="contend">
-  <table *ngIf="workloadList.length > 0">
+  <table data-cy="table" *ngIf="workloadList.length > 0">
     <caption>Aktueller Import</caption>
     <tr>
       <th scope="col">Project</th>

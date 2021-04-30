@@ -54,7 +54,7 @@ export class WorkloadComponent implements OnInit {
     this.sendDataToDatabase();
     this.readyForUpload = 'success';
     setTimeout(async () => {
-      await this.router.navigate(['home']);
+      await this.router.navigate(['']);
     }, 1500);
   }
 

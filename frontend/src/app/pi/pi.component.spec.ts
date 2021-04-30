@@ -198,7 +198,7 @@ describe('PiComponent', () => {
   it('navigateHome() should call router after timeout', fakeAsync( () => {
     component.navigateHome();
     tick(1500);
-    expect(mockRouter.navigate).toHaveBeenCalledWith(['home']);
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['']);
   }));
 
 });

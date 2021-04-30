@@ -11,18 +11,35 @@ on:
     branches:
     - develop
     paths:
+      - 'backend/**'
       - 'frontend/**'
       - '.github/workflows/**'
 
 jobs:
   tests:
     runs-on: ubuntu-latest
+    env:
+      DATABASE_SCHEMA: test_db
+      DATABASE_USER: root
+      DATABASE_PASSWORD: root
 
     strategy:
       matrix:
         node-version: [14.x]
 
     steps:
+      - uses: haltuf/mysql-action@master
+        with:
+          host port: 3306
+          container port: 3306
+          character set server: 'utf8'
+          collation server: 'utf8_general_ci'
+          mysql version: '8.0'
+          mysql database: 'test_db'
+          mysql root password: ${{ secrets.ROOTPASSWORD }}
+          mysql user: ''
+          mysql password: ''
+          authentication plugin: 'mysql_native_password'
       - uses: actions/cache@v2
         with:
           path: ~/.npm
@@ -34,6 +51,9 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+      - run: cd backend/ && npm ci
+      - run: cd backend/ && npm run test
+      - run: cd backend/ && npm run test:e2e
       - run: cd frontend/ && npm ci
       - run: cd frontend/ && npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
-      - run: cd frontend/ && npm run e2e
+      - run: cd backend/ && npm run start & cd frontend/ && npm run start & cd frontend/ && npm run cy:run
