@@ -39,8 +39,6 @@ $ npm run seed:localdb
 ```
 Nachdem die Applikation läuft, kann die Applikation mit obigem Script mit Beispieldaten gefüllt werden.
 
-<br>
-
 ### Container basiert
 ```bash
 $ npm run start:docker
@@ -54,10 +52,8 @@ $ npm run seed:db
 ```
 Nachdem die Applikation läuft, kann die Applikation mit obigem Script mit Beispieldaten gefüllt werden.
 
-<br>
-
 ### Beispiel csv
-Im Ordner `documents` befindet sich eine .csv Datei, mit welcher in der Applikation neue Workload Daten importiert werden können.
+Im Ordner `testfile` befindet sich eine .csv Datei, mit welcher in der Applikation neue Workload Daten importiert werden können.
 Ob die Applikation lokal oder im Container ausgeführt wird, ist davon unabhängig.
 
 ---

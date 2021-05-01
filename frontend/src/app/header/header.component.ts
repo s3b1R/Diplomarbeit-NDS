@@ -33,7 +33,7 @@ export class HeaderComponent implements OnInit {
         index: 3
       },
       {
-        label: 'PI Verwaltung',
+        label: 'Pi Verwaltung',
         link: './pi',
         index: 4
       },
