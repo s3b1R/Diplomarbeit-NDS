@@ -1,4 +1,3 @@
-### Status
 <a href="https://sonarcloud.io/dashboard?id=s3b1R_Diplomarbeit-NDS" target="_blank"><img src="https://sonarcloud.io/api/project_badges/measure?project=s3b1R_Diplomarbeit-NDS&metric=alert_status" alt="code-quality" /></a>
 <a href="https://github.com/s3b1R/Diplomarbeit-NDS/actions/workflows/onBuildDevelop.yml" target="_blank"><img src="https://github.com/s3b1R/Diplomarbeit-NDS/actions/workflows/onBuildDevelop.yml/badge.svg" alt="build status develop branch" /></a>
 <a href="https://github.com/s3b1R/Diplomarbeit-NDS/actions/workflows/onBuildMaster.yml" target="_blank"><img src="https://github.com/s3b1R/Diplomarbeit-NDS/actions/workflows/onBuildMaster.yml/badge.svg" alt="build status master branch" /></a>
