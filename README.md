@@ -11,6 +11,8 @@ Dieses Projekt habe ich zum Abschluss im Lehrgang NDS HF Applikationsentwicklung
 
 Die Applikation soll die Planung des Workloads in PI- und Sprint-Plannings im Tribe in welchem ich arbeite erleichtern.
 
+Eine [Kurzanleitung](documents/Kurzanleitung.pdf) zum Tool ist im Ordner `documents` zu finden.
+
 --- 
 
 ## Vorbereitung und Applikationsstart
