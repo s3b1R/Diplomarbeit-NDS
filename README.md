@@ -6,7 +6,7 @@
 <a href="https://github.com/s3b1R/Diplomarbeit-NDS/actions/workflows/onBuildMaster.yml" target="_blank"><img src="https://github.com/s3b1R/Diplomarbeit-NDS/actions/workflows/onBuildMaster.yml/badge.svg" alt="build status master branch" /></a>
 
 ## Einleitung
-Dieses Projekt habe ich zum Abschluss im Lehrgang NDS HF Applikationsentwicklung der <a hrer="https://www.ibw.ch/" target="_blank">ibW</a> erstellt.
+Dieses Projekt habe ich zum Abschluss im Lehrgang NDS HF Applikationsentwicklung der [ibW](https://www.ibw.ch/) erstellt.
 
 Die Applikation soll die Planung des Workloads in PI- und Sprint-Plannings im Tribe in welchem ich arbeite erleichtern.
 
