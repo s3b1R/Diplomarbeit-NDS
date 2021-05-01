@@ -7,7 +7,6 @@
 
 # Ressourcen Planer
 
-## Einleitung
 Dieses Projekt habe ich zum Abschluss im Lehrgang NDS HF Applikationsentwicklung der [ibW](https://www.ibw.ch/) erstellt.
 
 Die Applikation soll die Planung des Workloads in PI- und Sprint-Plannings im Tribe in welchem ich arbeite erleichtern.
