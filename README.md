@@ -23,7 +23,7 @@ GIT Repository clonen oder ZIP download
 $ npm install
 ```
 Es werden alle benötigten Pakete für das Front- und Backend installiert.  
-**Wichtig:** Docker muss gestartet sein, da mit dem Script auch ein Image und ein Container für die Datenbank erstellt werden.
+**Wichtig:** Docker muss gestartet sein, da das Script auch ein Image und ein Container für die Datenbank erstellt.
 
 ---
 
@@ -32,13 +32,13 @@ Es werden alle benötigten Pakete für das Front- und Backend installiert.
 ```bash
 $ npm run start:local
 ```
-Der Script startet den Docker Container mit der Datenbank, sowie das lokal installierte Front- und Backend.
+Das Script startet den Docker Container mit der Datenbank, sowie das lokal installierte Front- und Backend.
 Nach dem Start ist die Applikation unter [http://localhost:4200](http://localhost:4200) erreichbar.
 #### Beispieldaten
 ```bash
 $ npm run seed:localdb
 ```
-Nachdem die Applikation läuft, kann die Applikation mit obigem Script mit Beispieldaten gefüllt werden.
+Nachdem die Applikation läuft, kann die Applikation durch das Script mit Beispieldaten gefüllt werden.
 
 <br>
 
@@ -53,7 +53,7 @@ Nach dem Start ist die Applikation unter [http://localhost](http://localhost) er
 ```bash
 $ npm run seed:db
 ```
-Nachdem die Applikation läuft, kann die Applikation mit obigem Script mit Beispieldaten gefüllt werden.
+Nachdem die Applikation läuft, kann die Applikation durch das Script mit Beispieldaten gefüllt werden.
 
 <br>
 
