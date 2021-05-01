@@ -150,6 +150,11 @@ describe('Frontend', () => {
     cy.get('.ng-star-inserted > .ng-star-inserted:nth-child(3)').click().clear().type('0 , 8');
     cy.get('.ng-star-inserted > .ng-star-inserted:nth-child(2)').click().clear().type(' .5').blur();
     cy.reload();
+    cy.get('[data-cy="datepicker"] > .mat-button-wrapper').click();
+    cy.get('.mat-calendar-period-button > .mat-button-wrapper').click();
+    cy.get('.mat-calendar-period-button > .mat-button-wrapper').click();
+    cy.get('.mat-calendar-content').contains('2021').click();
+    cy.get('.mat-calendar-content').contains('APR').click();
     cy.get('.ng-star-inserted > .ng-star-inserted:nth-child(2)').should('contain', '0.5');
     cy.get('.ng-star-inserted > .ng-star-inserted:nth-child(3)').should('contain', '0.8');
     cy.visit('/');
