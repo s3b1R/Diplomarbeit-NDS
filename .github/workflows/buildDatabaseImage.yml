@@ -1,4 +1,4 @@
-name: Docker Images
+name: Database Docker Image
 
 on:
     pull_request:
