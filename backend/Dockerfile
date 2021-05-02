@@ -8,6 +8,8 @@ RUN npm install --only=development
 
 COPY . .
 
+RUN npm i rimraf
+
 RUN npm run build
 
 FROM node:14 AS production

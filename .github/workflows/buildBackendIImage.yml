@@ -1,0 +1,26 @@
+name: Backend Docker Image
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'backend/**'
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v2
+            - name: docker login
+              env:
+                DOCKER_USER: ${{secrets.DOCKER_USER}}
+                DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+              run: |
+                    docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+            - name: Build backend image
+              run: cd frontend && docker build . --file Dockerfile --tag sebirhz/resplan-backend:latest
+
+            - name: Docker push backend image
+              run: docker push sebirhz/resplan-backend:latest
