@@ -1,0 +1,24 @@
+name: Docker Images
+
+on:
+    pull_request:
+        branches:
+        - develop
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v2
+            - name: docker login
+              env:
+                DOCKER_USER: ${{secrets.DOCKER_USER}}
+                DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+              run: |
+                    docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+            - name: Build database image
+              run: cd dockerdb && docker build . --file Dockerfile --tag sebirhz/resplan-database:test
+
+            - name: Docker push database image
+              run: docker push sebirhz/resplan-database:test
