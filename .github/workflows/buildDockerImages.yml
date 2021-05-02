@@ -24,7 +24,7 @@ jobs:
               run: docker push sebirhz/resplan-database:test
 
             - name: Build backend image
-             run: cd backend && docker build . --file Dockerfile --tag sebirhz/resplan-backend:test
+              run: cd backend && docker build . --file Dockerfile --tag sebirhz/resplan-backend:test
 
             - name: Docker push backend image
               run: docker push sebirhz/resplan-backend:test
