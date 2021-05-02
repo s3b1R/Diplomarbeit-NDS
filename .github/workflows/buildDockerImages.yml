@@ -18,7 +18,7 @@ jobs:
               run: |
                     docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
             - name: Build database image
-              run: cd frontend && docker build . --file Dockerfile --tag ${{secrets.DOCKER_USER}}/resplan-frontend:$(date +%s)
+              run: cd frontend && docker build . --file Dockerfile --tag sebirhz/resplan-frontend:test
 
             - name: Docker push database image
-              run: docker push ${{secrets.DOCKER_USER}}
+              run: docker push sebirhz/resplan-frontend:test
