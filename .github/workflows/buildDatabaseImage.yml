@@ -1,9 +1,11 @@
 name: Database Docker Image
 
 on:
-    pull_request:
-        branches:
-        - develop
+  push:
+    branches:
+      - master
+    paths:
+      - 'dockerdb/**'
 
 jobs:
     build:
@@ -18,7 +20,7 @@ jobs:
               run: |
                     docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
             - name: Build database image
-              run: cd dockerdb && docker build . --file Dockerfile --tag sebirhz/resplan-database:test
+              run: cd dockerdb && docker build . --file Dockerfile --tag sebirhz/resplan-database:latest
 
             - name: Docker push database image
-              run: docker push sebirhz/resplan-database:test
+              run: docker push sebirhz/resplan-database:latest

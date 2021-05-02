@@ -1,9 +1,11 @@
 name: Frontend Docker Image
 
 on:
-    pull_request:
-        branches:
-        - develop
+  push:
+    branches:
+      - master
+    paths:
+      - 'frontend/**'
 
 jobs:
     build:
@@ -18,7 +20,7 @@ jobs:
               run: |
                     docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
             - name: Build frontend image
-              run: cd frontend && docker build . --file Dockerfile --tag sebirhz/resplan-frontend:test
+              run: cd frontend && docker build . --file Dockerfile --tag sebirhz/resplan-frontend:latest
 
             - name: Docker push frontend image
-              run: docker push sebirhz/resplan-frontend:test
+              run: docker push sebirhz/resplan-frontend:latest
