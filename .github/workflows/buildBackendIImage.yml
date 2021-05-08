@@ -20,7 +20,7 @@ jobs:
               run: |
                     docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
             - name: Build backend image
-              run: cd frontend && docker build . --file Dockerfile --tag sebirhz/resplan-backend:latest
+              run: cd backend && docker build . --file Dockerfile --tag sebirhz/resplan-backend:latest
 
             - name: Docker push backend image
               run: docker push sebirhz/resplan-backend:latest
