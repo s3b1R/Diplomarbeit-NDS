@@ -52,15 +52,15 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name: install backend
+      - name: Install backend
         run: cd backend/ && npm ci
-      - name: run backend unit tests
+      - name: Run backend unit tests
         run: cd backend/ && npm run test
-      - name: run backend e2e test
+      - name: Run backend e2e test
         run: cd backend/ && npm run test:e2e
-      - name: install frontend
+      - name: Install frontend
         run: cd frontend/ && npm ci
-      - name: run frontend unit tests
+      - name: Run frontend unit tests
         run: cd frontend/ && npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
-      - name: run frontend e2e tests
+      - name: Run frontend e2e tests
         run: cd backend/ && npm run start & cd frontend/ && npm run start & cd frontend/ && npm run cy:run
