@@ -60,6 +60,6 @@ jobs:
       - name: Install frontend
         run: cd frontend/ && npm ci
       - name: Run frontend unit tests
-       run: cd frontend/ && npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
+        run: cd frontend/ && npm run test -- --watch=false --no-progress --browsers=ChromeHeadlessNoSandbox
       - name: Run frontend e2e tests
         run: cd backend/ && npm run start & cd frontend/ && npm run start & cd frontend/ && npm run cy:run
