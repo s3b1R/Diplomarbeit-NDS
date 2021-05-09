@@ -27,6 +27,20 @@ describe('CapacityComponent', () => {
     component = fixture.componentInstance;
     apiService = TestBed.inject(ApiService);
     fixture.detectChanges();
+    component.capacitiesToShow = [
+    new Capacity().deserialize({
+      id: 101,
+      capa: '2',
+      date: '2021-04-01',
+      user: {id: 99, name: 'Jon Doe'},
+    }),
+      new Capacity().deserialize({
+        id: 102,
+        capa: '2',
+        date: '2021-04-30',
+        user: {id: 1, name: 'Jon Doe'},
+      })
+    ];
   });
 
   it('should create', () => {
