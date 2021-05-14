@@ -51,18 +51,18 @@ export class CapacityController {
     return this.capacityService.create(capacityData);
   }
 
-  @Put(':id/update')
+  @Put(':id')
   async update(@Param('id') id, @Body() capacityData: Capacity): Promise<any> {
     capacityData.id = Number(id);
     return this.capacityService.update(capacityData);
   }
 
-  @Delete(':id/delete')
+  @Delete(':id')
   async delete(@Param('id') id): Promise<any> {
     return this.capacityService.delete(id);
   }
 
-  @Delete('alldelete/:userId')
+  @Delete('all/:userId')
   async deleteAllCapacityForUser(@Param('userId') userId): Promise<any> {
     return this.capacityService.deleteAllCapacityForUser(userId);
   }

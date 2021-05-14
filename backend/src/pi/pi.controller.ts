@@ -22,13 +22,13 @@ export class PiController {
     return this.piService.findById(id);
   }
 
-  @Put(':id/update')
+  @Put(':id')
   async update(@Param('id') id, @Body() piData: Pi): Promise<any> {
     piData.id = Number(id);
     return this.piService.update(piData);
   }
 
-  @Delete(':id/delete')
+  @Delete(':id')
   async delete(@Param('id') id): Promise<any> {
     return this.piService.delete(id);
   }

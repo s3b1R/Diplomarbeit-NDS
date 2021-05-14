@@ -24,7 +24,7 @@ export class WorkloadController {
     return this.workloadService.create(workload);
   }
 
-  @Delete('delete')
+  @Delete('clear')
   async clear(): Promise<void> {
     return this.workloadService.clear();
   }
