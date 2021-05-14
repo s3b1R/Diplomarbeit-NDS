@@ -45,14 +45,14 @@ describe('ApiService', () => {
   it('should update an user', () => {
     expect((service.updateUser(88, 'Hans Musterli'))).toBeUndefined();
 
-    const updateUserRequest = httpMock.expectOne(`${service.baseUrl}users/88/update`);
+    const updateUserRequest = httpMock.expectOne(`${service.baseUrl}users/88`);
     expect(updateUserRequest.request.method).toBe('PUT');
   });
 
   it('should delete an user', () => {
     expect((service.deleteUser(88))).toBeUndefined();
 
-    const deleteUserRequest = httpMock.expectOne(`${service.baseUrl}users/88/delete`);
+    const deleteUserRequest = httpMock.expectOne(`${service.baseUrl}users/88`);
     expect(deleteUserRequest.request.method).toBe('DELETE');
   });
 
@@ -133,7 +133,7 @@ describe('ApiService', () => {
   it('should update a capacity', () => {
     expect((service.updateCapacity(99, 1))).toBeUndefined();
 
-    const updateRequest = httpMock.expectOne(`${service.baseUrl}capacity/99/update`);
+    const updateRequest = httpMock.expectOne(`${service.baseUrl}capacity/99`);
     expect(updateRequest.request.method).toBe('PUT');
   });
 
@@ -158,7 +158,7 @@ describe('ApiService', () => {
   it('should delete all capacities for one user', () => {
     expect((service.deleteAllCapacityForUser(32))).toBeUndefined();
 
-    const deleteUserRequest = httpMock.expectOne(`${service.baseUrl}capacity/alldelete/32`);
+    const deleteUserRequest = httpMock.expectOne(`${service.baseUrl}capacity/all/32`);
     expect(deleteUserRequest.request.method).toBe('DELETE');
   });
 
@@ -225,7 +225,7 @@ describe('ApiService', () => {
   it('should clear all workloads', () => {
     expect((service.clearWorkload())).toBeUndefined();
 
-    const clearWorkloadRequest = httpMock.expectOne(`${service.baseUrl}workload/delete`);
+    const clearWorkloadRequest = httpMock.expectOne(`${service.baseUrl}workload/clear`);
     expect(clearWorkloadRequest.request.method).toBe('DELETE');
   });
 
@@ -319,14 +319,14 @@ describe('ApiService', () => {
       null, null, null, null, null, null, null,
       null, null, null, null))).toBeUndefined();
 
-    const updateRequest = httpMock.expectOne(`${service.baseUrl}pi/1/update`);
+    const updateRequest = httpMock.expectOne(`${service.baseUrl}pi/1`);
     expect(updateRequest.request.method).toBe('PUT');
   });
 
   it('should delete a pi', () => {
     expect((service.deletePi(1))).toBeUndefined();
 
-    const deleteUserRequest = httpMock.expectOne(`${service.baseUrl}pi/1/delete`);
+    const deleteUserRequest = httpMock.expectOne(`${service.baseUrl}pi/1`);
     expect(deleteUserRequest.request.method).toBe('DELETE');
   });
 

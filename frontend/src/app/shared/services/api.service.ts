@@ -30,12 +30,12 @@ export class ApiService {
   }
 
   public updateUser(userId: number, userName: string): void {
-    this.httpService.put(`${this.baseUrl}users/${userId}/update`, {name: userName},
+    this.httpService.put(`${this.baseUrl}users/${userId}`, {name: userName},
       {headers: {'Content-Type': 'application/json'}, observe: 'body', responseType: 'json'}).subscribe();
   }
 
   public deleteUser(userId: number): void {
-    this.httpService.delete(`${this.baseUrl}users/${userId}/delete`).subscribe();
+    this.httpService.delete(`${this.baseUrl}users/${userId}`).subscribe();
   }
 
   public getCapacitiesForMonth(month: string): Observable<Capacity[]> {
@@ -54,7 +54,7 @@ export class ApiService {
   }
 
   public updateCapacity(capaId: number, newValue: number): void {
-    this.httpService.put(`${this.baseUrl}capacity/${capaId}/update`, {capa: newValue},
+    this.httpService.put(`${this.baseUrl}capacity/${capaId}`, {capa: newValue},
       {headers: {'Content-Type': 'application/json'}, observe: 'body', responseType: 'json'})
       .subscribe(response => response);
   }
@@ -69,7 +69,7 @@ export class ApiService {
   }
 
   public deleteAllCapacityForUser(userId: number): void {
-    this.httpService.delete(`${this.baseUrl}capacity/alldelete/${userId}`).subscribe();
+    this.httpService.delete(`${this.baseUrl}capacity/all/${userId}`).subscribe();
   }
 
   public newWorkload(newAssigne: string, newSprint: string, newStoryPoints: number, newProject: string): Observable<Workload> {
@@ -94,7 +94,7 @@ export class ApiService {
   }
 
   public clearWorkload(): void {
-    this.httpService.delete(`${this.baseUrl}workload/delete`).subscribe();
+    this.httpService.delete(`${this.baseUrl}workload/clear`).subscribe();
   }
 
   public newPi(piName: string, startDate: string, endDate: string, amountOfSprints: number,
@@ -130,7 +130,7 @@ export class ApiService {
   public updatePi(piId: number, piName: string, startDate: string, endDate: string, amountOfSprints: number,
                   sprint1Start, sprint1End, sprint2Start, sprint2End, sprint3Start, sprint3End, sprint4Start, sprint4End,
                   sprint5Start, sprint5End, sprint6Start, sprint6End): void {
-    this.httpService.put(`${this.baseUrl}pi/${piId}/update`, {
+    this.httpService.put(`${this.baseUrl}pi/${piId}`, {
         piShortname: piName,
         piStart: startDate,
         piEnd: endDate,
@@ -153,6 +153,6 @@ export class ApiService {
   }
 
   public deletePi(piId: number): void {
-    this.httpService.delete(`${this.baseUrl}pi/${piId}/delete`).subscribe();
+    this.httpService.delete(`${this.baseUrl}pi/${piId}`).subscribe();
   }
 }
