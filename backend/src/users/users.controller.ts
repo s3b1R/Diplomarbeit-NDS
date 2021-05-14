@@ -29,13 +29,13 @@ export class UsersController {
     return this.usersService.create(usersData);
   }
 
-  @Put(':id/update')
+  @Put(':id')
   async update(@Param('id') id, @Body() usersData: Users): Promise<any> {
     usersData.id = Number(id);
     return this.usersService.update(usersData);
   }
 
-  @Delete(':id/delete')
+  @Delete(':id')
   async delete(@Param('id') id): Promise<any> {
     return this.usersService.delete(id);
   }

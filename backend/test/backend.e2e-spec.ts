@@ -8,7 +8,7 @@ import { CapacityModule } from './../src/capacity/capacity.module';
 import { PiModule } from './../src/pi/pi.module';
 import { Workload } from './../src/workload/workload.entity';
 import { WorkloadModule } from './../src/workload/workload.module';
-import e from 'express';
+
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
@@ -80,7 +80,7 @@ describe('UsersModule (e2e)', () => {
 
   it('should update an users name', async () => {
     const { body } = await request(app.getHttpServer())
-      .put('/users/1/update')
+      .put('/users/1')
       .set('Accept', 'application/json')
       .send({ name: 'Hanna Test' })
       .expect(200);
@@ -90,7 +90,7 @@ describe('UsersModule (e2e)', () => {
 
   it('should delete an user', async () => {
     const { body } = await request(app.getHttpServer())
-      .delete('/users/1/delete')
+      .delete('/users/1')
       .set('Accept', 'application/json')
       .expect(200);
     expect(body).toHaveProperty('raw.changedRows', 0);
@@ -206,7 +206,7 @@ describe('CapacityModule (e2e)', () => {
 
   it('should update a capacity', async () => {
     const { body } = await request(app.getHttpServer())
-      .put('/capacity/1/update')
+      .put('/capacity/1')
       .set('Accept', 'application/json')
       .send({ capa: '1.0' })
       .expect(200);
@@ -216,7 +216,7 @@ describe('CapacityModule (e2e)', () => {
 
   it('should delete a capacity', async () => {
     const { body } = await request(app.getHttpServer())
-      .delete('/capacity/1/delete')
+      .delete('/capacity/1')
       .set('Accept', 'application/json')
       .expect(200);
     expect(body).toHaveProperty('raw.changedRows', 0);
@@ -225,7 +225,7 @@ describe('CapacityModule (e2e)', () => {
 
   it('should delete all capacities for a user', async () => {
     const { body } = await request(app.getHttpServer())
-      .delete('/capacity/alldelete/2')
+      .delete('/capacity/all/2')
       .set('Accept', 'application/json')
       .expect(200);
     expect(body).toHaveProperty('affectedRows', 1);
@@ -393,7 +393,7 @@ describe('PiModule (e2e)', () => {
 
   it('should update a pi', async () => {
     const { body } = await request(app.getHttpServer())
-      .put('/pi/1/update')
+      .put('/pi/1')
       .set('Accept', 'application/json')
       .send({ sprintCounts: '6' })
       .expect(200);
@@ -403,7 +403,7 @@ describe('PiModule (e2e)', () => {
 
   it('should delete a pi', async () => {
     const { body } = await request(app.getHttpServer())
-      .delete('/pi/1/delete')
+      .delete('/pi/1')
       .set('Accept', 'application/json')
       .expect(200);
     expect(body).toHaveProperty('raw.changedRows', 0);
@@ -505,7 +505,7 @@ describe('WorkloadModule (e2e)', () => {
 
   it('should clear workload table', async () => {
     const { body } = await request(app.getHttpServer())
-      .delete('/workload/delete')
+      .delete('/workload/clear')
       .set('Accept', 'application/json')
       .expect(200);
     expect(body).toEqual({});
