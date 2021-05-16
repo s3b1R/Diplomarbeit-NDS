@@ -1,10 +1,10 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {ApiService} from '../shared/services/api.service';
+import {ApiService} from '../../shared/services/api.service';
 import {ComparisonComponent} from './comparison.component';
 import {of} from 'rxjs';
-import {Pi} from '../shared/models/pi.model';
-import {User} from '../shared/models/user.model';
+import {Pi} from '../../shared/models/pi.model';
+import {User} from '../../shared/models/user.model';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 describe('ComparisonComponent', () => {

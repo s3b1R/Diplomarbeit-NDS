@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
-import {Pi} from '../shared/models/pi.model';
+import {Pi} from '../../shared/models/pi.model';
 import {format, parse} from 'date-fns';
-import {ApiService} from '../shared/services/api.service';
-import {ConfirmationDialogComponent} from '../shared/confirmation-dialog/confirmation-dialog.component';
+import {ApiService} from '../../shared/services/api.service';
+import {ConfirmationDialogComponent} from '../../shared/components/confirmation-dialog/confirmation-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 

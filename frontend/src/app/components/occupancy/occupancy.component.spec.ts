@@ -1,8 +1,8 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {ApiService} from '../shared/services/api.service';
+import {ApiService} from '../../shared/services/api.service';
 import {OccupancyComponent} from './occupancy.component';
-import {Workload} from '../shared/models/workload.model';
+import {Workload} from '../../shared/models/workload.model';
 import {of} from 'rxjs';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
