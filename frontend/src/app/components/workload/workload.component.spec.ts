@@ -1,12 +1,12 @@
 import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {ApiService} from '../shared/services/api.service';
+import {ApiService} from '../../shared/services/api.service';
 import {NgxCsvParser} from 'ngx-csv-parser';
 import {Router} from '@angular/router';
 import {WorkloadComponent} from './workload.component';
 import {File} from '@angular/compiler-cli/src/ngtsc/file_system/testing/src/mock_file_system';
 import {Observable, of} from 'rxjs';
-import {Workload} from '../shared/models/workload.model';
+import {Workload} from '../../shared/models/workload.model';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 describe('WorkloadComponent', () => {

@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {User} from '../shared/models/user.model';
-import {ApiService} from '../shared/services/api.service';
+import {User} from '../../shared/models/user.model';
+import {ApiService} from '../../shared/services/api.service';
 import {FormControl} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
-import {ConfirmationDialogComponent} from '../shared/confirmation-dialog/confirmation-dialog.component';
+import {ConfirmationDialogComponent} from '../../shared/components/confirmation-dialog/confirmation-dialog.component';
 import {Router} from '@angular/router';
 
 @Component({

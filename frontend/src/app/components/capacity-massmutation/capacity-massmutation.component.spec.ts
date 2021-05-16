@@ -1,14 +1,14 @@
 import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {ApiService} from '../shared/services/api.service';
+import {ApiService} from '../../shared/services/api.service';
 import {Router} from '@angular/router';
 import {of} from 'rxjs';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 
 import {CapacityMassmutationComponent} from './capacity-massmutation.component';
-import {User} from '../shared/models/user.model';
-import {Capacity} from '../shared/models/capacity.model';
+import {User} from '../../shared/models/user.model';
+import {Capacity} from '../../shared/models/capacity.model';
 
 describe('CapacityMassmutationComponent', () => {
   let component: CapacityMassmutationComponent;

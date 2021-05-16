@@ -2,10 +2,10 @@ import {ComponentFixture, fakeAsync, flushMicrotasks, TestBed, tick} from '@angu
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {CapacityComponent} from './capacity.component';
 import {DateFnsModule} from 'ngx-date-fns';
-import {ApiService} from '../shared/services/api.service';
+import {ApiService} from '../../shared/services/api.service';
 import {of} from 'rxjs';
-import {User} from '../shared/models/user.model';
-import {Capacity} from '../shared/models/capacity.model';
+import {User} from '../../shared/models/user.model';
+import {Capacity} from '../../shared/models/capacity.model';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 

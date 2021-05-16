@@ -1,10 +1,10 @@
 import {ComponentFixture, fakeAsync, tick, TestBed} from '@angular/core/testing';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {ApiService} from '../shared/services/api.service';
+import {ApiService} from '../../shared/services/api.service';
 import {MatDialog} from '@angular/material/dialog';
 import {PiComponent} from './pi.component';
 import {of} from 'rxjs';
-import {Pi} from '../shared/models/pi.model';
+import {Pi} from '../../shared/models/pi.model';
 import {DateFnsModule} from 'ngx-date-fns';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {Router} from '@angular/router';
