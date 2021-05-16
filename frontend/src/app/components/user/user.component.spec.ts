@@ -1,10 +1,10 @@
 import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {MatDialog} from '@angular/material/dialog';
-import {ApiService} from '../shared/services/api.service';
+import {ApiService} from '../../shared/services/api.service';
 import {UserComponent} from './user.component';
 import {of} from 'rxjs';
-import {User} from '../shared/models/user.model';
+import {User} from '../../shared/models/user.model';
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import {Router} from '@angular/router';
 

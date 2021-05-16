@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgxCsvParser, NgxCSVParserError} from 'ngx-csv-parser';
-import {ApiService} from '../shared/services/api.service';
+import {ApiService} from '../../shared/services/api.service';
 import {Router} from '@angular/router';
 
 @Component({

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {User} from '../shared/models/user.model';
-import {Pi} from '../shared/models/pi.model';
-import {ApiService} from '../shared/services/api.service';
+import {User} from '../../shared/models/user.model';
+import {Pi} from '../../shared/models/pi.model';
+import {ApiService} from '../../shared/services/api.service';
 
 
 @Component({
